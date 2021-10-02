@@ -30,11 +30,13 @@ class MucEventHandler: XmppServiceExtension {
 
     func register(for client: XMPPClient, cancellables: inout Set<AnyCancellable>) {
         client.$state.combineLatest(XmppService.instance.$isFetch).sink(receiveValue: { [weak client] state, isFetch in
-            guard let client = client, case .connected(let resumed) = state, !resumed, !isFetch else {
+           // case .connected(let resumed) = state, !resumed, !isFetch
+            guard let client = client else {
                 return;
             }
             client.module(.muc).roomManager.rooms(for: client).forEach { (room) in
                 // first we need to check if room supports MAM
+                print(room)
                 DBChatMarkersStore.instance.awaitingSync(for: room as! Room);
                 client.module(.disco).getInfo(for: JID(room.jid), completionHandler: { result in
                     var mamVersions: [MessageArchiveManagementModule.Version] = [];
@@ -112,7 +114,9 @@ class MucEventHandler: XmppServiceExtension {
                 });
         }).store(in: &cancellables);
     }
+    func fetchMUCRoomslist (for client: XMPPClient){
         
+    }
     static func showJoinError(_ err: XMPPError, for room: Room) {
         guard let error = MucModule.RoomError.from(error: err), let context = room.context else {
             return;

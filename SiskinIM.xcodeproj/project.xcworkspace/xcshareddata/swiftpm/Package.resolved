@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "libsignal",
+        "repositoryURL": "https://github.com/tigase/libsignal",
+        "state": {
+          "branch": null,
+          "revision": "d23d5af0d729cf66b93cea607f3f84a34b9fddfd",
+          "version": "1.0.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

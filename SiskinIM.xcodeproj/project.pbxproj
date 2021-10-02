@@ -7,6 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		010A28CE27017A00004E702F /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28C927017A00004E702F /* HMAC.swift */; };
+		010A28CF27017A00004E702F /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28CA27017A00004E702F /* AppColors.swift */; };
+		010A28D027017A00004E702F /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28CB27017A00004E702F /* OTPView.swift */; };
+		010A28D127017A00004E702F /* LoginPage Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28CC27017A00004E702F /* LoginPage Extension.swift */; };
+		010A28D227017A00004E702F /* OTPTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28CD27017A00004E702F /* OTPTextField.swift */; };
+		010A28DD27017A12004E702F /* SlideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28D427017A12004E702F /* SlideView.swift */; };
+		010A28DE27017A12004E702F /* BlobViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28D527017A12004E702F /* BlobViews.swift */; };
+		010A28DF27017A12004E702F /* ActivityLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28D627017A12004E702F /* ActivityLine.swift */; };
+		010A28E027017A12004E702F /* SignUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28D727017A12004E702F /* SignUpButton.swift */; };
+		010A28E127017A12004E702F /* UsernameTF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28D827017A12004E702F /* UsernameTF.swift */; };
+		010A28E227017A12004E702F /* ContinueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28D927017A12004E702F /* ContinueButton.swift */; };
+		010A28E327017A12004E702F /* PasswordTF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28DA27017A12004E702F /* PasswordTF.swift */; };
+		010A28E427017A12004E702F /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28DB27017A12004E702F /* LoginButton.swift */; };
+		010A28E527017A12004E702F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28DC27017A12004E702F /* MainView.swift */; };
+		010A28EB27017A38004E702F /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28E727017A38004E702F /* KeyChain.swift */; };
+		010A28EC27017A38004E702F /* InfoPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28E827017A38004E702F /* InfoPage.swift */; };
+		010A28ED27017A38004E702F /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28E927017A38004E702F /* LoginPage.swift */; };
+		010A28EE27017A38004E702F /* LoginVerifyIDVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28EA27017A38004E702F /* LoginVerifyIDVC.swift */; };
+		010A28F027028CA3004E702F /* OTRECDHKeyExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28EF27028CA3004E702F /* OTRECDHKeyExchange.swift */; };
+		010A28F227028D11004E702F /* CryptoExportImportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28F127028D11004E702F /* CryptoExportImportManager.swift */; };
+		88A909F105B2B332E3B20031 /* Pods_Siskin_IM___Share.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9271A33B2A99494E2A887219 /* Pods_Siskin_IM___Share.framework */; };
+		E57D98B888D705F93D226265 /* Pods_Shared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F63225C53597FA56806A4C9D /* Pods_Shared.framework */; };
+		F8500D36C572EB354D214A7D /* Pods_NotificationService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC62F8983F4B65423034385E /* Pods_NotificationService.framework */; };
+		FC2C7D02D85F8E342753B72B /* Pods_Siskin_IM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62D912CC5AE20C380998D5D5 /* Pods_Siskin_IM.framework */; };
 		FE00157D2017617B00490340 /* StreamFeaturesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE00157C2017617B00490340 /* StreamFeaturesCache.swift */; };
 		FE00157F2019090300490340 /* ExperimentalSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE00157E2019090300490340 /* ExperimentalSettingsViewController.swift */; };
 		FE01ADA91E224CF400FA7E65 /* SiskinPushNotificationsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE01ADA81E224CF400FA7E65 /* SiskinPushNotificationsModule.swift */; };
@@ -323,6 +347,40 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		010A28C627017791004E702F /* tigase-swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "tigase-swift"; path = "../tigase-swift"; sourceTree = "<group>"; };
+		010A28C727017794004E702F /* tigase-swift-omemo */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "tigase-swift-omemo"; path = "../tigase-swift-omemo"; sourceTree = "<group>"; };
+		010A28C927017A00004E702F /* HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMAC.swift; sourceTree = "<group>"; };
+		010A28CA27017A00004E702F /* AppColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
+		010A28CB27017A00004E702F /* OTPView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTPView.swift; sourceTree = "<group>"; };
+		010A28CC27017A00004E702F /* LoginPage Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LoginPage Extension.swift"; sourceTree = "<group>"; };
+		010A28CD27017A00004E702F /* OTPTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTPTextField.swift; sourceTree = "<group>"; };
+		010A28D427017A12004E702F /* SlideView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideView.swift; sourceTree = "<group>"; };
+		010A28D527017A12004E702F /* BlobViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlobViews.swift; sourceTree = "<group>"; };
+		010A28D627017A12004E702F /* ActivityLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityLine.swift; sourceTree = "<group>"; };
+		010A28D727017A12004E702F /* SignUpButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpButton.swift; sourceTree = "<group>"; };
+		010A28D827017A12004E702F /* UsernameTF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsernameTF.swift; sourceTree = "<group>"; };
+		010A28D927017A12004E702F /* ContinueButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinueButton.swift; sourceTree = "<group>"; };
+		010A28DA27017A12004E702F /* PasswordTF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordTF.swift; sourceTree = "<group>"; };
+		010A28DB27017A12004E702F /* LoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
+		010A28DC27017A12004E702F /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		010A28E727017A38004E702F /* KeyChain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
+		010A28E827017A38004E702F /* InfoPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoPage.swift; sourceTree = "<group>"; };
+		010A28E927017A38004E702F /* LoginPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginPage.swift; sourceTree = "<group>"; };
+		010A28EA27017A38004E702F /* LoginVerifyIDVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVerifyIDVC.swift; sourceTree = "<group>"; };
+		010A28EF27028CA3004E702F /* OTRECDHKeyExchange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTRECDHKeyExchange.swift; sourceTree = "<group>"; };
+		010A28F127028D11004E702F /* CryptoExportImportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoExportImportManager.swift; sourceTree = "<group>"; };
+		0123690DD7EAEB020F22908A /* Pods-NotificationService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationService.release.xcconfig"; path = "Target Support Files/Pods-NotificationService/Pods-NotificationService.release.xcconfig"; sourceTree = "<group>"; };
+		1A35B2C055C61D447FD9E98B /* Pods-Shared.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared.debug.xcconfig"; path = "Target Support Files/Pods-Shared/Pods-Shared.debug.xcconfig"; sourceTree = "<group>"; };
+		1BD37AA5F0EC76935CEBDC50 /* Pods-Shared.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared.release.xcconfig"; path = "Target Support Files/Pods-Shared/Pods-Shared.release.xcconfig"; sourceTree = "<group>"; };
+		3916E3A0673D9D8DE7882D14 /* Pods-Siskin IM - Share.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siskin IM - Share.debug.xcconfig"; path = "Target Support Files/Pods-Siskin IM - Share/Pods-Siskin IM - Share.debug.xcconfig"; sourceTree = "<group>"; };
+		60FDAD703E9A1379B972E0D6 /* Pods-Siskin IM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siskin IM.release.xcconfig"; path = "Target Support Files/Pods-Siskin IM/Pods-Siskin IM.release.xcconfig"; sourceTree = "<group>"; };
+		62D912CC5AE20C380998D5D5 /* Pods_Siskin_IM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Siskin_IM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DD139AEABDA2140708D5AD6 /* Pods-Siskin IM - Share.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siskin IM - Share.release.xcconfig"; path = "Target Support Files/Pods-Siskin IM - Share/Pods-Siskin IM - Share.release.xcconfig"; sourceTree = "<group>"; };
+		9271A33B2A99494E2A887219 /* Pods_Siskin_IM___Share.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods_Siskin_IM___Share.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF208294D915DDA6A231DF31 /* Pods-Siskin IM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siskin IM.debug.xcconfig"; path = "Target Support Files/Pods-Siskin IM/Pods-Siskin IM.debug.xcconfig"; sourceTree = "<group>"; };
+		CFE49B486917015C348A8F93 /* Pods-NotificationService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationService.debug.xcconfig"; path = "Target Support Files/Pods-NotificationService/Pods-NotificationService.debug.xcconfig"; sourceTree = "<group>"; };
+		EC62F8983F4B65423034385E /* Pods_NotificationService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NotificationService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F63225C53597FA56806A4C9D /* Pods_Shared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE00157C2017617B00490340 /* StreamFeaturesCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamFeaturesCache.swift; sourceTree = "<group>"; };
 		FE00157E2019090300490340 /* ExperimentalSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperimentalSettingsViewController.swift; sourceTree = "<group>"; };
 		FE01ADA81E224CF400FA7E65 /* SiskinPushNotificationsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiskinPushNotificationsModule.swift; sourceTree = "<group>"; };
@@ -590,6 +648,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE759FE22371C83D001E78D9 /* Shared.framework in Frameworks */,
+				88A909F105B2B332E3B20031 /* Pods_Siskin_IM___Share.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,6 +657,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE759FD12370B2F2001E78D9 /* Shared.framework in Frameworks */,
+				F8500D36C572EB354D214A7D /* Pods_NotificationService.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,6 +671,7 @@
 				FE759FE82371C972001E78D9 /* libxml2.tbd in Frameworks */,
 				FE1908B72584D70300CA049F /* OpenSSL.xcframework in Frameworks */,
 				FEC9B1162440E7B500A484EE /* TigaseSwiftOMEMO in Frameworks */,
+				E57D98B888D705F93D226265 /* Pods_Shared.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -622,12 +683,68 @@
 				FE5079F01CD3CA91001A015C /* Security.framework in Frameworks */,
 				FE759FCC2370B2A4001E78D9 /* Shared.framework in Frameworks */,
 				FE1908AA2584D6BC00CA049F /* OpenSSL.xcframework in Frameworks */,
+				FC2C7D02D85F8E342753B72B /* Pods_Siskin_IM.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		010A28C827017A00004E702F /* Design Tools + Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				010A28C927017A00004E702F /* HMAC.swift */,
+				010A28CA27017A00004E702F /* AppColors.swift */,
+				010A28CB27017A00004E702F /* OTPView.swift */,
+				010A28CC27017A00004E702F /* LoginPage Extension.swift */,
+				010A28CD27017A00004E702F /* OTPTextField.swift */,
+			);
+			path = "Design Tools + Extensions";
+			sourceTree = SOURCE_ROOT;
+		};
+		010A28D327017A12004E702F /* LoginViews */ = {
+			isa = PBXGroup;
+			children = (
+				010A28D427017A12004E702F /* SlideView.swift */,
+				010A28D527017A12004E702F /* BlobViews.swift */,
+				010A28D627017A12004E702F /* ActivityLine.swift */,
+				010A28D727017A12004E702F /* SignUpButton.swift */,
+				010A28D827017A12004E702F /* UsernameTF.swift */,
+				010A28D927017A12004E702F /* ContinueButton.swift */,
+				010A28DA27017A12004E702F /* PasswordTF.swift */,
+				010A28DB27017A12004E702F /* LoginButton.swift */,
+				010A28DC27017A12004E702F /* MainView.swift */,
+			);
+			name = LoginViews;
+			path = SiskinIM/LoginViews;
+			sourceTree = SOURCE_ROOT;
+		};
+		010A28E627017A38004E702F /* MainViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				010A28E727017A38004E702F /* KeyChain.swift */,
+				010A28E827017A38004E702F /* InfoPage.swift */,
+				010A28E927017A38004E702F /* LoginPage.swift */,
+				010A28EA27017A38004E702F /* LoginVerifyIDVC.swift */,
+			);
+			path = MainViewControllers;
+			sourceTree = SOURCE_ROOT;
+		};
+		1B49A68C995EE2CDE99EDF1A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CFE49B486917015C348A8F93 /* Pods-NotificationService.debug.xcconfig */,
+				0123690DD7EAEB020F22908A /* Pods-NotificationService.release.xcconfig */,
+				1A35B2C055C61D447FD9E98B /* Pods-Shared.debug.xcconfig */,
+				1BD37AA5F0EC76935CEBDC50 /* Pods-Shared.release.xcconfig */,
+				BF208294D915DDA6A231DF31 /* Pods-Siskin IM.debug.xcconfig */,
+				60FDAD703E9A1379B972E0D6 /* Pods-Siskin IM.release.xcconfig */,
+				3916E3A0673D9D8DE7882D14 /* Pods-Siskin IM - Share.debug.xcconfig */,
+				7DD139AEABDA2140708D5AD6 /* Pods-Siskin IM - Share.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		FE01ADA11E214CEA00FA7E65 /* xmpp */ = {
 			isa = PBXGroup;
 			children = (
@@ -716,6 +833,10 @@
 			children = (
 				FE1A349F258CD3E10058B86A /* WebRTC.xcframework */,
 				FE1908962584D69400CA049F /* OpenSSL.xcframework */,
+				EC62F8983F4B65423034385E /* Pods_NotificationService.framework */,
+				F63225C53597FA56806A4C9D /* Pods_Shared.framework */,
+				62D912CC5AE20C380998D5D5 /* Pods_Siskin_IM.framework */,
+				9271A33B2A99494E2A887219 /* Pods_Siskin_IM___Share.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -968,6 +1089,8 @@
 		FE94E5181CCBA74F00FAE755 = {
 			isa = PBXGroup;
 			children = (
+				010A28C727017794004E702F /* tigase-swift-omemo */,
+				010A28C627017791004E702F /* tigase-swift */,
 				FE1908902584D69400CA049F /* Frameworks */,
 				FE759FA22370ACA4001E78D9 /* NotificationService */,
 				FE759FC62370B2A4001E78D9 /* Shared */,
@@ -978,6 +1101,7 @@
 				FE94E5231CCBA74F00FAE755 /* SiskinIM */,
 				FE4DDF541F39E0B500A4CE5A /* SiskinIM - Share */,
 				FE80BDA91D92974C001914B0 /* SiskinIM.entitlements */,
+				1B49A68C995EE2CDE99EDF1A /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1011,8 +1135,11 @@
 				FEBC12F124C70DE000689475 /* db-schema-13.sql */,
 				FEDE00C3266CE1680019CC1C /* db-schema-14.sql */,
 				FEDE00A1266BE4300019CC1C /* notifications */,
+				010A28D327017A12004E702F /* LoginViews */,
 				FE11D38F26623E8200CC883F /* conversation */,
 				FEE49DD3242687D800900BBB /* chats */,
+				010A28E627017A38004E702F /* MainViewControllers */,
+				010A28C827017A00004E702F /* Design Tools + Extensions */,
 				FEE49DD22426879500900BBB /* channel */,
 				FEE49DD12426879400900BBB /* groupchat */,
 				FE4071E221E2603400F09B58 /* voip */,
@@ -1108,6 +1235,8 @@
 				FEAC717A1CECE70100ABABEF /* MucChatOccupantsTableViewCell.swift */,
 				FE8DD9C4221B153A0090F5AA /* InviteViewController.swift */,
 				FEE9608922F191980009B191 /* MucChatSettingsViewController.swift */,
+				010A28EF27028CA3004E702F /* OTRECDHKeyExchange.swift */,
+				010A28F127028D11004E702F /* CryptoExportImportManager.swift */,
 			);
 			path = groupchat;
 			sourceTree = "<group>";
@@ -1165,6 +1294,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FE4DDF5E1F39E0B600A4CE5A /* Build configuration list for PBXNativeTarget "Siskin IM - Share" */;
 			buildPhases = (
+				88573645AC401BC32CFB34AC /* [CP] Check Pods Manifest.lock */,
 				FE4DDF4F1F39E0B500A4CE5A /* Sources */,
 				FE4DDF501F39E0B500A4CE5A /* Frameworks */,
 				FE4DDF511F39E0B500A4CE5A /* Resources */,
@@ -1183,6 +1313,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FE759FAB2370ACA4001E78D9 /* Build configuration list for PBXNativeTarget "NotificationService" */;
 			buildPhases = (
+				0798EB241EAEC32B55721875 /* [CP] Check Pods Manifest.lock */,
 				FE759F9D2370ACA4001E78D9 /* Sources */,
 				FE759F9E2370ACA4001E78D9 /* Frameworks */,
 				FE759F9F2370ACA4001E78D9 /* Resources */,
@@ -1201,6 +1332,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FE759FCE2370B2A4001E78D9 /* Build configuration list for PBXNativeTarget "Shared" */;
 			buildPhases = (
+				5DEB49A3A891F7AC2BA31DE7 /* [CP] Check Pods Manifest.lock */,
 				FE759FC02370B2A4001E78D9 /* Headers */,
 				FE759FC12370B2A4001E78D9 /* Sources */,
 				FE759FC22370B2A4001E78D9 /* Frameworks */,
@@ -1224,6 +1356,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FE94E54B1CCBA74F00FAE755 /* Build configuration list for PBXNativeTarget "Siskin IM" */;
 			buildPhases = (
+				BCCC1EA9333A856A06EC6766 /* [CP] Check Pods Manifest.lock */,
 				FEBA835126F8D81900347D89 /* ShellScript */,
 				FE94E51D1CCBA74F00FAE755 /* Sources */,
 				FE94E51E1CCBA74F00FAE755 /* Frameworks */,
@@ -1232,6 +1365,7 @@
 				FEF80DB71CDCC508005645A7 /* Embed Frameworks */,
 				FE0473391D86CEE700E6D6CE /* Trim Framework Executables */,
 				FE4DDF611F39E0B600A4CE5A /* Embed App Extensions */,
+				6842A447E8B2F749D90320A2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1241,8 +1375,6 @@
 				FE759FCB2370B2A4001E78D9 /* PBXTargetDependency */,
 			);
 			name = "Siskin IM";
-			packageProductDependencies = (
-			);
 			productName = SiskinIM;
 			productReference = FE94E5211CCBA74F00FAE755 /* Siskin.app */;
 			productType = "com.apple.product-type.application";
@@ -1259,7 +1391,6 @@
 				TargetAttributes = {
 					FE4DDF521F39E0B500A4CE5A = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = YBEYW6E35C;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -1273,18 +1404,15 @@
 					};
 					FE759FA02370ACA4001E78D9 = {
 						CreatedOnToolsVersion = 11.2;
-						DevelopmentTeam = YBEYW6E35C;
 						ProvisioningStyle = Automatic;
 					};
 					FE759FC42370B2A4001E78D9 = {
 						CreatedOnToolsVersion = 11.2;
-						DevelopmentTeam = YBEYW6E35C;
 						LastSwiftMigration = 1120;
 						ProvisioningStyle = Automatic;
 					};
 					FE94E5201CCBA74F00FAE755 = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = YBEYW6E35C;
 						LastSwiftMigration = 1020;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -1390,6 +1518,114 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0798EB241EAEC32B55721875 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NotificationService-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5DEB49A3A891F7AC2BA31DE7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Shared-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6842A447E8B2F749D90320A2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Siskin IM/Pods-Siskin IM-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/TransitionButton/TransitionButton.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TransitionButton.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Siskin IM/Pods-Siskin IM-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		88573645AC401BC32CFB34AC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Siskin IM - Share-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BCCC1EA9333A856A06EC6766 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Siskin IM-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		FE0473391D86CEE700E6D6CE /* Trim Framework Executables */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1487,11 +1723,16 @@
 				FE3E387E2427A09A00D3A8E8 /* ChannelSelectToJoinViewController.swift in Sources */,
 				FEF19F162348E781005CFE9A /* BaseChatViewControllerWithDataSource.swift in Sources */,
 				FEF19F0223473B9E005CFE9A /* XmppServiceEventHandler.swift in Sources */,
+				010A28E127017A12004E702F /* UsernameTF.swift in Sources */,
+				010A28CF27017A00004E702F /* AppColors.swift in Sources */,
 				FEDE93971D0C202600CA60A9 /* ContactViewController.swift in Sources */,
+				010A28EC27017A38004E702F /* InfoPage.swift in Sources */,
 				FEE49DCE2424C1F800900BBB /* ConversationLogController.swift in Sources */,
 				FE1AC8F7216B8AB700D4CDAB /* NewFeaturesDetector.swift in Sources */,
+				010A28CE27017A00004E702F /* HMAC.swift in Sources */,
 				FE11D35726623D6800CC883F /* ConversationEntrySender.swift in Sources */,
 				FE17808D23EB4C7F00A1EA76 /* AccountQRCodeController.swift in Sources */,
+				010A28DF27017A12004E702F /* ActivityLine.swift in Sources */,
 				FE11D36726623D7000CC883F /* DisplayableIdProtocol.swift in Sources */,
 				FEF0968226D7A9FB001C0454 /* ServerCertificateInfo.swift in Sources */,
 				FE11D35F26623D6D00CC883F /* Conversation.swift in Sources */,
@@ -1503,6 +1744,7 @@
 				FE11D3B5266241BD00CC883F /* Publisher+OnlyGetter.swift in Sources */,
 				FE7F9303200FD5AC004C6195 /* AccountManagerScramSaltedPasswordCache.swift in Sources */,
 				FE11D3BF2662852A00CC883F /* XMPPClient_extension.swift in Sources */,
+				010A28E427017A12004E702F /* LoginButton.swift in Sources */,
 				FE82A729268C83020049C844 /* ChartView.swift in Sources */,
 				FE9625A01D9AE7CB00D07118 /* RosterProvider.swift in Sources */,
 				FEF19F0423473C06005CFE9A /* MessageEventHandler.swift in Sources */,
@@ -1511,6 +1753,7 @@
 				FE3A45CF1CE49D3300C36264 /* RosterItemEditViewController.swift in Sources */,
 				FE0AE13726B58C4F0010D2E2 /* MeetManager.swift in Sources */,
 				FEE49DD7242688E100900BBB /* ChannelViewController.swift in Sources */,
+				010A28E227017A12004E702F /* ContinueButton.swift in Sources */,
 				FE507A211CDB7B3B001A015C /* SettingsViewController.swift in Sources */,
 				FE11D35526623D6800CC883F /* ConversationEntryRecipient.swift in Sources */,
 				FE507A191CDB7B3B001A015C /* DBChatHistoryStore.swift in Sources */,
@@ -1518,6 +1761,7 @@
 				FE8885EE26BC6B570095E25E /* CreateMeetingViewController.swift in Sources */,
 				FEBC12F524C70E7F00689475 /* DBChatHistorySyncStore.swift in Sources */,
 				FEDC6790238B05E4005C0FAB /* BlockedContactsController.swift in Sources */,
+				010A28DD27017A12004E702F /* SlideView.swift in Sources */,
 				FE2332E1242CCDB400008ED4 /* InvitationChatTableViewCell.swift in Sources */,
 				FE3E38862428C21100D3A8E8 /* OSLog.swift in Sources */,
 				FECEF29423B7933A007EC323 /* MetadataCache.swift in Sources */,
@@ -1531,8 +1775,10 @@
 				FEDC678E238B03C1005C0FAB /* AppStoryboard.swift in Sources */,
 				FEA303AD24696604004A3B3E /* VCardTextEditCell.swift in Sources */,
 				FE36B3C821FA52E000D1F037 /* EmptyViewController.swift in Sources */,
+				010A28D027017A00004E702F /* OTPView.swift in Sources */,
 				FE11D3A126623F4100CC883F /* Array+IndexChanges.swift in Sources */,
 				FE507A161CDB7B3B001A015C /* ChatsListViewController.swift in Sources */,
+				010A28E027017A12004E702F /* SignUpButton.swift in Sources */,
 				FE3E38842427E34300D3A8E8 /* ChannelJoinViewController.swift in Sources */,
 				FE75A0122376E73C001E78D9 /* SiskinPushNotificationsModuleProvider.swift in Sources */,
 				FE3E3890242A98C000D3A8E8 /* ChannelParticipantsController.swift in Sources */,
@@ -1556,13 +1802,16 @@
 				FEE9608A22F191980009B191 /* MucChatSettingsViewController.swift in Sources */,
 				FE3E38822427BF8600D3A8E8 /* ChannelSelectAccountAndComponentController.swift in Sources */,
 				FE0E30FE253714050030F8C5 /* MediaHelper.swift in Sources */,
+				010A28DE27017A12004E702F /* BlobViews.swift in Sources */,
 				FE11D35426623D6800CC883F /* ConversationInvitation.swift in Sources */,
+				010A28E527017A12004E702F /* MainView.swift in Sources */,
 				FE9E136F1F26049A005C0EE5 /* NotificationSettingsViewController.swift in Sources */,
 				FE11D3E126639D3300CC883F /* ContactManager.swift in Sources */,
 				FE31291C222C0D1500A92863 /* AvatarView.swift in Sources */,
 				FE719E7E2274D20D007CEEC9 /* OMEMOFingerprintsController.swift in Sources */,
 				FE759FFC23742CE5001E78D9 /* NotificationCenterDelegate.swift in Sources */,
 				FE11D37F26623D7700CC883F /* DBVCardStore.swift in Sources */,
+				010A28D227017A00004E702F /* OTPTextField.swift in Sources */,
 				FEF19F0C23476466005CFE9A /* MucEventHandler.swift in Sources */,
 				FE11D33E26623D6200CC883F /* AppendixProtocol.swift in Sources */,
 				FE1DCCA21EA52CE200850563 /* DataFormController.swift in Sources */,
@@ -1577,6 +1826,7 @@
 				FE11D3ED26639E0100CC883F /* VCardManager.swift in Sources */,
 				FE0E31122537288A0030F8C5 /* MediaSettingsVIewController.swift in Sources */,
 				FEDE93871D07564F00CA60A9 /* SwitchTableViewCell.swift in Sources */,
+				010A28EE27017A38004E702F /* LoginVerifyIDVC.swift in Sources */,
 				FE507A171CDB7B3B001A015C /* ChatTableViewCell.swift in Sources */,
 				FE31DDE4201261A200C2AB1D /* DNSSrvDiskCache.swift in Sources */,
 				FEDE00D0266CEF5E0019CC1C /* ChatTableViewMarkerCell.swift in Sources */,
@@ -1585,6 +1835,7 @@
 				FE4A94AA26679D65000A96E5 /* EnumTableViewCell.swift in Sources */,
 				FE11D2E526616B7300CC883F /* DatabaseMigrator.swift in Sources */,
 				FE0AE13526B575820010D2E2 /* MeetController.swift in Sources */,
+				010A28F227028D11004E702F /* CryptoExportImportManager.swift in Sources */,
 				FE4071E421E2605900F09B58 /* VideoCallController.swift in Sources */,
 				FE9E13731F260B33005C0EE5 /* StepperTableViewCell.swift in Sources */,
 				FE6545601E9E7B85006A14AC /* RegisterAccountController.swift in Sources */,
@@ -1603,6 +1854,7 @@
 				FEF80DB21CDBBBFE005645A7 /* AccountSettingsViewController.swift in Sources */,
 				FEDE00A8266BE4740019CC1C /* NotificationManager.swift in Sources */,
 				FEA303AB24694447004A3B3E /* VCardAvatarEditCell.swift in Sources */,
+				010A28EB27017A38004E702F /* KeyChain.swift in Sources */,
 				FE11D35626623D6800CC883F /* ConversationAttachment.swift in Sources */,
 				FE6545621E9E7FDE006A14AC /* AccountDomainTableViewCell.swift in Sources */,
 				FE507A231CDB7B3B001A015C /* CustomTabBarController.swift in Sources */,
@@ -1652,15 +1904,19 @@
 				FE11D35D26623D6D00CC883F /* Channel.swift in Sources */,
 				FEDE00B4266CC7B80019CC1C /* InvitationsManager.swift in Sources */,
 				FE507A1D1CDB7B3B001A015C /* RosterItemTableViewCell.swift in Sources */,
+				010A28D127017A00004E702F /* LoginPage Extension.swift in Sources */,
 				FE11D38226623D7700CC883F /* DBChatStore+ChatStore.swift in Sources */,
 				FE2809832167CF1B002F5BD0 /* ServerFeaturesViewController.swift in Sources */,
 				FEC514281CEB82E9003AF765 /* MucChatViewController.swift in Sources */,
+				010A28F027028CA3004E702F /* OTRECDHKeyExchange.swift in Sources */,
+				010A28E327017A12004E702F /* PasswordTF.swift in Sources */,
 				FE1A07482525EDD4004F38A0 /* ExternalServiceDiscovery_Service_extension.swift in Sources */,
 				FE74D510234A4E1F001A925B /* ChatTableViewSystemCell.swift in Sources */,
 				FE507A241CDB7B3B001A015C /* GlobalSplitViewController.swift in Sources */,
 				FE233CD521E6846E00099281 /* CameraPreviewView.swift in Sources */,
 				FE11D2E026616A4F00CC883F /* DBRosterStore.swift in Sources */,
 				FE507A261CDB7B3B001A015C /* AvatarManager.swift in Sources */,
+				010A28ED27017A38004E702F /* LoginPage.swift in Sources */,
 				FEA308D01F27A063002EF4C0 /* NavigationControllerWrappingSegue.swift in Sources */,
 				FEA7BF5B21E50C5800D9E36C /* JingleManager.swift in Sources */,
 				FE11D35226623D6800CC883F /* ConversationEntryState.swift in Sources */,
@@ -1801,6 +2057,7 @@
 /* Begin XCBuildConfiguration section */
 		FE4DDF5F1F39E0B600A4CE5A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3916E3A0673D9D8DE7882D14 /* Pods-Siskin IM - Share.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1809,7 +2066,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = YBEYW6E35C;
+				DEVELOPMENT_TEAM = 9VNV3CT575;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(SDK_DIR)/usr/include",
@@ -1823,7 +2080,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 7.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.tigase.messenger.mobile.Tigase-Messenger---Share";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.scytale.SigmaVani.Tigase-Messenger---Share";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1833,6 +2090,7 @@
 		};
 		FE4DDF601F39E0B600A4CE5A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7DD139AEABDA2140708D5AD6 /* Pods-Siskin IM - Share.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1841,7 +2099,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = YBEYW6E35C;
+				DEVELOPMENT_TEAM = 9VNV3CT575;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(SDK_DIR)/usr/include",
@@ -1855,7 +2113,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 7.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.tigase.messenger.mobile.Tigase-Messenger---Share";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.scytale.SigmaVani.Tigase-Messenger---Share";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1864,6 +2122,7 @@
 		};
 		FE759FA92370ACA4001E78D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CFE49B486917015C348A8F93 /* Pods-NotificationService.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1875,7 +2134,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = YBEYW6E35C;
+				DEVELOPMENT_TEAM = 9VNV3CT575;
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				HEADER_SEARCH_PATHS = (
@@ -1892,7 +2151,7 @@
 				MARKETING_VERSION = 7.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.tigase.messenger.mobile.NotificationService;
+				PRODUCT_BUNDLE_IDENTIFIER = org.scytale.SigmaVani.NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1903,6 +2162,7 @@
 		};
 		FE759FAA2370ACA4001E78D9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0123690DD7EAEB020F22908A /* Pods-NotificationService.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1914,7 +2174,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = YBEYW6E35C;
+				DEVELOPMENT_TEAM = 9VNV3CT575;
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				HEADER_SEARCH_PATHS = (
@@ -1930,7 +2190,7 @@
 				);
 				MARKETING_VERSION = 7.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.tigase.messenger.mobile.NotificationService;
+				PRODUCT_BUNDLE_IDENTIFIER = org.scytale.SigmaVani.NotificationService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1940,6 +2200,7 @@
 		};
 		FE759FCF2370B2A4001E78D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A35B2C055C61D447FD9E98B /* Pods-Shared.debug.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1953,7 +2214,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = YBEYW6E35C;
+				DEVELOPMENT_TEAM = 9VNV3CT575;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1973,7 +2234,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.tigase.messenger.mobile.Shared;
+				PRODUCT_BUNDLE_IDENTIFIER = org.scytale.SigmaVani.Shared;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
@@ -1989,6 +2250,7 @@
 		};
 		FE759FD02370B2A4001E78D9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1BD37AA5F0EC76935CEBDC50 /* Pods-Shared.release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -2002,7 +2264,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = YBEYW6E35C;
+				DEVELOPMENT_TEAM = 9VNV3CT575;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2021,7 +2283,7 @@
 					"@loader_path/Frameworks",
 				);
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.tigase.messenger.mobile.Shared;
+				PRODUCT_BUNDLE_IDENTIFIER = org.scytale.SigmaVani.Shared;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
@@ -2153,16 +2415,17 @@
 		};
 		FE94E54C1CCBA74F00FAE755 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF208294D915DDA6A231DF31 /* Pods-Siskin IM.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SiskinIM.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 8;
 				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = YBEYW6E35C;
+				DEVELOPMENT_TEAM = 9VNV3CT575;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2182,7 +2445,7 @@
 				);
 				MARKETING_VERSION = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.tigase.messenger.mobile;
+				PRODUCT_BUNDLE_IDENTIFIER = org.scytale.SigmaVani;
 				PRODUCT_NAME = Siskin;
 				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -2193,15 +2456,16 @@
 		};
 		FE94E54D1CCBA74F00FAE755 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 60FDAD703E9A1379B972E0D6 /* Pods-Siskin IM.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SiskinIM.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 8;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = YBEYW6E35C;
+				DEVELOPMENT_TEAM = 9VNV3CT575;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2221,7 +2485,7 @@
 				);
 				MARKETING_VERSION = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.tigase.messenger.mobile;
+				PRODUCT_BUNDLE_IDENTIFIER = org.scytale.SigmaVani;
 				PRODUCT_NAME = Siskin;
 				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = NO;

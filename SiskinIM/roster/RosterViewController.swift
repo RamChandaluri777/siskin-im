@@ -67,8 +67,9 @@ class RosterViewController: AbstractRosterViewController, UIGestureRecognizerDel
 //        navigationController?.navigationBar.isTranslucent = true;
         searchController.searchBar.barStyle = .black;
         searchController.searchBar.tintColor = UIColor.white;
-        navigationController?.navigationBar.barTintColor = UIColor(named: "chatslistBackground")?.withAlphaComponent(0.2);
-        navigationController?.navigationBar.tintColor = UIColor.white;
+        
+        navigationController?.navigationBar.barTintColor = UIColor(named: "chatslistBackground");
+        navigationController?.navigationBar.tintColor = UIColor(named: "chatMessageText");
         if #available(iOS 13.0, *) {
 //            (navigationItem.titleView as? UISegmentedControl)?.selectedSegmentTintColor =
         } else {
@@ -87,8 +88,8 @@ class RosterViewController: AbstractRosterViewController, UIGestureRecognizerDel
             searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .selected)
             searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal);
         } else {
-            availabilityFilterSelector?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor(named: "chatslistBackground")!], for: .selected);
-            availabilityFilterSelector?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal);
+            availabilityFilterSelector?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor(named: "chatMessageText")!], for: .selected);
+            availabilityFilterSelector?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor(named: "chatMessageText")], for: .normal);
             searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor(named: "chatslistBackground")!], for: .selected)
             searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white], for: .normal);
         }

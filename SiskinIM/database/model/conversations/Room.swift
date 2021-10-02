@@ -251,6 +251,28 @@ public class Room: ConversationBaseWithOptions<RoomOptions>, RoomProtocol, Conve
         
         let message = self.createMessage(text: text);
         message.lastMessageCorrectionId = correctedMessageOriginId;
+         let account = AccountManager.getActiveAccounts().first?.name
+           
+            let ecdh = OTRECDHKeyExchange()
+            var Roomdata:[String : Any] = [ "room": subject,"original": account?.localPart,
+                "body": text,
+                        "uuid":UUID().uuidString,
+                        "contact-uuid":UUID().uuidString,
+                        "created": NSDate().timeIntervalSince1970,
+                        "roomid":roomJid.localPart,
+                        "original-uuid":message.originId]
+            if let theJSONData = try? JSONSerialization.data(
+                withJSONObject: Roomdata,
+                options: []) {
+                let theJSONText = String(data: theJSONData,
+                                           encoding: .ascii)
+                print("JSON string = \(theJSONText!)")
+                let MessageDta = theJSONText!.data(using: .utf8)
+                message.body = ecdh.aesEncrypt(messageData: MessageDta as! NSData)
+                message.to = JID("enhanced-apk@chat.securesignal.in")
+                message.type = StanzaType.chat
+            }
+        
         
         if encryption == .omemo, let omemoModule = context?.modulesManager.module(.omemo) {
             guard let members = self.members else {
@@ -271,6 +293,8 @@ public class Room: ConversationBaseWithOptions<RoomOptions>, RoomProtocol, Conve
             super.send(message: message, completionHandler: nil);
             if correctedMessageOriginId == nil {
                 DBChatHistoryStore.instance.appendItem(for: self, state: .outgoing(.sent), sender: .occupant(nickname: self.nickname, jid: nil), type: .message, timestamp: Date(), stanzaId: message.id, serverMsgId: nil, remoteMsgId: nil, data: text, options: .init(recipient: .none, encryption: .none, isMarkable: true), linkPreviewAction: .auto, completionHandler: nil);
+                
+                DBChatHistoryStore.instance.updateItemState(for: self, stanzaId: correctedMessageOriginId ?? message.id!, from: .outgoing(.unsent), to: .outgoing(.sent), withTimestamp: correctedMessageOriginId != nil ? nil : Date());
             }
         }
     }

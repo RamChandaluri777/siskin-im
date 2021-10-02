@@ -48,7 +48,7 @@ class SettingsViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4;
+        return 3;
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -73,7 +73,7 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return AccountManager.getAccounts().count + 1;
+            return AccountManager.getAccounts().count ;
         case 1:
             return 2;
         case 2:
@@ -162,10 +162,10 @@ class SettingsViewController: UITableViewController {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "MediaSettingsViewCell", for: indexPath);
                 cell.accessoryType = .disclosureIndicator;
                 return cell;
-            case .experimental:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "ExperimentalSettingsViewCell", for: indexPath);
-                cell.accessoryType = .disclosureIndicator;
-                return cell;
+//            case .experimental:
+//                let cell = tableView.dequeueReusableCell(withIdentifier: "ExperimentalSettingsViewCell", for: indexPath);
+//                cell.accessoryType = .disclosureIndicator;
+//                return cell;
             }
         } else {
             switch AboutGroup.groups[indexPath.row] {
@@ -295,10 +295,10 @@ class SettingsViewController: UITableViewController {
         case contacts
         case notifications
         case media
-        case experimental
+       // case experimental
         //case about
         
-        static let groups: [SettingsGroup] = [.appearance, .chat, .contacts, .notifications, .media, .experimental];
+        static let groups: [SettingsGroup] = [.appearance, .chat, .contacts, .notifications, .media, ];
     }
     
     enum AboutGroup {

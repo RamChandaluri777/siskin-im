@@ -1,0 +1,6 @@
+framework module Pods_Siskin_IM___Share {
+  umbrella header "Pods-Siskin IM - Share-umbrella.h"
+
+  export *
+  module * { export * }
+}

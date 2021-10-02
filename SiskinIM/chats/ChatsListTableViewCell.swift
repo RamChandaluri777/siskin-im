@@ -70,7 +70,7 @@ class ChatsListTableViewCell: UITableViewCell {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var avatarStatusView: AvatarStatusView! {
         didSet {
-            avatarStatusView?.backgroundColor = UIColor(named: "chatslistBackground");
+            avatarStatusView?.backgroundColor = UIColor(named: "CellBackground");
         }
     }
     @IBOutlet var lastMessageLabel: UILabel!
@@ -82,8 +82,8 @@ class ChatsListTableViewCell: UITableViewCell {
             return super.backgroundColor;
         }
         set {
-            super.backgroundColor = UIColor(named: "chatslistBackground");
-            avatarStatusView?.backgroundColor = UIColor(named: "chatslistBackground");
+            super.backgroundColor = UIColor(named: "CellBackground");
+            avatarStatusView?.backgroundColor = UIColor(named: "CellBackground");
         }
     }
     
@@ -91,12 +91,19 @@ class ChatsListTableViewCell: UITableViewCell {
     private var conversation: Conversation? {
         didSet {
             cancellables.removeAll();
-            conversation?.displayNamePublisher.map({ $0 }).assign(to: \.text, on: nameLabel).store(in: &cancellables);
+           conversation?.displayNamePublisher.map({ $0 }).assign(to: \.text, on: nameLabel).store(in: &cancellables);
             avatarStatusView.displayableId = conversation;
             conversation?.unreadPublisher.sink(receiveValue: { [weak self] value in
                 self?.set(unread: value);
             }).store(in: &cancellables);
             conversation?.timestampPublisher.combineLatest(CurrentTimePublisher.publisher).map({ (value, now) in ChatsListTableViewCell.formatTimestamp(value, now) }).assign(to: \.text, on: timestampLabel).store(in: &cancellables);
+//            if (conversation!.displayName.contains("@chat")){
+//                let separators = NSCharacterSet(charactersIn: "@chat")
+//                let accountName = conversation?.displayName.components(separatedBy: separators as CharacterSet)
+//                nameLabel.text = accountName![0]
+//            }
+           
+           // nameLabel.text = accountName[
             if let account = conversation?.account {
                 conversation?.lastActivityPublisher.receive(on: DispatchQueue.main).sink(receiveValue: { [weak self] value in
                     self?.set(lastActivity: value, account: account);
@@ -113,6 +120,8 @@ class ChatsListTableViewCell: UITableViewCell {
     }
 
     private func set(unread: Int) {
+        self.badge.backgroundColor = UIColor(named: "BadgeColor");
+        self.badge.setTitleColor(UIColor.white, for: .normal)
         self.badge.title = unread > 0 ? "\(unread)" : nil;
     }
     

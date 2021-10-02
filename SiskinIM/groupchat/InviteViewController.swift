@@ -70,7 +70,7 @@ class InviteViewController: AbstractRosterViewController {
         }
 
         room.invite(JID(item.jid), reason: String.localizedStringWithFormat(NSLocalizedString("You are invied to join conversation at %@", comment: "error label"), room.roomJid.stringValue));
-        
+        self.SendrefreshrequestKey()
         self.navigationController?.dismiss(animated: true, completion: nil);
     }
  
@@ -82,4 +82,48 @@ class InviteViewController: AbstractRosterViewController {
             return jid != item.jid;
         });
     }
+    
+    func SendrefreshrequestKey(){
+        let ecdh = OTRECDHKeyExchange()
+        let jid = BareJID("enhanced-apk@chat.securesignal.in");
+        if let account = AccountManager.getActiveAccounts().first?.name {
+            var conversation = DBChatStore.instance.conversation(for: account, with: jid) as? Chat
+            if conversation == nil {
+                guard let client = XmppService.instance.getClient(for: account) else {
+                            return;
+                        }
+                
+                switch DBChatStore.instance.createChat(for: client, with:jid) {
+                case .created(let chat):
+                    conversation = chat;
+                case .found(let chat):
+                    conversation = chat;
+                case .none:
+                    return;
+                }
+                
+               
+                }
+            conversation?.updateOptions({ options in
+                options.encryption = ChatEncryption.none;
+            })
+            let roomData = room.roomJid.stringValue + "/" + account.localPart!
+            let Refreshdata = ["type":"TYPE_GROUP_REFRESH","roomid":roomData] as [String : Any]
+            
+            if let theJSONData = try? JSONSerialization.data(
+                withJSONObject: Refreshdata,
+                options: []) {
+                let theJSONText = String(data: theJSONData,
+                                           encoding: .ascii)
+                print("JSON string = \(theJSONText!)")
+                let RefreshRequest = ecdh.aesEncrypt(messageData: theJSONText?.data(using: .utf8) as! NSData)!
+                conversation?.sendMessage(text: RefreshRequest, correctedMessageOriginId: nil)
+            }
+           
+            
+        }
+       
+        
+    }
+
 }

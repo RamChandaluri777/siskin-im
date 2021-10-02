@@ -72,7 +72,7 @@ class ShareViewController: UITableViewController {
     
     var recipients: [RosterItem] = [];
     
-    var sharedDefaults = UserDefaults(suiteName: "group.TigaseMessenger.Share");
+    var sharedDefaults = UserDefaults(suiteName: "group.Sigmavani.Share");
     var avatarCacheUrl: URL?;
     
     var avatars: [AvatarKey: String] = [:];
@@ -135,7 +135,7 @@ class ShareViewController: UITableViewController {
             return r1.displayName.lowercased() < r2.displayName.lowercased();
         })
         
-        avatarCacheUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.siskinim.shared")!.appendingPathComponent("Library", isDirectory: true).appendingPathComponent("Caches", isDirectory: true).appendingPathComponent("avatars", isDirectory: true);
+        avatarCacheUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.Sigmavani.shared")!.appendingPathComponent("Library", isDirectory: true).appendingPathComponent("Caches", isDirectory: true).appendingPathComponent("avatars", isDirectory: true);
         for url in try! FileManager.default.contentsOfDirectory(at: FileManager.default.temporaryDirectory, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]) {
             try? FileManager.default.removeItem(at: url);
         }

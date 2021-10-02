@@ -294,10 +294,10 @@ class NotificationCenterDelegate: NSObject, UNUserNotificationCenterDelegate {
             topController()?.present(alert, animated: true, completion: nil);
         } else {
             // call missed...
-            let alert = UIAlertController(title: NSLocalizeString("Missed call", comment: "alert title"), message: String.localizedStringWithFormat(NSLocalizedString("Missed incoming call from %@", comment: "alert body"), senderName), preferredStyle: .alert);
-            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "button label"), style: .default, handler: nil));
-            
-            topController()?.present(alert, animated: true, completion: nil);
+//            let alert = UIAlertController(title: NSLocalizeString("Missed call", comment: "alert title"), message: String.localizedStringWithFormat(NSLocalizedString("Missed incoming call from %@", comment: "alert body"), senderName), preferredStyle: .alert);
+//            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "button label"), style: .default, handler: nil));
+//            
+//            topController()?.present(alert, animated: true, completion: nil);
         }
         #endif
         completionHandler();

@@ -177,13 +177,13 @@ class SettingsStore {
     @UserDefaultsSetting(key: "XmppPipelining", defaultValue: false)
     var xmppPipelining: Bool;
     
-    @UserDefaultsSetting(key: "enableBookmarksSync", defaultValue: false)
+    @UserDefaultsSetting(key: "enableBookmarksSync", defaultValue: true)
     var enableBookmarksSync: Bool;
     @UserDefaultsRawSetting(key: "messageEncryption", defaultValue: ConversationEncryption.none)
     var messageEncryption: ConversationEncryption;
     @UserDefaultsSetting(key: "markdown", defaultValue: true)
     var enableMarkdownFormatting: Bool;
-    @UserDefaultsSetting(key: "ShowEmoticons", defaultValue: false)
+    @UserDefaultsSetting(key: "ShowEmoticons", defaultValue: true)
     var showEmoticons: Bool;
     
     @UserDefaultsSetting(key: "linkPreviews", defaultValue: true)
@@ -201,7 +201,7 @@ class SettingsStore {
     @UserDefaultsSetting(key: "enablePush", defaultValue: nil)
     var enablePush: Bool?;
     
-    public static let sharedDefaults = UserDefaults(suiteName: "group.TigaseMessenger.Share")!;
+    public static let sharedDefaults = UserDefaults(suiteName: "group.Sigmavani.Share")!;
     
     private var cancellables: Set<AnyCancellable> = [];
     
@@ -239,14 +239,14 @@ class SettingsStore {
                     if let timestamp = (v as? [String: Any])?["timestamp"] as? Date {
                         if timestamp < removeOlder {
                             SettingsStore.sharedDefaults.removeObject(forKey: k);
-                            let localUploadDirUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.siskinim.shared")!.appendingPathComponent("upload", isDirectory: true).appendingPathComponent(hash, isDirectory: false);
+                            let localUploadDirUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.Sigmavani.shared")!.appendingPathComponent("upload", isDirectory: true).appendingPathComponent(hash, isDirectory: false);
                             if FileManager.default.fileExists(atPath: localUploadDirUrl.path) {
                                 try? FileManager.default.removeItem(at: localUploadDirUrl);
                             }
                         }
                     } else {
                         SettingsStore.sharedDefaults.removeObject(forKey: k);
-                        let localUploadDirUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.siskinim.shared")!.appendingPathComponent("upload", isDirectory: true).appendingPathComponent(hash, isDirectory: false);
+                        let localUploadDirUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.Sigmavani.shared")!.appendingPathComponent("upload", isDirectory: true).appendingPathComponent(hash, isDirectory: false);
                         if FileManager.default.fileExists(atPath: localUploadDirUrl.path) {
                             try? FileManager.default.removeItem(at: localUploadDirUrl);
                         }

@@ -96,9 +96,9 @@ class AccountSettingsViewController: UITableViewController {
                 fingerprint.insert(" ", at: idx);
                 idx = fingerprint.index(after: idx);
             }
-            omemoFingerprint.text = fingerprint;
+           // omemoFingerprint.text = fingerprint;
         } else {
-            omemoFingerprint.text = NSLocalizedString("Key not generated!", comment: "no OMEMO key - not generated yet");
+           // omemoFingerprint.text = NSLocalizedString("Key not generated!", comment: "no OMEMO key - not generated yet");
         }
     }
     
@@ -358,6 +358,8 @@ class AccountSettingsViewController: UITableViewController {
                     regModule.unregister(completionHander: { (result) in
                         DispatchQueue.main.async() {
                             try? AccountManager.deleteAccount(for: account);
+                            let ecdh = OTRECDHKeyExchange()
+                            ecdh.deleteAllKeysInKeyChain()
                             self.navigationController?.popViewController(animated: true);
                         }
                     });
@@ -373,6 +375,8 @@ class AccountSettingsViewController: UITableViewController {
             } else {
                 DispatchQueue.main.async {
                     try? AccountManager.deleteAccount(for: account);
+                    let ecdh = OTRECDHKeyExchange()
+                    ecdh.deleteAllKeysInKeyChain()
                     self.navigationController?.popViewController(animated: true);
                 }
             }
@@ -440,6 +444,7 @@ class AccountSettingsViewController: UITableViewController {
             }));
         }
         alert.addAction(UIAlertAction(title: NSLocalizedString("Remove from application", comment: "button label"), style: .default, handler: { (action) in
+            
             completionHandler(.success(false));
         }));
         alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "button label"), style: .default, handler: nil));

@@ -38,6 +38,16 @@ class ChatsListViewController: UITableViewController {
         super.viewDidLoad();
         
         tableView.dataSource = self;
+        
+        let ecdh = OTRECDHKeyExchange()
+        ecdh.deleteAllKeysInKeyChain()
+        if (ecdh.GetMyPrivateandPublickey() == false){
+            self.AddBotRoaster()
+            self.SendBotKey()
+                    }
+        if (ecdh.GetBotpublickey() == false){
+            self.SendBotrequestKey()
+           }
         setColors();
 
     }
@@ -57,7 +67,7 @@ class ChatsListViewController: UITableViewController {
             addMucButton.target = nil;
             addMucButton.primaryAction = nil
             
-            let newPrivateGC = UIAction(title: NSLocalizedString("New private group chat", comment: "label for chats list new converation action"), image: nil, handler: { action in
+            let newPrivateGC = UIAction(title: NSLocalizedString("Create New Group Chat", comment: "label for chats list new converation action"), image: nil, handler: { action in
                 let navigation = UIStoryboard(name: "MIX", bundle: nil).instantiateViewController(withIdentifier: "ChannelCreateNavigationViewController") as! UINavigationController;
                 (navigation.visibleViewController as? ChannelCreateViewController)?.kind = .adhoc;
                 navigation.modalPresentationStyle = .formSheet;
@@ -71,7 +81,7 @@ class ChatsListViewController: UITableViewController {
                 self.present(navigation, animated: true, completion: nil);
             });
             
-            let joinGC = UIAction(title: NSLocalizedString("Join group chat",  comment: "label for chats list new converation action"), image: nil, handler: { action in
+            let joinGC = UIAction(title: NSLocalizedString("Groups",  comment: "label for chats list new converation action"), image: nil, handler: { action in
                 let navigation = UIStoryboard(name: "MIX", bundle: nil).instantiateViewController(withIdentifier: "ChannelJoinNavigationViewController") as! UINavigationController;
                 navigation.modalPresentationStyle = .formSheet;
                 self.present(navigation, animated: true, completion: nil);
@@ -90,7 +100,7 @@ class ChatsListViewController: UITableViewController {
                     callback([]);
                 }
             });
-            addMucButton.menu = UIMenu(title: "", children: [newPrivateGC, newPublicGC, joinGC, deferedItems]);
+            addMucButton.menu = UIMenu(title: "", children: [newPrivateGC, joinGC]);
         }
     }
     
@@ -121,13 +131,124 @@ class ChatsListViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func AddBotRoaster() {
+   let rosterview = RosterItemEditViewController()
+        if let account = AccountManager.getActiveAccounts().first?.name {
+            rosterview.account = BareJID(account.stringValue)
+            rosterview.jid = JID("enhanced-apk@chat.securesignal.in")
+            rosterview.AutoAddtoRoster()
+        }
+//        let jid = JID("enhanced-apk@chat.securesignal.in");
+//        if let account = AccountManager.getActiveAccounts().first?.name {
+//            guard let client = XmppService.instance.getClient(for: account) else {
+//                        return;
+//                    }
+//
+//
+//                    let resultHandler = { (result: Result<Iq, XMPPError>) in
+//                        switch result {
+//                        case .success(_):
+//
+//                            DispatchQueue.main.async {
+//
+//                            }
+//                        case .failure(let error):
+//                            DispatchQueue.main.async {
+//                                let alert = UIAlertController.init(title: "Failure", message: "Server returned error: \(error)", preferredStyle: .alert);
+//                                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil));
+//                                self.present(alert, animated: true, completion: nil);
+//                            }
+//                        }
+//                    };
+//
+//            if let rosterItem = DBRosterStore.instance.item(for: client, jid: jid) {
+//                        if rosterItem.name == "Bot" {
+//
+//
+//                        } else {
+//                            client.module(.roster).updateItem(jid: jid, name: "Bot", groups: rosterItem.groups, completionHandler: resultHandler);
+//                        }
+//                    } else {
+//                        client.module(.roster).addItem(jid: jid, name: "Bot", groups: [], completionHandler: resultHandler);
+//                    }
+//        }
+       
 
+    }
+    
+    
+    func SendBotKey(){
+        let ecdh = OTRECDHKeyExchange()
+        let Botkey = ecdh.keygeneration()
+       
+        let jid = BareJID("enhanced-apk@chat.securesignal.in");
+        if let account = AccountManager.getActiveAccounts().first?.name {
+            var conversation = DBChatStore.instance.conversation(for: account, with: jid) as? Chat
+            if conversation == nil {
+                guard let client = XmppService.instance.getClient(for: account) else {
+                            return;
+                        }
+                switch DBChatStore.instance.createChat(for: client, with:jid) {
+                case .created(let chat):
+                    conversation = chat;
+                case .found(let chat):
+                    conversation = chat;
+                case .none:
+                    return;
+                }
+                
+               
+                }
+            conversation?.updateOptions({ options in
+                options.encryption = ChatEncryption.none;
+            })
+            conversation?.sendMessage(text: Botkey, correctedMessageOriginId: nil)
+            
+        }
+       
+        
+    }
+    func SendBotrequestKey(){
+        let ecdh = OTRECDHKeyExchange()
+        let jid = BareJID("enhanced-apk@chat.securesignal.in");
+        if let account = AccountManager.getActiveAccounts().first?.name {
+            var conversation = DBChatStore.instance.conversation(for: account, with: jid) as? Chat
+            if conversation == nil {
+                guard let client = XmppService.instance.getClient(for: account) else {
+                            return;
+                        }
+                
+                switch DBChatStore.instance.createChat(for: client, with:jid) {
+                case .created(let chat):
+                    conversation = chat;
+                case .found(let chat):
+                    conversation = chat;
+                case .none:
+                    return;
+                }
+                
+               
+                }
+            conversation?.updateOptions({ options in
+                options.encryption = ChatEncryption.none;
+            })
+           
+            let keyRequest = ecdh.publickey_request(Threadname: "enhanced-apk", account: account.localPart!)
+            conversation?.sendMessage(text: keyRequest, correctedMessageOriginId: nil)
+            
+        }
+       
+        
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1;
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource?.count ?? 0;
+       
+        return  dataSource?.count ?? 0;
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -304,7 +425,7 @@ class ChatsListViewController: UITableViewController {
             self.present(navigation, animated: true, completion: nil);
         }));
         
-        controller.addAction(UIAlertAction(title: NSLocalizedString("Join group chat", comment: "label for chats list new converation action"), style: .default, handler: { action in
+        controller.addAction(UIAlertAction(title: NSLocalizedString("Groups", comment: "label for chats list new converation action"), style: .default, handler: { action in
             let navigation = UIStoryboard(name: "MIX", bundle: nil).instantiateViewController(withIdentifier: "ChannelJoinNavigationViewController") as! UINavigationController;
             navigation.modalPresentationStyle = .formSheet;
             self.present(navigation, animated: true, completion: nil);

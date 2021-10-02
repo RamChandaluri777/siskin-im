@@ -31,7 +31,7 @@ import TigaseLogging
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    fileprivate let backgroundRefreshTaskIdentifier = "org.tigase.messenger.mobile.refresh";
+    fileprivate let backgroundRefreshTaskIdentifier = "org.scytale.SigmaVani.refresh";
     
     var window: UIWindow?
     
@@ -48,7 +48,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         RTCInitializeSSL();
         //RTCSetupInternalTracer();
         AccountSettings.initialize();
-        
+       
+        //UINavigationBar.appearance().backgroundColor =  UIColor(named: "chatslistBackground");// backgorund color with gradient
+        // or
+       // UINavigationBar.appearance().barTintColor = UIColor(named: "chatMessageText"); // solid color
+            
+      
         switch Settings.appearance {
         case .light:
             for window in application.windows {
@@ -95,13 +100,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return;
             }
             if AccountManager.getAccounts().isEmpty {
-                self?.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SetupViewController");
+                let LoginViewController = LoginPage()
+                let ecdh = OTRECDHKeyExchange()
+                ecdh.deleteAllKeysInKeyChain()
+                self?.window?.rootViewController = LoginViewController
+               // self?.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SetupViewController");
+            }else{
+                let ecdh = OTRECDHKeyExchange()
+                if (ecdh.GetMyPrivateandPublickey() == false){
+                    self?.AddBotRoaster()
+                    self?.SendBotKey()
+                            }
+                if (ecdh.GetBotpublickey() == false){
+                    self?.SendBotrequestKey()
+                   }
             }
         }).store(in: &cancellables);
 
         (self.window?.rootViewController as? UISplitViewController)?.preferredDisplayMode = .allVisible;
         if AccountManager.getAccounts().isEmpty {
-            self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SetupViewController");
+            
+                 let LoginViewController = LoginPage()
+            self.window?.rootViewController = LoginViewController
+          //  self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SetupViewController");
         }
                 
         return true
@@ -128,6 +149,112 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
+    
+    func AddBotRoaster() {
+        
+        let jid = JID("enhanced-apk@chat.securesignal.in");
+        if let account = AccountManager.getActiveAccounts().first?.name {
+            guard let client = XmppService.instance.getClient(for: account) else {
+                        return;
+                    }
+                   
+                    
+                    let resultHandler = { (result: Result<Iq, XMPPError>) in
+                        switch result {
+                        case .success(_):
+                           
+                            DispatchQueue.main.async {
+                                
+                            }
+                        case .failure(let error):
+                            DispatchQueue.main.async {
+                                let alert = UIAlertController.init(title: "Failure", message: "Server returned error: \(error)", preferredStyle: .alert);
+                                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil));
+                               
+                            }
+                        }
+                    };
+                    
+            if let rosterItem = DBRosterStore.instance.item(for: client, jid: jid) {
+                        if rosterItem.name == "Bot" {
+                            
+                         
+                        } else {
+                            client.module(.roster).updateItem(jid: jid, name: "Bot", groups: rosterItem.groups, completionHandler: resultHandler);
+                        }
+                    } else {
+                        client.module(.roster).addItem(jid: jid, name: "Bot", groups: [], completionHandler: resultHandler);
+                    }
+        }
+       
+
+    }
+    
+    
+    func SendBotKey(){
+        let ecdh = OTRECDHKeyExchange()
+        let Botkey = ecdh.keygeneration()
+       
+        let jid = BareJID("enhanced-apk@chat.securesignal.in");
+        if let account = AccountManager.getActiveAccounts().first?.name {
+            var conversation = DBChatStore.instance.conversation(for: account, with: jid) as? Chat
+            if conversation == nil {
+                guard let client = XmppService.instance.getClient(for: account) else {
+                            return;
+                        }
+                switch DBChatStore.instance.createChat(for: client, with:jid) {
+                case .created(let chat):
+                    conversation = chat;
+                case .found(let chat):
+                    conversation = chat;
+                case .none:
+                    return;
+                }
+                
+               
+                }
+            conversation?.updateOptions({ options in
+                options.encryption = ChatEncryption.none;
+            })
+            conversation?.sendMessage(text: Botkey, correctedMessageOriginId: nil)
+            
+        }
+       
+        
+    }
+    func SendBotrequestKey(){
+        let ecdh = OTRECDHKeyExchange()
+        let jid = BareJID("enhanced-apk@chat.securesignal.in");
+        if let account = AccountManager.getActiveAccounts().first?.name {
+            var conversation = DBChatStore.instance.conversation(for: account, with: jid) as? Chat
+            if conversation == nil {
+                guard let client = XmppService.instance.getClient(for: account) else {
+                            return;
+                        }
+                
+                switch DBChatStore.instance.createChat(for: client, with:jid) {
+                case .created(let chat):
+                    conversation = chat;
+                case .found(let chat):
+                    conversation = chat;
+                case .none:
+                    return;
+                }
+                
+               
+                }
+            conversation?.updateOptions({ options in
+                options.encryption = ChatEncryption.none;
+            })
+           
+            let keyRequest = ecdh.publickey_request(Threadname: "enhanced-apk", account: account.localPart!)
+            conversation?.sendMessage(text: keyRequest, correctedMessageOriginId: nil)
+            
+        }
+       
+        
+    }
+    
 
     private var backgroundTaskId = UIBackgroundTaskIdentifier.invalid;
     

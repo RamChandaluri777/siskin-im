@@ -57,7 +57,7 @@ class ChatViewController : BaseChatViewControllerWithDataSourceAndContextMenuAnd
             var buttons: [UIBarButtonItem] = [];
             buttons.append(self.smallBarButtinItem(image: UIImage(named: "videoCall")!, action: #selector(self.videoCall)));
             buttons.append(self.smallBarButtinItem(image: UIImage(named: "audioCall")!, action: #selector(self.audioCall)));
-            self.navigationItem.rightBarButtonItems = buttons;
+           // self.navigationItem.rightBarButtonItems = buttons;
         }
     }
     

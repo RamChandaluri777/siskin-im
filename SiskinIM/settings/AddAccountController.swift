@@ -19,16 +19,15 @@
 // If not, see https://www.gnu.org/licenses/.
 //
 
-
 import UIKit
 import TigaseSwift
 import Combine
 import Shared
-
+import CryptoSwift
 class AddAccountController: UITableViewController, UITextFieldDelegate {
     
     var account:String?;
-    
+   
     @IBOutlet var jidTextField: UITextField!
     
     @IBOutlet var passwordTextField: UITextField!
@@ -37,6 +36,13 @@ class AddAccountController: UITableViewController, UITextFieldDelegate {
     
     @IBOutlet var saveButton: UIBarButtonItem!
     
+    
+    @objc open var Username:String?
+    @objc open var AuthenicationCode:String?
+    @objc open var jwsToken:String?
+    @objc open var NonceSalt:String?
+    @objc open var DeviceID:String?
+    var errorStatus:String?
     var activityInditcator: UIActivityIndicatorView?;
     
     var xmppClient: XMPPClient?;
@@ -67,8 +73,54 @@ class AddAccountController: UITableViewController, UITextFieldDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        updateSaveButtonState();
         super.viewWillAppear(animated);
+        updateSaveButtonState();
+        self.jidTextField.text = self.Username! + "@chat.securesignal.in"
+        let AuthenticationSalt = String(self.AuthenicationCode!.suffix(6))
+       // let Authendata = self.AuthenicationCode! + AuthenticationSalt
+        let AuthenticationData: Array<UInt8> = Array(self.AuthenicationCode!.utf8)
+        let Payloadsalt: Array<UInt8> = Array(AuthenticationSalt.utf8)
+        let result = try! HMAC(key: Payloadsalt, variant: .sha256).authenticate(AuthenticationData)
+        let hashdata = Data(result)
+        var hmacHash = hexStringFromData(input: hashdata as NSData)
+            hmacHash = hmacHash.lowercased()
+        self.passwordTextField.text = hmacHash
+           var uuid = NSUUID().uuidString.lowercased()
+            uuid = uuid.replacingOccurrences(of: "-", with: "", options: NSString.CompareOptions.literal, range: nil)
+            self.SendUserPresence(userName: self.Username!, Nonce: uuid) { (status) in
+                if (status == true){
+                    self.validateAccount()
+                }else{
+                    
+                        if (self.errorStatus!.contains("0x2001")){
+                            self.LoginErrorAlert(Message: "OTP Not Sent")
+                           // self.passwordTF?.errorLabel.text = "OTP Not Sent"
+                        }else if (self.errorStatus!.contains("0x3112")){
+                            self.LoginErrorAlert(Message: "Unauthorized Contact Admin")
+                            //self.passwordTF?.errorLabel.text = "Unauthorized"
+                        }else if (self.errorStatus!.contains("0x3113")){
+                            self.LoginErrorAlert(Message: "Cannot create Session Already Logged In")
+                           // self.passwordTF?.errorLabel.text = "Already Logged in"
+                        }else if (self.errorStatus!.contains("0x3114")){
+                            self.LoginErrorAlert(Message: "WrongOTP")
+                          //  self.passwordTF?.errorLabel.text =  "Wrong OTP"
+                        }else if (self.errorStatus!.contains("0x3115")){
+                            self.LoginErrorAlert(Message: "Account Banned Contact Admin to free Account ")
+                           // self.passwordTF?.errorLabel.text = "Account Banned"
+                            
+                        }else if (self.errorStatus!.contains("0x3116")){
+                            self.LoginErrorAlert(Message: "Your IP Address is Blocked")
+                           // self.passwordTF?.errorLabel.text = "IP address blocked"
+                        }else if (self.errorStatus!.contains("0x3117")){
+                            self.LoginErrorAlert(Message: "Account Not found")
+                           // self.passwordTF?.errorLabel.text = "Account Not Found"
+                        }
+                        self.dismiss(animated: true, completion: nil)
+                      
+                 
+                   
+                }
+            }
     }
     
     
@@ -100,18 +152,30 @@ class AddAccountController: UITableViewController, UITextFieldDelegate {
     }
     
     func validateAccount() {
-        guard let jid = BareJID(self.jidTextField.text), let password = self.passwordTextField.text, !password.isEmpty else {
-            return;
+        DispatchQueue.main.async {
+            guard let jid = BareJID(self.jidTextField.text), let password = self.passwordTextField.text, !password.isEmpty else {
+                return;
+            }
+            
+            self.saveButton.isEnabled = false;
+            self.showIndicator();
+            
+            self.accountValidatorTask = AccountValidatorTask(controller: self);
+            self.accountValidatorTask?.check(account: jid, password: password, callback: self.handleResult);
         }
-        
-        self.saveButton.isEnabled = false;
-        showIndicator();
-        
-        self.accountValidatorTask = AccountValidatorTask(controller: self);
-        self.accountValidatorTask?.check(account: jid, password: password, callback: self.handleResult);
+       
+    }
+    
+    func LoginErrorAlert(Message:String){
+        let alert = UIAlertController(title: "Warning", message: Message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            self.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func saveAccount(acceptedCertificate: SslCertificateInfo?) {
+        print("sign in button clicked");
         guard let jid = BareJID(jidTextField.text) else {
             return;
         }
@@ -121,14 +185,18 @@ class AddAccountController: UITableViewController, UITextFieldDelegate {
 
         var cancellables: Set<AnyCancellable> = [];
         do {
+            
+            
+            
             try AccountManager.save(account: account);
+           
             self.dismissView();
             (UIApplication.shared.delegate as? AppDelegate)?.showSetup(value: false);
         } catch {
             self.hideIndicator();
             cancellables.removeAll();
-            let alert = UIAlertController(title: NSLocalizedString("Error", comment: "alert title"), message: String.localizedStringWithFormat(NSLocalizedString("It was not possible to save account details: %@", comment: "alert body"), error.localizedDescription), preferredStyle: .alert);
-            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "button label"), style: .default));
+            let alert = UIAlertController(title: "Error", message: "It was not possible to save account details: \(error)", preferredStyle: .alert);
+            alert.addAction(UIAlertAction(title: "OK", style: .default));
             self.present(alert, animated: true, completion: nil);
         }
     }
@@ -138,6 +206,8 @@ class AddAccountController: UITableViewController, UITextFieldDelegate {
     }
     
     func dismissView() {
+        
+        
         let dismiss = self.view.window?.rootViewController is SetupViewController;
 //        onAccountAdded = nil;
         accountValidatorTask?.finish();
@@ -148,13 +218,123 @@ class AddAccountController: UITableViewController, UITextFieldDelegate {
         } else {
             let newController = navigationController?.popViewController(animated: true);
             if newController == nil || newController != self {
-                let emptyDetailController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "emptyDetailViewController");
-                self.showDetailViewController(emptyDetailController, sender: self);
+                
+                let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "SettingsNavigationController") as! UINavigationController
+                       let controller1 = AccountSettingsViewController.instantiate(fromAppStoryboard: .Account);
+                       let accounts = AccountManager.getAccounts();
+                       controller1.hidesBottomBarWhenPushed = true;
+                       controller1.account = accounts[0];
+                       controller.pushViewController(controller1, animated: true)
+                       self.showDetailViewController(controller1, sender: self)
+                   //    self.present(controller, animated: true, completion: nil);
+                
+                
+                
+               /* let emptyDetailController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "emptyDetailViewController");
+                self.showDetailViewController(emptyDetailController, sender: self);*/
             }
         }
         
     }
     
+    func hexStringFromData(input: NSData) -> String {
+           var bytes = [UInt8](repeating: 0, count: input.length)
+           input.getBytes(&bytes, length: input.length)
+           
+           var hexString = ""
+           for byte in bytes {
+               hexString += String(format:"%02X", UInt8(byte))
+           }
+           
+           return hexString
+       }
+    
+   func getPostString(params:[String:Any]) -> String
+       {
+           var data = [String]()
+           for(key, value) in params
+           {
+               data.append(key + "=\(value)")
+           }
+           return data.map { String($0) }.joined(separator: "&")
+       }
+    
+    func SendUserPresence(userName:String,Nonce:String, completion: @escaping (_ success: Bool) -> ()){
+     
+     var Status:Bool = false
+     let Authorization = "Bearer TN5sBit7LEZEICw6ws8NG6NjiCHmzzdc"
+        let now = Date()
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone.current
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateString = formatter.string(from: now)
+     var deviceId = UIDevice.current.identifierForVendor!.uuidString
+     deviceId = deviceId.replacingOccurrences(of: "-", with: "", options: NSString.CompareOptions.literal, range: nil)
+        let token = userName + deviceId + Nonce + dateString + self.NonceSalt!
+     let PayloadData: Array<UInt8> = Array(token.utf8)
+        let Payloadsalt: Array<UInt8> = Array(self.NonceSalt!.utf8)
+     do {
+         let result = try! HMAC(key: Payloadsalt, variant: .sha256).authenticate(PayloadData)
+         let hashdata = Data(result)
+         var hmacHash = hexStringFromData(input: hashdata as NSData)
+         hmacHash = hmacHash.lowercased()
+        let userdata : Data = "username=\(userName)&deviceid=\(deviceId)&nonce=\(Nonce)&token=\(hmacHash)".data(using: .utf8)!
+        let apidata: [String: Any] = ["username":userName,"deviceid":deviceId,"nonce":Nonce,"timestamp":dateString,"token":hmacHash]
+        let jsonData = try? JSONSerialization.data(withJSONObject: apidata)
+         let urlstring = URL(string: "https://chat.securesignal.in:5222/sendpresence")
+
+            var urlrequest = URLRequest(url: urlstring!)
+                        urlrequest.httpMethod = "POST"
+         urlrequest.httpBody = jsonData
+         urlrequest.setValue(Authorization, forHTTPHeaderField: "Authorization")
+       //  urlrequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+                        let session = URLSession.shared
+                        let task = session.dataTask(with: urlrequest, completionHandler: { data, response, error in
+
+                            guard let data = data, error == nil else {
+                                print("error=\(error)")
+                               Status = false
+                                print(Status)
+
+                                return
+                            }
+                            if let response = response {
+                                let nsHTTPResponse = response as! HTTPURLResponse
+                                let statusCode = nsHTTPResponse.statusCode
+                                if statusCode == 200 {
+                                Status = true
+
+                                   //return true
+                                }else{
+                                 Status = false
+                                   
+                                }
+                            }
+
+                          do {
+                            let json = try JSONSerialization.jsonObject(with: data,options:[]) as? [String:Any]
+                                print(json)
+                             let status = json?["status"] as? String
+    //
+                            print(status)
+                             if (status!.contains("SUCCESS")){
+                                 Status = true
+                            }else if (status!.contains("ERROR:")){
+                             Status = false
+                                self.errorStatus = status
+                            }}
+                    catch {
+                        print("cant parse json \(error)")
+                        Status = false
+                        }
+
+                            completion(Status)
+                        }).resume()
+     } catch {
+         print(error.localizedDescription)
+     }
+     }
+
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if indexPath.section == 0 && indexPath.row == 0 && !jidTextField.isEnabled {
             return nil;
@@ -184,16 +364,60 @@ class AddAccountController: UITableViewController, UITextFieldDelegate {
             var error = "";
             switch errorCondition {
             case .not_authorized:
-                error = NSLocalizedString("Login and password do not match.", comment: "error message");
+                error = "Login and password do not match.";
             default:
-                error = NSLocalizedString("It was not possible to contact XMPP server and sign in.", comment: "error message");
+                error = "It was not possible to contact XMPP server and sign in.";
             }
-            let alert = UIAlertController(title: NSLocalizedString("Error", comment: "alert title"), message:  error, preferredStyle: .alert);
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Close", comment: "button label"), style: .cancel, handler: nil));
+            let alert = UIAlertController(title: "Error", message:  error, preferredStyle: .alert);
+            alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil));
             self.present(alert, animated: true, completion: nil);
         case .success(_):
             self.saveAccount(acceptedCertificate: acceptedCertificate);
+            //self.AddBotRoaster()
+            
+//            let account =
         }
+    }
+    
+    func AddBotRoaster() {
+        
+        let jid = JID("enhanced-apk@chat.securesignal.in");
+        let account = BareJID(jidTextField.text)!;
+        if let account = AccountManager.getActiveAccounts().first?.name {
+            guard let client = XmppService.instance.getClient(for: account) else {
+                        return;
+                    }
+                   
+                    
+                    let resultHandler = { (result: Result<Iq, XMPPError>) in
+                        switch result {
+                        case .success(_):
+                           
+                            DispatchQueue.main.async {
+                               // self.dismissView();
+                            }
+                        case .failure(let error):
+                            DispatchQueue.main.async {
+                                let alert = UIAlertController.init(title: "Failure", message: "Server returned error: \(error)", preferredStyle: .alert);
+                                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil));
+                                self.present(alert, animated: true, completion: nil);
+                            }
+                        }
+                    };
+                    
+            if let rosterItem = DBRosterStore.instance.item(for: client, jid: jid) {
+                        if rosterItem.name == "Bot" {
+                          //  updateSubscriptions(client: client);
+                           // self.dismissView();
+                        } else {
+                            client.module(.roster).updateItem(jid: jid, name: "Bot", groups: rosterItem.groups, completionHandler: resultHandler);
+                        }
+                    } else {
+                        client.module(.roster).addItem(jid: jid, name: "Bot", groups: [], completionHandler: resultHandler);
+                    }
+        }
+       
+
     }
     
     func showIndicator() {
@@ -253,7 +477,6 @@ class AddAccountController: UITableViewController, UITextFieldDelegate {
         
         public func check(account: BareJID, password: String, callback: @escaping (Result<Void,ErrorCondition>)->Void) {
             self.callback = callback;
-            client?.connectionConfiguration.useSeeOtherHost = false;
             client?.connectionConfiguration.userJid = account;
             client?.connectionConfiguration.credentials = .password(password: password, authenticationName: nil, cache: nil);
             client?.login();
