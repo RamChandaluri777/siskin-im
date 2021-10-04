@@ -50,7 +50,16 @@ class RosterItemEditViewController: UITableViewController, UIPickerViewDataSourc
         accountPicker.delegate = self;
         self.accountTextField.inputView = accountPicker;
         self.jidTextField.text = jid?.stringValue;
-        self.accountTextField.text = account?.stringValue;
+        
+        if account?.stringValue != nil {
+            let s1 = account!.stringValue
+            if let s = (s1.split(separator: "@").first)?.prefix(1).uppercased() {
+                self.accountTextField.text = s.appending((s1.split(separator: "@").first!).dropFirst())
+            }
+        }
+        
+        
+      //  self.accountTextField.text = account?.stringValue;
         self.sendPresenceUpdatesSwitch.isOn = true;
         self.receivePresenceUpdatesSwitch.isOn = true;
         if let account = account, let jid = jid {
@@ -65,7 +74,14 @@ class RosterItemEditViewController: UITableViewController, UIPickerViewDataSourc
         } else {
             if account == nil && !AccountManager.getAccounts().isEmpty {
                 self.account = AccountManager.getAccounts().first;
-                self.accountTextField.text = account?.stringValue;
+                if account?.stringValue != nil {
+                    let s1 = account!.stringValue
+                    if let s = (s1.split(separator: "@").first)?.prefix(1).uppercased() {
+                        self.accountTextField.text = s.appending((s1.split(separator: "@").first!).dropFirst())
+                    }
+                }
+
+                //self.accountTextField.text = account?.stringValue;
             }
             self.nameTextField.text = nil;
         }

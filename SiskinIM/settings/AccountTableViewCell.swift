@@ -55,7 +55,12 @@ class AccountTableViewCell: UITableViewCell {
     func set(account accountJid: BareJID) {
         cancellables.removeAll();
         avatarObj = AvatarManager.instance.avatarPublisher(for: .init(account: accountJid, jid: accountJid, mucNickname: nil));
-        nameLabel.text = accountJid.stringValue;
+        //nameLabel.text = accountJid.stringValue;
+        
+        if let s = (accountJid.stringValue.split(separator: "@").first)?.prefix(1).uppercased() {
+            nameLabel.text = s.appending((accountJid.stringValue.split(separator: "@").first!).dropFirst())
+        }
+        
         if let acc = AccountManager.getAccount(for: accountJid) {
             descriptionLabel.text = acc.nickname;
             if acc.active {

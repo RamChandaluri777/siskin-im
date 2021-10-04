@@ -27,6 +27,10 @@
 		010A28EE27017A38004E702F /* LoginVerifyIDVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28EA27017A38004E702F /* LoginVerifyIDVC.swift */; };
 		010A28F027028CA3004E702F /* OTRECDHKeyExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28EF27028CA3004E702F /* OTRECDHKeyExchange.swift */; };
 		010A28F227028D11004E702F /* CryptoExportImportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28F127028D11004E702F /* CryptoExportImportManager.swift */; };
+		5CE5ABB5270AF8000063C1C8 /* RightViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CE5ABB1270AF8000063C1C8 /* RightViewCell.xib */; };
+		5CE5ABB6270AF8000063C1C8 /* LeftViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CE5ABB2270AF8000063C1C8 /* LeftViewCell.xib */; };
+		5CE5ABB7270AF8000063C1C8 /* RightViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE5ABB3270AF8000063C1C8 /* RightViewCell.swift */; };
+		5CE5ABB8270AF8000063C1C8 /* LeftViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE5ABB4270AF8000063C1C8 /* LeftViewCell.swift */; };
 		88A909F105B2B332E3B20031 /* Pods_Siskin_IM___Share.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9271A33B2A99494E2A887219 /* Pods_Siskin_IM___Share.framework */; };
 		E57D98B888D705F93D226265 /* Pods_Shared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F63225C53597FA56806A4C9D /* Pods_Shared.framework */; };
 		F8500D36C572EB354D214A7D /* Pods_NotificationService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC62F8983F4B65423034385E /* Pods_NotificationService.framework */; };
@@ -373,6 +377,10 @@
 		1A35B2C055C61D447FD9E98B /* Pods-Shared.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared.debug.xcconfig"; path = "Target Support Files/Pods-Shared/Pods-Shared.debug.xcconfig"; sourceTree = "<group>"; };
 		1BD37AA5F0EC76935CEBDC50 /* Pods-Shared.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared.release.xcconfig"; path = "Target Support Files/Pods-Shared/Pods-Shared.release.xcconfig"; sourceTree = "<group>"; };
 		3916E3A0673D9D8DE7882D14 /* Pods-Siskin IM - Share.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siskin IM - Share.debug.xcconfig"; path = "Target Support Files/Pods-Siskin IM - Share/Pods-Siskin IM - Share.debug.xcconfig"; sourceTree = "<group>"; };
+		5CE5ABB1270AF8000063C1C8 /* RightViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RightViewCell.xib; sourceTree = "<group>"; };
+		5CE5ABB2270AF8000063C1C8 /* LeftViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeftViewCell.xib; sourceTree = "<group>"; };
+		5CE5ABB3270AF8000063C1C8 /* RightViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightViewCell.swift; sourceTree = "<group>"; };
+		5CE5ABB4270AF8000063C1C8 /* LeftViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftViewCell.swift; sourceTree = "<group>"; };
 		60FDAD703E9A1379B972E0D6 /* Pods-Siskin IM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siskin IM.release.xcconfig"; path = "Target Support Files/Pods-Siskin IM/Pods-Siskin IM.release.xcconfig"; sourceTree = "<group>"; };
 		62D912CC5AE20C380998D5D5 /* Pods_Siskin_IM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Siskin_IM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DD139AEABDA2140708D5AD6 /* Pods-Siskin IM - Share.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siskin IM - Share.release.xcconfig"; path = "Target Support Files/Pods-Siskin IM - Share/Pods-Siskin IM - Share.release.xcconfig"; sourceTree = "<group>"; };
@@ -745,6 +753,17 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		5CE5ABB0270AF8000063C1C8 /* ChatDetails */ = {
+			isa = PBXGroup;
+			children = (
+				5CE5ABB1270AF8000063C1C8 /* RightViewCell.xib */,
+				5CE5ABB2270AF8000063C1C8 /* LeftViewCell.xib */,
+				5CE5ABB3270AF8000063C1C8 /* RightViewCell.swift */,
+				5CE5ABB4270AF8000063C1C8 /* LeftViewCell.swift */,
+			);
+			path = ChatDetails;
+			sourceTree = "<group>";
+		};
 		FE01ADA11E214CEA00FA7E65 /* xmpp */ = {
 			isa = PBXGroup;
 			children = (
@@ -795,6 +814,7 @@
 		FE11D38F26623E8200CC883F /* conversation */ = {
 			isa = PBXGroup;
 			children = (
+				5CE5ABB0270AF8000063C1C8 /* ChatDetails */,
 				FE11D39026623E9D00CC883F /* ConversationDataSource.swift */,
 				FEE49DCD2424C1F800900BBB /* ConversationLogController.swift */,
 				FECEF29923B7BBD3007EC323 /* BaseChatTableViewCell.swift */,
@@ -1497,6 +1517,7 @@
 				FEE2D18D268664FF007AEE74 /* db-schema-6.sql in Resources */,
 				FEBA835426F8DF1300347D89 /* Localizable.strings in Resources */,
 				FEBA82FC26F76A8700347D89 /* Groupchat.storyboard in Resources */,
+				5CE5ABB6270AF8000063C1C8 /* LeftViewCell.xib in Resources */,
 				FEE2D19526866503007AEE74 /* db-schema-12.sql in Resources */,
 				FEBA830226F76A9300347D89 /* Settings.storyboard in Resources */,
 				FE94E52E1CCBA74F00FAE755 /* Assets.xcassets in Resources */,
@@ -1506,6 +1527,7 @@
 				FEE2D188268664FF007AEE74 /* db-schema-8.sql in Resources */,
 				FEE2D18F268664FF007AEE74 /* db-schema-5.sql in Resources */,
 				FE94E52C1CCBA74F00FAE755 /* Main.storyboard in Resources */,
+				5CE5ABB5270AF8000063C1C8 /* RightViewCell.xib in Resources */,
 				FEBA830826F76A9C00347D89 /* Conversation.storyboard in Resources */,
 				FEBA830526F76A9800347D89 /* Account.storyboard in Resources */,
 				FEBA830B26F76AA200347D89 /* MIX.storyboard in Resources */,
@@ -1761,6 +1783,7 @@
 				FE8885EE26BC6B570095E25E /* CreateMeetingViewController.swift in Sources */,
 				FEBC12F524C70E7F00689475 /* DBChatHistorySyncStore.swift in Sources */,
 				FEDC6790238B05E4005C0FAB /* BlockedContactsController.swift in Sources */,
+				5CE5ABB7270AF8000063C1C8 /* RightViewCell.swift in Sources */,
 				010A28DD27017A12004E702F /* SlideView.swift in Sources */,
 				FE2332E1242CCDB400008ED4 /* InvitationChatTableViewCell.swift in Sources */,
 				FE3E38862428C21100D3A8E8 /* OSLog.swift in Sources */,
@@ -1904,6 +1927,7 @@
 				FE11D35D26623D6D00CC883F /* Channel.swift in Sources */,
 				FEDE00B4266CC7B80019CC1C /* InvitationsManager.swift in Sources */,
 				FE507A1D1CDB7B3B001A015C /* RosterItemTableViewCell.swift in Sources */,
+				5CE5ABB8270AF8000063C1C8 /* LeftViewCell.swift in Sources */,
 				010A28D127017A00004E702F /* LoginPage Extension.swift in Sources */,
 				FE11D38226623D7700CC883F /* DBChatStore+ChatStore.swift in Sources */,
 				FE2809832167CF1B002F5BD0 /* ServerFeaturesViewController.swift in Sources */,

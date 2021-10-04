@@ -255,8 +255,16 @@ class ChatsListViewController: UITableViewController {
         let cellIdentifier = Settings.recentsMessageLinesNo == 1 ? "ChatsListTableViewCellNew" : "ChatsListTableViewCellBig";
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath) as! ChatsListTableViewCell;
         
+//        if let item = dataSource?.item(at: indexPath) {
+//            cell.update(conversation: item.chat);
+//        }
+        
         if let item = dataSource?.item(at: indexPath) {
+            if let s = (item.name.split(separator: "@").first)?.prefix(1).uppercased() {
+                cell.nameLabel.text = s.appending((item.name.split(separator: "@").first!).dropFirst())
+            }
             cell.update(conversation: item.chat);
+
         }
         cell.avatarStatusView.updateCornerRadius();
         

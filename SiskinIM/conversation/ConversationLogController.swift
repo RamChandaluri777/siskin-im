@@ -22,7 +22,7 @@
 import UIKit
 import Combine
 
-class ConversationLogController: UIViewController, ConversationDataSourceDelegate, UITableViewDataSource {
+class ConversationLogController: UIViewController, ConversationDataSourceDelegate, UITableViewDataSource, UITableViewDelegate {
     
     public static let REFRESH_CELL = Notification.Name("ConversationCellRefresh");
     
@@ -42,7 +42,7 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad();
-        
+        self.setupTable()
         dataSource.delegate = self;
 
         tableView.rowHeight = UITableView.automaticDimension;
@@ -56,10 +56,40 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
         
         conversationLogDelegate?.initialize(tableView: self.tableView);
         
-        tableView.dataSource = self;
+     //   tableView.dataSource = self;
         
         NotificationCenter.default.addObserver(self, selector: #selector(showEditToolbar), name: NSNotification.Name("tableViewCellShowEditToolbar"), object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(refreshCell(_:)), name: ConversationLogController.REFRESH_CELL, object: nil);
+    }
+    
+    func setupTable() {
+        // config tableView
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 160.0;
+        tableView.separatorStyle = .none;
+        tableView.transform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: 0);
+        tableView.dataSource = self
+        tableView.delegate = self;
+        
+        /*
+         if Settings.appearance.description == "Auto" || Settings.appearance.description == "Light" {
+         //           nb.barTintColor = UIColor.white
+         //           nb.tintColor = UIColor.black;
+         //       } else if Settings.appearance.description == "Dark" {
+         //            nb.barTintColor = UIColor.black
+         //            nb.tintColor = UIColor.white;
+         //       }
+         */
+        if Settings.appearance.description == "Auto" || Settings.appearance.description == "Light" {
+            tableView.backgroundColor = .white
+        } else if Settings.appearance.description == "Dark" {
+            tableView.backgroundColor = .black
+        }
+      //  tableView.backgroundColor = .white//UIColor(named: "E4DDD6")
+        tableView.tableFooterView = UIView()
+        // cell setup
+        tableView.register(UINib(nibName: "RightViewCell", bundle: nil), forCellReuseIdentifier: "RightViewCell")
+        tableView.register(UINib(nibName: "LeftViewCell", bundle: nil), forCellReuseIdentifier: "LeftViewCell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -114,15 +144,45 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
                 cell.set(item: item, message: message);
                 return cell;
             } else {
-                let id = isContinuation(at: indexPath.row, for: item) ? "ChatTableViewMessageContinuationCell" : "ChatTableViewMessageCell";
-                let cell: ChatTableViewCell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! ChatTableViewCell;
-                cell.contentView.transform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: 0);
-                cell.set(item: item, message: message, correctionTimestamp: correctionTimestamp);
-//            cell.setNeedsUpdateConstraints();
-//            cell.updateConstraintsIfNeeded();
-            
-                return cell;
-            }
+                // let id = isContinuation(at: indexPath.row, for: item) ? "ChatTableViewMessageContinuationCell" : "ChatTableViewMessageCell";
+                // let cell: ChatTableViewCell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! ChatTableViewCell;
+                // cell.contentView.transform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: 0);
+                // cell.set(item: item, message: message, correctionTimestamp: correctionTimestamp);
+                // return cell;
+                 
+                 switch item.state {
+                 case.incoming(_):
+                     
+                     let cell = tableView.dequeueReusableCell(withIdentifier: "LeftViewCell") as! LeftViewCell
+                     cell.contentView.transform = tableView.transform
+                     cell.configureCell(item: item, message: message, correctionTimestamp: correctionTimestamp)//(message: message)
+                     return cell
+                 case.outgoing(_):
+                     let cell = tableView.dequeueReusableCell(withIdentifier: "RightViewCell") as! RightViewCell
+                     cell.contentView.transform = tableView.transform
+                     cell.configureCell(item: item, message: message, correctionTimestamp:correctionTimestamp)//(message: message)
+                     return cell
+                 case .none:
+                         print("none")
+                    return UITableViewCell()
+                  //   return tableView.dequeueReusableCell(withIdentifier: "ChatTableViewCellIncoming", for: indexPath);
+                 case .incoming_error(_, errorMessage: _):
+                     print("incoming error")
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "LeftViewCell") as! LeftViewCell
+                    cell.contentView.transform = tableView.transform
+                    cell.configureCell(item: item, message: message, correctionTimestamp: correctionTimestamp)//(message: message)
+                    return cell
+                    // return tableView.dequeueReusableCell(withIdentifier: "ChatTableViewCellIncoming", for: indexPath);
+                 case .outgoing_error(_, errorMessage: _):
+                     print("outgoing error")
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "RightViewCell") as! RightViewCell
+                    cell.contentView.transform = tableView.transform
+                    cell.configureCell(item: item, message: message, correctionTimestamp:correctionTimestamp)//(message: message)
+                    return cell
+                    // return tableView.dequeueReusableCell(withIdentifier: "ChatTableViewCellIncoming", for: indexPath);
+                 }
+                 
+             }
         case .linkPreview(let url):
             let id = "ChatTableViewLinkPreviewCell";
             let cell: LinkPreviewChatTableViewCell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! LinkPreviewChatTableViewCell;
@@ -150,7 +210,8 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
             cell.contentView.transform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: 0);
             return cell;
         default:
-            return tableView.dequeueReusableCell(withIdentifier: "ChatTableViewCellIncoming", for: indexPath);
+            return UITableViewCell()
+                // return tableView.dequeueReusableCell(withIdentifier: "ChatTableViewCellIncoming", for: indexPath);
         }
     }
     

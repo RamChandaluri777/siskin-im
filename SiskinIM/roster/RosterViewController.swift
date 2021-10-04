@@ -102,8 +102,12 @@ class RosterViewController: AbstractRosterViewController, UIGestureRecognizerDel
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! RosterItemTableViewCell;
         
         if let item = roster?.item(at: indexPath) {
-            cell.nameLabel.text = item.displayName;
-            cell.statusLabel.text = item.presence?.status ?? item.jid.stringValue;
+            if let s = (item.displayName.split(separator: "@").first)?.prefix(1).uppercased() {
+                cell.nameLabel.text = s.appending((item.displayName.split(separator: "@").first!).dropFirst())
+                cell.statusLabel.text = s.appending((item.displayName.split(separator: "@").first!).dropFirst())
+            }
+           // cell.nameLabel.text = item.displayName;
+           // cell.statusLabel.text = item.presence?.status ?? item.jid.stringValue;
             cell.avatarStatusView.displayableId = ContactManager.instance.contact(for: .init(account: item.account, jid: item.jid, type: .buddy));
         }
         

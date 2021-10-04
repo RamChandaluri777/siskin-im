@@ -48,7 +48,11 @@ class AccountSettingsViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
-        navigationItem.title = account.stringValue;
+        //navigationItem.title = account.stringValue;
+        
+        if let s = (account.stringValue.split(separator: "@").first)?.prefix(1).uppercased() {
+            navigationItem.title = s.appending((account.stringValue.split(separator: "@").first!).dropFirst())
+        }
         
         AccountManager.accountEventsPublisher.receive(on: DispatchQueue.main).sink(receiveValue: { [weak self] event in
             switch event {
@@ -302,28 +306,33 @@ class AccountSettingsViewController: UITableViewController {
     }
         
     func update(vcard: VCard?) {
-        if let fn = vcard?.fn {
-            fullNameTextView.text = fn;
-        } else if let surname = vcard?.surname, let given = vcard?.givenName {
-            fullNameTextView.text = "\(given) \(surname)";
-        } else {
-            fullNameTextView.text = account.stringValue;
+//        if let fn = vcard?.fn {
+//            fullNameTextView.text = fn;
+//        } else if let surname = vcard?.surname, let given = vcard?.givenName {
+//            fullNameTextView.text = "\(given) \(surname)";
+//        } else {
+//            fullNameTextView.text = account.stringValue;
+//        }
+        
+        if let s = (account.stringValue.split(separator: "@").first)?.prefix(1).uppercased() {
+            fullNameTextView.text = s.appending((account.stringValue.split(separator: "@").first!).dropFirst())
+            companyTextView.text = s.appending((account.stringValue.split(separator: "@").first!).dropFirst())
         }
         
-        let company = vcard?.organizations.first?.name;
-        let role = vcard?.role;
-        if role != nil && company != nil {
-            companyTextView.text = "\(role!) at \(company!)";
-            companyTextView.isHidden = false;
-        } else if company != nil {
-            companyTextView.text = company;
-            companyTextView.isHidden = false;
-        } else if role != nil {
-            companyTextView.text = role;
-            companyTextView.isHidden = false;
-        } else {
-            companyTextView.isHidden = true;
-        }
+//        let company = vcard?.organizations.first?.name;
+//        let role = vcard?.role;
+//        if role != nil && company != nil {
+//            companyTextView.text = "\(role!) at \(company!)";
+//            companyTextView.isHidden = false;
+//        } else if company != nil {
+//            companyTextView.text = company;
+//            companyTextView.isHidden = false;
+//        } else if role != nil {
+//            companyTextView.text = role;
+//            companyTextView.isHidden = false;
+//        } else {
+//            companyTextView.isHidden = true;
+//        }
         
         let addresses = vcard?.addresses.filter { (addr) -> Bool in
             return !addr.isEmpty;

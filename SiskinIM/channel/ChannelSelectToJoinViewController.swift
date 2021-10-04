@@ -96,7 +96,13 @@ class ChannelSelectToJoinViewController: UITableViewController, UISearchResultsU
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChannelJoinCellView", for: indexPath);
         let item = items[indexPath.row];
         cell.textLabel?.text = item.name ?? item.jid.localPart;
-        cell.detailTextLabel?.text = item.jid.stringValue;
+            if let s = (item.jid.stringValue.split(separator: "@").first)?.prefix(1).uppercased() {
+                cell.detailTextLabel?.text = s.appending((item.jid.stringValue.split(separator: "@").first!).dropFirst())
+            }
+           // cell.update(conversation: item.chat);
+
+        print(item.jid.stringValue)
+       // cell.detailTextLabel?.text = item.jid.stringValue;
         return cell;
     }
     

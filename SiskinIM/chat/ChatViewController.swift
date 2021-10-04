@@ -79,6 +79,9 @@ class ChatViewController : BaseChatViewControllerWithDataSourceAndContextMenuAnd
         
         conversation.context?.$state.map({ $0 == .connected() }).receive(on: DispatchQueue.main).assign(to: \.connected, on: self.titleView).store(in: &cancellables);
         conversation.displayNamePublisher.map({ $0 }).assign(to: \.name, on: self.titleView).store(in: &cancellables);
+        if let s = (conversation.displayName.split(separator: "@").first)?.prefix(1).uppercased() {
+            self.titleView.name = s.appending((conversation.displayName.split(separator: "@").first!).dropFirst())
+        }
         conversation.statusPublisher.combineLatest(conversation.descriptionPublisher, chat.optionsPublisher).receive(on: DispatchQueue.main).sink(receiveValue: { [weak self] (show, description, options) in
             self?.titleView.setStatus(show, description: description, encryption: options.encryption);
         }).store(in: &cancellables)        
