@@ -149,9 +149,7 @@ import CryptoSwift
   
     
     @objc open func keygeneration() -> String {
-        
-//        {"checksum":"21a4e4c9f96a0163ff77256968b78e906eceb7981e147c1ba9643b1d4006c64f","body":{"data":"9En0oayWRX6FW4w5MmgQikpbctU9C8iZ6mTK3LFite3tgQhsWN3fz460Zkf4Q4cViiX0Gnb8SzQ0FwuP9XjkgFr8bmGbXnyR7IXv7XiTanLFLazc+k4m8Dn1idyaD4HX/DHdUwrZ/0HyOnZRPx9HbQ0GrYY/DUfKV9q6iWNBrB/CXGDiTN2y00TI5m3p5/5h3wRESarN5liQSB8jaL+XCRZ/K13YqfdqDQwFFUmsdAPLtEigfAwlFOJ1USAdSfJwuKQCCXZi/KCXEPASmVoWjLC/PYhLmpezKyN3g2lLCrP/wpLu/6Z851RPWSaYrcNSvs/oYBxlf1gdSBvWtb5SKOHrMyj9QxIk8nB6Zg==","type":"TYPE_DH_ENCRYPTED"}}
-        
+  
         var privateencoded:String?
         deleteAllKeysInKeyChain()
      SecKeyGeneratePair(keyattribute, &publicKeySec, &privateKeySec)
@@ -162,7 +160,6 @@ import CryptoSwift
             print(privatedata.base64EncodedString())
             privateencoded = privatedata.base64EncodedString()
         }
-      //  let botkey = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEJuCzLHBBYGDQPJ/mTibZyyrG9Y6fAfJCDFHCAo8mmFLybID3n/BbMkD+TVcRajek2+jGGrfHK7snZ79x+REIOA=="
         print(privateencoded)
         self.StoreInKeychain(tag: tagPrivate, key: privateKeySec!)
         self.StoreInKeychain(tag: tagPublic, key: publicKeySec!)
@@ -190,20 +187,20 @@ import CryptoSwift
            }
 
 
-       let botdata: [String: Any] = ["body":[ "type":"TYPE_PUBLIC_KEY" , "data":publickeybase64encoded]]
-       let salt = "abc123"
+        let botdata: [String: Any] = ["body":[ "type":"TYPE_PUBLIC_KEY" , "data":publickeybase64encoded]]
+        let salt = "abc123"
 
-       let jsonData = try! JSONSerialization.data(withJSONObject: botdata, options: JSONSerialization.WritingOptions.prettyPrinted)
-       let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
+        let jsonData = try! JSONSerialization.data(withJSONObject: botdata, options: JSONSerialization.WritingOptions.prettyPrinted)
+        let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
 
-     let checksumderive = jsonString + salt
-       print(checksumderive)
-   let checksumdata = sha256(string: checksumderive)
+        let checksumderive = jsonString + salt
+        print(checksumderive)
+        let checksumdata = sha256(string: checksumderive)
    
-     var checksum = ""
-     for index in 0..<Int(CC_SHA256_DIGEST_LENGTH) {
-      checksum += String(format: "%02x", checksumdata![index])
-     }
+        var checksum = ""
+        for index in 0..<Int(CC_SHA256_DIGEST_LENGTH) {
+            checksum += String(format: "%02x", checksumdata![index])
+        }
        let bodydata:[String:Any] = ["body":["type":"TYPE_PUBLIC_KEY","data":publickeybase64encoded],"checksum":checksum]
        let jsonbodydata = try! JSONSerialization.data(withJSONObject: bodydata, options: JSONSerialization.WritingOptions.prettyPrinted)
        let jsonbodystring = NSString(data: jsonbodydata, encoding: String.Encoding.utf8.rawValue)! as String

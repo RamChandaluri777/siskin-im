@@ -39,7 +39,7 @@ open class AvatarStore {
     private let cache = NSCache<NSString,UIImage>();
 
     public init() {
-        cacheDirectory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.Sigmavani.shared")!.appendingPathComponent("Library", isDirectory: true).appendingPathComponent("Caches", isDirectory: true).appendingPathComponent("avatars", isDirectory: true);
+        cacheDirectory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.SigmaVani.Shared")!.appendingPathComponent("Library", isDirectory: true).appendingPathComponent("Caches", isDirectory: true).appendingPathComponent("avatars", isDirectory: true);
 
         let oldCacheDirectory = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("avatars", isDirectory: true);
 

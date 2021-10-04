@@ -239,14 +239,14 @@ class SettingsStore {
                     if let timestamp = (v as? [String: Any])?["timestamp"] as? Date {
                         if timestamp < removeOlder {
                             SettingsStore.sharedDefaults.removeObject(forKey: k);
-                            let localUploadDirUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.Sigmavani.shared")!.appendingPathComponent("upload", isDirectory: true).appendingPathComponent(hash, isDirectory: false);
+                            let localUploadDirUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.SigmaVani.Shared")!.appendingPathComponent("upload", isDirectory: true).appendingPathComponent(hash, isDirectory: false);
                             if FileManager.default.fileExists(atPath: localUploadDirUrl.path) {
                                 try? FileManager.default.removeItem(at: localUploadDirUrl);
                             }
                         }
                     } else {
                         SettingsStore.sharedDefaults.removeObject(forKey: k);
-                        let localUploadDirUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.Sigmavani.shared")!.appendingPathComponent("upload", isDirectory: true).appendingPathComponent(hash, isDirectory: false);
+                        let localUploadDirUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.SigmaVani.Shared")!.appendingPathComponent("upload", isDirectory: true).appendingPathComponent(hash, isDirectory: false);
                         if FileManager.default.fileExists(atPath: localUploadDirUrl.path) {
                             try? FileManager.default.removeItem(at: localUploadDirUrl);
                         }

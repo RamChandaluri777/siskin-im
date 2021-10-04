@@ -68,7 +68,7 @@ class DownloadManager {
             if let hash = Digest.sha1.digest(toHex: inUrl.data(using: .utf8)!), var params = SettingsStore.sharedDefaults.dictionary(forKey: "upload-\(hash)"), let filename = params["name"] as? String {
                 var jids: [BareJID] = (params["jids"] as? [String])?.map({ BareJID($0) }) ?? [];
 
-                let sharedFileUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.Sigmavani.shared")!.appendingPathComponent("upload", isDirectory: true).appendingPathComponent(hash, isDirectory: false);
+                let sharedFileUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.SigmaVani.Shared")!.appendingPathComponent("upload", isDirectory: true).appendingPathComponent(hash, isDirectory: false);
 
                 var handled = false;
                 if jids.contains(item.conversation.jid) {

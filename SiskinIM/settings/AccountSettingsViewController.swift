@@ -141,7 +141,7 @@ class AccountSettingsViewController: UITableViewController {
             }))
             self.navigationController?.present(controller, animated: true, completion: nil);
         }
-        if indexPath.section == 5 && indexPath.row == 0 {
+        if indexPath.section == 4 && indexPath.row == 0 {
             self.deleteAccount();
         }
     }

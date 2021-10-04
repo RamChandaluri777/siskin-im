@@ -26,7 +26,7 @@ import TigaseSwift
 extension Database {
     
     public static func mainDatabaseUrl() -> URL {
-        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.Sigmavani.shared")!.appendingPathComponent("sai_main.db");
+        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.SigmaVani.Shared")!.appendingPathComponent("siskinim_main.db");
     }
     
 }
