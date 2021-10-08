@@ -129,30 +129,71 @@ class ContactViewController: UITableViewController {
         case .attachments:
             return 1;
         case .encryption:
-            return omemoIdentities.count + 1;
+            return 0;
+           // return omemoIdentities.count + 1;
         case .phones:
-            return phones.count;
+            return 0;
+            //return phones.count;
         case .emails:
-            return emails.count;
+            return 0;
+           // return emails.count;
         case .addresses:
-            return addresses.count;
+            return 0;
+            //return addresses.count;
         }
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 2 {
+            return 424
+        }
+        return super.tableView(tableView, heightForRowAt: indexPath)
+    }
+                               
+                               
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection sectionNo: Int) -> String? {
         return sections[sectionNo].label;
     }
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection sectionNo: Int) -> CGFloat {
+        
+        switch sections[sectionNo] {
+        case .basic:
             return 1.0;
+        case .settings:
+            return super.tableView(tableView, heightForHeaderInSection: sectionNo)
+        case .attachments:
+            return 0;
+        case .encryption:
+            return 0;
+        case .phones:
+            return 0
+        case .emails:
+            return 0
+        case .addresses:
+            return 0
         }
-        return super.tableView(tableView, heightForHeaderInSection: section);
+        
+        
+        
+        
+       /* if section == 0 {
+            return 1.0;
+        } else if section == 2 {
+            return 140;
+        }*/
+      //  return super.tableView(tableView, heightForHeaderInSection: section);
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return "";
     }
+    
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//
+//       return super.tableView(tableView, heightForRowAt: indexPath)
+//    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch sections[indexPath.section] {
@@ -162,7 +203,6 @@ class ContactViewController: UITableViewController {
             cell.account = account;
             cell.jid = jid;
             cell.vcard = vcard;
-        
             return cell;
         case .settings:
             switch SettingsOptions(rawValue: indexPath.row)! {
@@ -189,7 +229,11 @@ class ContactViewController: UITableViewController {
                 return cell;
             }
         case .attachments:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "AttachmentsCell", for: indexPath);
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AttachmentsCell", for: indexPath) as! AttachmentsCell
+            cell.contentView.frame.size.height = 500
+            cell.lblAttachment.text = "Attachment"
+            cell.conversation = self.chat;
+            cell.reloadCollectionView()
             return cell;
         case .encryption:
             if indexPath.row == 0 {
@@ -228,7 +272,6 @@ class ContactViewController: UITableViewController {
             
             cell.typeView.text = type;
             cell.labelView.text = phone.number?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
-            
             return cell;
         case .emails:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ContactFormCell", for: indexPath) as! ContactFormTableViewCell;
@@ -237,7 +280,6 @@ class ContactViewController: UITableViewController {
             
             cell.typeView.text = type;
             cell.labelView.text = email.address?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
-            
             return cell;
         case .addresses:
             let cell = tableView.dequeueReusableCell(withIdentifier: "AddressCell", for: indexPath ) as! ContactFormTableViewCell;
@@ -275,11 +317,10 @@ class ContactViewController: UITableViewController {
             }
             
             cell.labelView.text = text;
-            
             return cell;
-//        default:
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "ContactFormCell", for: indexPath as IndexPath) as! ContactFormTableViewCell;
-//            return cell;
+        default:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ContactFormCell", for: indexPath as IndexPath) as! ContactFormTableViewCell;
+            return cell;
         }
     }
 
@@ -343,11 +384,11 @@ class ContactViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "chatShowAttachments" {
-            if let attachmentsController = segue.destination as? ChatAttachmentsController {
-                attachmentsController.conversation = self.chat;
-            }
-        }
+//        if segue.identifier == "chatShowAttachments" {
+//            if let attachmentsController = segue.destination as? ChatAttachmentsController {
+//                attachmentsController.conversation = self.chat;
+//            }
+//        }
     }
     
     func getVCardEntryTypeLabel(for type: VCard.EntryType) -> String? {
@@ -459,7 +500,8 @@ class ContactViewController: UITableViewController {
             case .attachments:
                 return "";
             case .encryption:
-                return NSLocalizedString("Encryption", comment: "contact details section");
+                return NSLocalizedString("", comment: "contact details section");
+                //return NSLocalizedString("Encryption", comment: "contact details section");
             case .phones:
                 return NSLocalizedString("Phones", comment: "contact details section");
             case .emails:

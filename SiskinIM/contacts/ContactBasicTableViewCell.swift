@@ -40,7 +40,12 @@ class ContactBasicTableViewCell: UITableViewCell {
                     fn = "\(given) \(surname)";
                 }
             }
-            nameView.text = fn ?? jid.stringValue;
+            if let s = (jid.stringValue.split(separator: "@").first)?.prefix(1).uppercased() {
+                        nameView.text = s.appending((jid.stringValue.split(separator: "@").first!).dropFirst())
+                jidView.text = s.appending((jid.stringValue.split(separator: "@").first!).dropFirst())
+            }
+            
+            //nameView.text = fn ?? jid.stringValue;
             
             let org = vcard?.organizations.first?.name;
             let role = vcard?.role;
@@ -52,8 +57,11 @@ class ContactBasicTableViewCell: UITableViewCell {
             }
             
             avatarView.image = AvatarManager.instance.avatar(for: jid, on: account) ?? AvatarManager.instance.defaultAvatar;
-            jidView.text = jid.stringValue;
-            accountView.text = String.localizedStringWithFormat(NSLocalizedString("using %@", comment: "account info label"), account.stringValue);
+           // jidView.text = jid.stringValue;
+            if let s = (account.stringValue.split(separator: "@").first)?.prefix(1).uppercased() {
+                accountView.text = s.appending((account.stringValue.split(separator: "@").first!).dropFirst())
+            }
+           // accountView.text = String.localizedStringWithFormat(NSLocalizedString("using %@", comment: "account info label"), account.stringValue);
         }
     }
     

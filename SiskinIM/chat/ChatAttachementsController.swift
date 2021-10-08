@@ -17,7 +17,6 @@ class ChatAttachmentsController: UICollectionViewController, UICollectionViewDel
     var conversation: Conversation!;
         
     private var loaded: Bool = false;
-    
     private var cancellables: Set<AnyCancellable> = [];
     
     override func viewDidLoad() {

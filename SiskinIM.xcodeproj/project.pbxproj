@@ -27,14 +27,11 @@
 		010A28EE27017A38004E702F /* LoginVerifyIDVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28EA27017A38004E702F /* LoginVerifyIDVC.swift */; };
 		010A28F027028CA3004E702F /* OTRECDHKeyExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28EF27028CA3004E702F /* OTRECDHKeyExchange.swift */; };
 		010A28F227028D11004E702F /* CryptoExportImportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28F127028D11004E702F /* CryptoExportImportManager.swift */; };
+		5C30D031270C4A6300D17A72 /* AttachmentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C30D030270C4A6300D17A72 /* AttachmentsCell.swift */; };
 		5CE5ABB5270AF8000063C1C8 /* RightViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CE5ABB1270AF8000063C1C8 /* RightViewCell.xib */; };
 		5CE5ABB6270AF8000063C1C8 /* LeftViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CE5ABB2270AF8000063C1C8 /* LeftViewCell.xib */; };
 		5CE5ABB7270AF8000063C1C8 /* RightViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE5ABB3270AF8000063C1C8 /* RightViewCell.swift */; };
 		5CE5ABB8270AF8000063C1C8 /* LeftViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE5ABB4270AF8000063C1C8 /* LeftViewCell.swift */; };
-		88A909F105B2B332E3B20031 /* Pods_Siskin_IM___Share.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9271A33B2A99494E2A887219 /* Pods_Siskin_IM___Share.framework */; };
-		E57D98B888D705F93D226265 /* Pods_Shared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F63225C53597FA56806A4C9D /* Pods_Shared.framework */; };
-		F8500D36C572EB354D214A7D /* Pods_NotificationService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC62F8983F4B65423034385E /* Pods_NotificationService.framework */; };
-		FC2C7D02D85F8E342753B72B /* Pods_Siskin_IM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62D912CC5AE20C380998D5D5 /* Pods_Siskin_IM.framework */; };
 		FE00157D2017617B00490340 /* StreamFeaturesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE00157C2017617B00490340 /* StreamFeaturesCache.swift */; };
 		FE00157F2019090300490340 /* ExperimentalSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE00157E2019090300490340 /* ExperimentalSettingsViewController.swift */; };
 		FE01ADA91E224CF400FA7E65 /* SiskinPushNotificationsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE01ADA81E224CF400FA7E65 /* SiskinPushNotificationsModule.swift */; };
@@ -377,18 +374,15 @@
 		1A35B2C055C61D447FD9E98B /* Pods-Shared.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared.debug.xcconfig"; path = "Target Support Files/Pods-Shared/Pods-Shared.debug.xcconfig"; sourceTree = "<group>"; };
 		1BD37AA5F0EC76935CEBDC50 /* Pods-Shared.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared.release.xcconfig"; path = "Target Support Files/Pods-Shared/Pods-Shared.release.xcconfig"; sourceTree = "<group>"; };
 		3916E3A0673D9D8DE7882D14 /* Pods-Siskin IM - Share.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siskin IM - Share.debug.xcconfig"; path = "Target Support Files/Pods-Siskin IM - Share/Pods-Siskin IM - Share.debug.xcconfig"; sourceTree = "<group>"; };
+		5C30D030270C4A6300D17A72 /* AttachmentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentsCell.swift; sourceTree = "<group>"; };
 		5CE5ABB1270AF8000063C1C8 /* RightViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RightViewCell.xib; sourceTree = "<group>"; };
 		5CE5ABB2270AF8000063C1C8 /* LeftViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeftViewCell.xib; sourceTree = "<group>"; };
 		5CE5ABB3270AF8000063C1C8 /* RightViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightViewCell.swift; sourceTree = "<group>"; };
 		5CE5ABB4270AF8000063C1C8 /* LeftViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftViewCell.swift; sourceTree = "<group>"; };
 		60FDAD703E9A1379B972E0D6 /* Pods-Siskin IM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siskin IM.release.xcconfig"; path = "Target Support Files/Pods-Siskin IM/Pods-Siskin IM.release.xcconfig"; sourceTree = "<group>"; };
-		62D912CC5AE20C380998D5D5 /* Pods_Siskin_IM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Siskin_IM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DD139AEABDA2140708D5AD6 /* Pods-Siskin IM - Share.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siskin IM - Share.release.xcconfig"; path = "Target Support Files/Pods-Siskin IM - Share/Pods-Siskin IM - Share.release.xcconfig"; sourceTree = "<group>"; };
-		9271A33B2A99494E2A887219 /* Pods_Siskin_IM___Share.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods_Siskin_IM___Share.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF208294D915DDA6A231DF31 /* Pods-Siskin IM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siskin IM.debug.xcconfig"; path = "Target Support Files/Pods-Siskin IM/Pods-Siskin IM.debug.xcconfig"; sourceTree = "<group>"; };
 		CFE49B486917015C348A8F93 /* Pods-NotificationService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationService.debug.xcconfig"; path = "Target Support Files/Pods-NotificationService/Pods-NotificationService.debug.xcconfig"; sourceTree = "<group>"; };
-		EC62F8983F4B65423034385E /* Pods_NotificationService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NotificationService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F63225C53597FA56806A4C9D /* Pods_Shared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE00157C2017617B00490340 /* StreamFeaturesCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamFeaturesCache.swift; sourceTree = "<group>"; };
 		FE00157E2019090300490340 /* ExperimentalSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperimentalSettingsViewController.swift; sourceTree = "<group>"; };
 		FE01ADA81E224CF400FA7E65 /* SiskinPushNotificationsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiskinPushNotificationsModule.swift; sourceTree = "<group>"; };
@@ -656,7 +650,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE759FE22371C83D001E78D9 /* Shared.framework in Frameworks */,
-				88A909F105B2B332E3B20031 /* Pods_Siskin_IM___Share.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -665,7 +658,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE759FD12370B2F2001E78D9 /* Shared.framework in Frameworks */,
-				F8500D36C572EB354D214A7D /* Pods_NotificationService.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -679,7 +671,6 @@
 				FE759FE82371C972001E78D9 /* libxml2.tbd in Frameworks */,
 				FE1908B72584D70300CA049F /* OpenSSL.xcframework in Frameworks */,
 				FEC9B1162440E7B500A484EE /* TigaseSwiftOMEMO in Frameworks */,
-				E57D98B888D705F93D226265 /* Pods_Shared.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -691,7 +682,6 @@
 				FE5079F01CD3CA91001A015C /* Security.framework in Frameworks */,
 				FE759FCC2370B2A4001E78D9 /* Shared.framework in Frameworks */,
 				FE1908AA2584D6BC00CA049F /* OpenSSL.xcframework in Frameworks */,
-				FC2C7D02D85F8E342753B72B /* Pods_Siskin_IM.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -853,10 +843,6 @@
 			children = (
 				FE1A349F258CD3E10058B86A /* WebRTC.xcframework */,
 				FE1908962584D69400CA049F /* OpenSSL.xcframework */,
-				EC62F8983F4B65423034385E /* Pods_NotificationService.framework */,
-				F63225C53597FA56806A4C9D /* Pods_Shared.framework */,
-				62D912CC5AE20C380998D5D5 /* Pods_Siskin_IM.framework */,
-				9271A33B2A99494E2A887219 /* Pods_Siskin_IM___Share.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -1243,6 +1229,7 @@
 				FEDE93981D0C207100CA60A9 /* ContactBasicTableViewCell.swift */,
 				FEDE939A1D0C38B000CA60A9 /* ContactFormTableViewCell.swift */,
 				FE719E7B22730DC3007CEEC9 /* OMEMOIdentityTableViewCell.swift */,
+				5C30D030270C4A6300D17A72 /* AttachmentsCell.swift */,
 			);
 			path = contacts;
 			sourceTree = "<group>";
@@ -1840,6 +1827,7 @@
 				FE1DCCA21EA52CE200850563 /* DataFormController.swift in Sources */,
 				FE7D293623BB5E0A001A877D /* LinkPreviewChatTableViewCell.swift in Sources */,
 				FE11D37E26623D7700CC883F /* DBChatStore+ChannelStore.swift in Sources */,
+				5C30D031270C4A6300D17A72 /* AttachmentsCell.swift in Sources */,
 				FE6545641E9E8B67006A14AC /* ServerSelectorTableViewCell.swift in Sources */,
 				FE31291A22240BEB00A92863 /* PEPBookmarksModule_extension.swift in Sources */,
 				FE00157F2019090300490340 /* ExperimentalSettingsViewController.swift in Sources */,

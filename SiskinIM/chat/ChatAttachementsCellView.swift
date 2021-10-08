@@ -9,6 +9,7 @@
 import UIKit
 import MobileCoreServices
 import TigaseSwift
+import AVFoundation
 
 class ChatAttachmentsCellView: UICollectionViewCell, UIDocumentInteractionControllerDelegate, UIContextMenuInteractionDelegate {
 
@@ -20,7 +21,7 @@ class ChatAttachmentsCellView: UICollectionViewCell, UIDocumentInteractionContro
     private var item: ConversationEntry?;
     
     func set(item: ConversationEntry) {
-        self.item = item;
+            self.item = item;
         
         self.addInteraction(UIContextMenuInteraction(delegate: self));
         
@@ -48,7 +49,13 @@ class ChatAttachmentsCellView: UICollectionViewCell, UIDocumentInteractionContro
             } else if let image = UIImage(contentsOfFile: fileUrl.path) {
                 self.imageField.image = image;
             } else {
-                self.imageField.image = UIImage.icon(forFile: fileUrl, mimeType: nil);
+                print(fileUrl)
+                if drawPDFfromURL(url: fileUrl) != nil{
+                    self.imageField.image = drawPDFfromURL(url: fileUrl)
+                } else if let thumbnailImage = getThumbnailImage(forUrl: fileUrl) {
+                    self.imageField.image = thumbnailImage
+                }
+                //self.imageField.image = UIImage.icon(forFile: fileUrl, mimeType: nil);
             }
         } else {
             if case .attachment(_, let appendix) = item.payload, let mimetype = appendix.mimetype, let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, mimetype as CFString, nil)?.takeRetainedValue() as String? {
@@ -58,6 +65,44 @@ class ChatAttachmentsCellView: UICollectionViewCell, UIDocumentInteractionContro
             }
         }
     }
+    
+    //Thumbnail image of pdf
+    func drawPDFfromURL(url: URL) -> UIImage? {
+        guard let document = CGPDFDocument(url as CFURL) else { return nil }
+        guard let page = document.page(at: 1) else { return nil }
+
+        let pageRect = page.getBoxRect(.mediaBox)
+        let renderer = UIGraphicsImageRenderer(size: pageRect.size)
+        let img = renderer.image { ctx in
+            UIColor.white.set()
+            ctx.fill(pageRect)
+
+            ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
+            ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
+
+            ctx.cgContext.drawPDFPage(page)
+        }
+
+        return img
+    }
+    
+    //Thumbnail image of video
+    func getThumbnailImage(forUrl url: URL) -> UIImage? {
+        let asset: AVAsset = AVAsset(url: url)
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+
+        do {
+            let thumbnailImage = try imageGenerator.copyCGImage(at: CMTimeMake(value: 1, timescale: 60) , actualTime: nil)
+            return UIImage(cgImage: thumbnailImage)
+            //return UIImage(systemName: thumbnailImage as! String)
+        } catch let error {
+            print(error)
+        }
+
+        return nil
+    }
+    
+    
     
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in

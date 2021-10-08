@@ -73,10 +73,10 @@ class BaseChatViewController: UIViewController, UITextViewDelegate, ChatViewInpu
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let s = (conversation.account.stringValue.split(separator: "@").first)?.prefix(1).uppercased() {
-        chatViewInputBar.placeholder = s.appending((conversation.account.stringValue.split(separator: "@").first!).dropFirst())
-        }
-        
+//        if let s = (conversation.account.stringValue.split(separator: "@").first)?.prefix(1).uppercased() {
+//        chatViewInputBar.placeholder = s.appending((conversation.account.stringValue.split(separator: "@").first!).dropFirst())
+//        }
+        chatViewInputBar.placeholder = "send Message"
      //   chatViewInputBar.placeholder = "from \(conversation.account.stringValue)...";
 
         navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem;

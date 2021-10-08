@@ -257,14 +257,17 @@ class ChatsListViewController: UITableViewController {
         
 //        if let item = dataSource?.item(at: indexPath) {
 //            cell.update(conversation: item.chat);
-//        }
+//        }        
+     
         
         if let item = dataSource?.item(at: indexPath) {
+            print(item.name)
+            cell.update(conversation: item.chat);
             if let s = (item.name.split(separator: "@").first)?.prefix(1).uppercased() {
+                print(s)
+                print(s.appending((item.name.split(separator: "@").first!).dropFirst()))
                 cell.nameLabel.text = s.appending((item.name.split(separator: "@").first!).dropFirst())
             }
-            cell.update(conversation: item.chat);
-
         }
         cell.avatarStatusView.updateCornerRadius();
         
@@ -520,6 +523,7 @@ class ChatsListViewController: UITableViewController {
                     self?.update(items: items);
                 }).store(in: &cancellables);
             }
+            
         }
         
         func update(items: [Conversation]) {
@@ -563,6 +567,7 @@ class ChatsListViewController: UITableViewController {
                 }
                 self.controller?.tableView.endUpdates();
             }
+            
 
             if #available(iOS 13.2, *) {
                 DispatchQueue.main.sync {

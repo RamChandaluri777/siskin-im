@@ -166,7 +166,7 @@
 		5A7C19B48DFF66123805C34AC8BE9F5F /* Pods-Siskin IM.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Siskin IM.modulemap"; sourceTree = "<group>"; };
 		5C228A593F97CF77696D7628749C2622 /* Cipher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Cipher.swift; path = Sources/CryptoSwift/Cipher.swift; sourceTree = "<group>"; };
 		5E967D80AE26051641019BFB6B350C6B /* Scrypt.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Scrypt.swift; path = Sources/CryptoSwift/Scrypt.swift; sourceTree = "<group>"; };
-		5F6BA03A0925860EA21A0CB5F550E9CB /* TransitionButton */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = TransitionButton; path = TransitionButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F6BA03A0925860EA21A0CB5F550E9CB /* TransitionButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TransitionButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		60D23C20CF70C22EA0D9FD2AB8176D14 /* BlockDecryptor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BlockDecryptor.swift; path = Sources/CryptoSwift/BlockDecryptor.swift; sourceTree = "<group>"; };
 		6107B1659F227C04D56D05E7128C91D0 /* Pods-Shared-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Shared-acknowledgements.plist"; sourceTree = "<group>"; };
 		6117D26974E353FCB144B3060BED93FB /* Pods-Siskin IM-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Siskin IM-umbrella.h"; sourceTree = "<group>"; };
@@ -203,7 +203,7 @@
 		9576DDCAEF9FFB14F355A7B7C8D08B57 /* Cryptors.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Cryptors.swift; path = Sources/CryptoSwift/Cryptors.swift; sourceTree = "<group>"; };
 		9637E0F14F73E7C3BD5387C28A55BD19 /* Operators.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Operators.swift; path = Sources/CryptoSwift/Operators.swift; sourceTree = "<group>"; };
 		9971FB739033639A2D3EF7BE52670470 /* BatchedCollection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BatchedCollection.swift; path = Sources/CryptoSwift/BatchedCollection.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E346FA205E3F78EB8979FD0E46CFC1F /* PKCS5.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PKCS5.swift; path = Sources/CryptoSwift/PKCS/PKCS5.swift; sourceTree = "<group>"; };
 		A36FD20A65EE5D2B376E57D6EFFF9201 /* Pods-NotificationService-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NotificationService-umbrella.h"; sourceTree = "<group>"; };
 		A4411994AD41D222649ACC52E05C9C4D /* Pods-Siskin IM-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Siskin IM-frameworks.sh"; sourceTree = "<group>"; };
@@ -259,7 +259,7 @@
 		F0EE37AEB5540828006C88FDAE8EFFD5 /* Checksum.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Checksum.swift; path = Sources/CryptoSwift/Checksum.swift; sourceTree = "<group>"; };
 		F0FA89196C573059B2B2C465660675F0 /* TransitionButton.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TransitionButton.debug.xcconfig; sourceTree = "<group>"; };
 		F159D04B06909D905D1752153C40F869 /* CCM.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CCM.swift; path = Sources/CryptoSwift/BlockMode/CCM.swift; sourceTree = "<group>"; };
-		F2A343575C643D7294B2A631A183BB35 /* Pods-Siskin IM - Share */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-Siskin IM - Share"; path = Pods_Siskin_IM___Share.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2A343575C643D7294B2A631A183BB35 /* Pods-Siskin IM - Share */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-Siskin IM - Share"; path = "Pods_Siskin_IM___Share.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F81274EDB681F11E7CB05F7DCA2BB33C /* CryptoSwift */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CryptoSwift; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F89E98E3D6E1406161827CE3164CD162 /* Pods-Siskin IM-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Siskin IM-Info.plist"; sourceTree = "<group>"; };
 		FCB6AF433D4655BCA260E83EF4ED86C2 /* CMAC.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CMAC.swift; path = Sources/CryptoSwift/CMAC.swift; sourceTree = "<group>"; };
@@ -421,7 +421,7 @@
 				2EA8CAC26090891B8445F19C85F02C11 /* Pods-Shared */,
 				B525B89871D754AE0E4064F3A82A4D72 /* Pods-Siskin IM */,
 				F2A343575C643D7294B2A631A183BB35 /* Pods-Siskin IM - Share */,
-				5F6BA03A0925860EA21A0CB5F550E9CB /* TransitionButton */,
+				5F6BA03A0925860EA21A0CB5F550E9CB /* TransitionButton.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -436,7 +436,6 @@
 				B244158ACC612DE0CB7CE5DD48085B03 /* TransitionButton.swift */,
 				326B2DFABA763E5F839BB815CC42612D /* Support Files */,
 			);
-			name = TransitionButton;
 			path = TransitionButton;
 			sourceTree = "<group>";
 		};
@@ -573,7 +572,6 @@
 				8DACCF1253DE2EE4E44423FD980184FB /* ZeroPadding.swift */,
 				C371B6EA34FFF4AC3E69EDEB46DB0831 /* Support Files */,
 			);
-			name = CryptoSwift;
 			path = CryptoSwift;
 			sourceTree = "<group>";
 		};
@@ -683,7 +681,7 @@
 			dependencies = (
 			);
 			name = "Pods-Siskin IM - Share";
-			productName = Pods_Siskin_IM___Share;
+			productName = "Pods_Siskin_IM___Share";
 			productReference = F2A343575C643D7294B2A631A183BB35 /* Pods-Siskin IM - Share */;
 			productType = "com.apple.product-type.framework";
 		};
@@ -738,7 +736,7 @@
 			);
 			name = TransitionButton;
 			productName = TransitionButton;
-			productReference = 5F6BA03A0925860EA21A0CB5F550E9CB /* TransitionButton */;
+			productReference = 5F6BA03A0925860EA21A0CB5F550E9CB /* TransitionButton.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -1129,7 +1127,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/TransitionButton/TransitionButton-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/TransitionButton/TransitionButton-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1240,7 +1238,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/TransitionButton/TransitionButton-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/TransitionButton/TransitionButton-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

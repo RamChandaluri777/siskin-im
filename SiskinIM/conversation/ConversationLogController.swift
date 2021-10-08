@@ -144,10 +144,10 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
                 cell.set(item: item, message: message);
                 return cell;
             } else {
-                // let id = isContinuation(at: indexPath.row, for: item) ? "ChatTableViewMessageContinuationCell" : "ChatTableViewMessageCell";
-                // let cell: ChatTableViewCell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! ChatTableViewCell;
-                // cell.contentView.transform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: 0);
-                // cell.set(item: item, message: message, correctionTimestamp: correctionTimestamp);
+//                 let id = isContinuation(at: indexPath.row, for: item) ? "ChatTableViewMessageContinuationCell" : "ChatTableViewMessageCell";
+//                 let cell: ChatTableViewCell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! ChatTableViewCell;
+//                 cell.contentView.transform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: 0);
+//                 cell.set(item: item, message: message, correctionTimestamp: correctionTimestamp);
                 // return cell;
                  
                  switch item.state {

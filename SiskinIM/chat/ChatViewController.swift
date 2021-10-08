@@ -59,6 +59,16 @@ class ChatViewController : BaseChatViewControllerWithDataSourceAndContextMenuAnd
             buttons.append(self.smallBarButtinItem(image: UIImage(named: "audioCall")!, action: #selector(self.audioCall)));
            // self.navigationItem.rightBarButtonItems = buttons;
         }
+        
+        
+        let namePublisher = chat.displayNamePublisher
+        let avatarPublisher = chat.avatarPublisher
+        
+        namePublisher.combineLatest(avatarPublisher).receive(on: DispatchQueue.main).sink(receiveValue: { [weak self] name, image in
+            self?.titleView.imageAvatar.set(name: name, avatar: image);
+        }).store(in: &cancellables);
+        
+        
     }
     
     @objc func showBuddyInfo(_ button: Any) {
@@ -70,6 +80,16 @@ class ChatViewController : BaseChatViewControllerWithDataSourceAndContextMenuAnd
         //contactView.showEncryption = true;
         navigation.title = self.navigationItem.title;
         navigation.modalPresentationStyle = .formSheet;
+        
+        
+        
+        
+//        if let namePublisher = chat?.displayNamePublisher, let avatarPublisher = chat.avatarPublisher {
+//                        namePublisher.combineLatest(avatarPublisher).receive(on: DispatchQueue.main).sink(receiveValue: { [weak self] name, image in
+//                            self?.titleView.imageAvatar.set(name: name, avatar: image);
+//                        }).store(in: &cancellables);
+//                    }
+        
         self.present(navigation, animated: true, completion: nil);
 
     }
@@ -184,6 +204,8 @@ class ChatViewController : BaseChatViewControllerWithDataSourceAndContextMenuAnd
 
 class BaseConversationTitleView: UIView {
     
+    
+    
     @IBOutlet var nameView: UILabel!;
     @IBOutlet var statusView: UILabel!;
     
@@ -195,6 +217,8 @@ class BaseConversationTitleView: UIView {
 class ChatTitleView: BaseConversationTitleView {
 
     var encryption: ChatEncryption? = nil;
+    
+    @IBOutlet var imageAvatar: AvatarView!;
     
     var name: String? {
         get {
