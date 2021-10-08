@@ -259,7 +259,7 @@ public class Room: ConversationBaseWithOptions<RoomOptions>, RoomProtocol, Conve
                         "uuid":UUID().uuidString,
                         "contact-uuid":UUID().uuidString,
                         "created": NSDate().timeIntervalSince1970,
-                        "roomid":roomJid.localPart,
+                                            "roomid":roomJid.stringValue + "/" + (account?.localPart)!,
                         "original-uuid":message.originId]
             if let theJSONData = try? JSONSerialization.data(
                 withJSONObject: Roomdata,

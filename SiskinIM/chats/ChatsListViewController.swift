@@ -39,8 +39,15 @@ class ChatsListViewController: UITableViewController {
         
         tableView.dataSource = self;
         
+      
+        setColors();
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated);
         let ecdh = OTRECDHKeyExchange()
-        ecdh.deleteAllKeysInKeyChain()
+        
         if (ecdh.GetMyPrivateandPublickey() == false){
             self.AddBotRoaster()
             self.SendBotKey()
@@ -48,12 +55,6 @@ class ChatsListViewController: UITableViewController {
         if (ecdh.GetBotpublickey() == false){
             self.SendBotrequestKey()
            }
-        setColors();
-
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated);
         DBChatStore.instance.$unreadMessagesCount.throttle(for: 0.1, scheduler: DispatchQueue.main, latest: true).map({ $0 == 0 ? nil : "\($0)" }).sink(receiveValue: { [weak self] value in
             self?.navigationController?.tabBarItem.badgeValue = value;
         }).store(in: &cancellables);
@@ -114,9 +115,16 @@ class ChatsListViewController: UITableViewController {
     }
     
     private func setColors() {
-        navigationController?.navigationBar.barTintColor = UIColor(named: "chatslistBackground");
-        navigationController?.navigationBar.tintColor = UIColor.white;
-    }
+          let appearance = UINavigationBarAppearance();
+          appearance.configureWithDefaultBackground();
+          appearance.backgroundColor = UIColor(named: "chatslistSemiBackground");
+          appearance.backgroundEffect = UIBlurEffect(style: .systemMaterial);
+          navigationController?.navigationBar.standardAppearance = appearance;
+          navigationController?.navigationBar.scrollEdgeAppearance = appearance;
+          navigationController?.navigationBar.barTintColor = UIColor(named: "chatslistBackground");
+          navigationController?.navigationBar.tintColor = UIColor.white;
+      }
+ 
 
     override func viewDidDisappear(_ animated: Bool) {
         cancellables.removeAll();

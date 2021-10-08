@@ -284,7 +284,7 @@
                         <nil key="title"/>
                         <barButtonItem key="backBarButtonItem" title=" " id="Dx3-QU-3cN"/>
                         <view key="titleView" contentMode="scaleToFill" id="fc4-l0-VbW" customClass="ChatTitleView" customModule="Siskin" customModuleProvider="target">
-                            <rect key="frame" x="12" y="2" width="390" height="40"/>
+                            <rect key="frame" x="59" y="2" width="296" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="snC-zH-RQA" customClass="AvatarView" customModule="Siskin" customModuleProvider="target">
@@ -295,16 +295,16 @@
                                     </constraints>
                                 </imageView>
                                 <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="vls-oU-dVk">
-                                    <rect key="frame" x="45" y="0.0" width="340" height="40"/>
+                                    <rect key="frame" x="45" y="0.0" width="246" height="40"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" ambiguous="YES" text="Jane Done" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UWL-vQ-lxc">
-                                            <rect key="frame" x="0.0" y="0.0" width="340" height="25.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalCompressionResistancePriority="751" text="Jane Done" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UWL-vQ-lxc">
+                                            <rect key="frame" x="0.0" y="0.0" width="246" height="25.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" text="Here I'm again..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m0n-Ls-5LF">
-                                            <rect key="frame" x="0.0" y="25.5" width="340" height="14.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Here I'm again..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m0n-Ls-5LF">
+                                            <rect key="frame" x="0.0" y="25.5" width="246" height="14.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <color key="textColor" systemColor="secondaryLabelColor"/>
                                             <nil key="highlightedColor"/>
@@ -340,7 +340,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="4859.420289855073" y="-737.61160714285711"/>
+            <point key="canvasLocation" x="4859.420289855073" y="-737.94642857142856"/>
         </scene>
         <!--Empty View Controller-->
         <scene sceneID="hqR-ti-YNP">
@@ -459,8 +459,14 @@
                     <tabBar key="tabBar" alpha="0.94999999999999996" contentMode="scaleToFill" id="MWg-yL-VNP">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" name="chatslistBackground"/>
+                        <color key="barTintColor" name="chatslistSemiBackground"/>
                         <color key="selectedImageTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <tabBarAppearance key="standardAppearance" backgroundEffect="systemMaterial">
+                            <color key="backgroundColor" name="chatslistSemiBackground"/>
+                        </tabBarAppearance>
+                        <tabBarAppearance key="scrollEdgeAppearance" backgroundEffect="systemMaterial">
+                            <color key="backgroundColor" name="chatslistSemiBackground"/>
+                        </tabBarAppearance>
                     </tabBar>
                     <connections>
                         <segue destination="JxF-gw-olp" kind="relationship" relationship="viewControllers" id="ifN-oQ-Gcj"/>
@@ -1365,6 +1371,9 @@
         </namedColor>
         <namedColor name="chatslistItemSecondaryLabel">
             <color white="0.85000002384185791" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </namedColor>
+        <namedColor name="chatslistSemiBackground">
+            <color red="0.0" green="0.364877849817276" blue="0.51637166738510132" alpha="0.5" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="tintColor">
             <color red="0.33000001311302185" green="0.33000001311302185" blue="0.48800000548362732" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

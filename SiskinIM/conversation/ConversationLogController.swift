@@ -144,43 +144,49 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
                 cell.set(item: item, message: message);
                 return cell;
             } else {
-//                 let id = isContinuation(at: indexPath.row, for: item) ? "ChatTableViewMessageContinuationCell" : "ChatTableViewMessageCell";
-//                 let cell: ChatTableViewCell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! ChatTableViewCell;
-//                 cell.contentView.transform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: 0);
-//                 cell.set(item: item, message: message, correctionTimestamp: correctionTimestamp);
-                // return cell;
+//
+                if item.sender.isGroupchat{
+                    
+                    let id = isContinuation(at: indexPath.row, for: item) ? "ChatTableViewMessageContinuationCell" : "ChatTableViewMessageCell";
+                                     let cell: ChatTableViewCell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! ChatTableViewCell;
+                                     cell.contentView.transform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: 0);
+                                     cell.set(item: item, message: message, correctionTimestamp: correctionTimestamp);
+                                     return cell;
+                }else{
+                    switch item.state {
+                    case.incoming(_):
+                        
+                        let cell = tableView.dequeueReusableCell(withIdentifier: "LeftViewCell") as! LeftViewCell
+                        cell.contentView.transform = tableView.transform
+                        cell.configureCell(item: item, message: message, correctionTimestamp: correctionTimestamp)//(message: message)
+                        return cell
+                    case.outgoing(_):
+                        let cell = tableView.dequeueReusableCell(withIdentifier: "RightViewCell") as! RightViewCell
+                        cell.contentView.transform = tableView.transform
+                        cell.configureCell(item: item, message: message, correctionTimestamp:correctionTimestamp)//(message: message)
+                        return cell
+                    case .none:
+                            print("none")
+                       return UITableViewCell()
+                     //   return tableView.dequeueReusableCell(withIdentifier: "ChatTableViewCellIncoming", for: indexPath);
+                    case .incoming_error(_, errorMessage: _):
+                        print("incoming error")
+                       let cell = tableView.dequeueReusableCell(withIdentifier: "LeftViewCell") as! LeftViewCell
+                       cell.contentView.transform = tableView.transform
+                       cell.configureCell(item: item, message: message, correctionTimestamp: correctionTimestamp)//(message: message)
+                       return cell
+                       // return tableView.dequeueReusableCell(withIdentifier: "ChatTableViewCellIncoming", for: indexPath);
+                    case .outgoing_error(_, errorMessage: _):
+                        print("outgoing error")
+                       let cell = tableView.dequeueReusableCell(withIdentifier: "RightViewCell") as! RightViewCell
+                       cell.contentView.transform = tableView.transform
+                       cell.configureCell(item: item, message: message, correctionTimestamp:correctionTimestamp)//(message: message)
+                       return cell
+                       // return tableView.dequeueReusableCell(withIdentifier: "ChatTableViewCellIncoming", for: indexPath);
+                    }
+                }
                  
-                 switch item.state {
-                 case.incoming(_):
-                     
-                     let cell = tableView.dequeueReusableCell(withIdentifier: "LeftViewCell") as! LeftViewCell
-                     cell.contentView.transform = tableView.transform
-                     cell.configureCell(item: item, message: message, correctionTimestamp: correctionTimestamp)//(message: message)
-                     return cell
-                 case.outgoing(_):
-                     let cell = tableView.dequeueReusableCell(withIdentifier: "RightViewCell") as! RightViewCell
-                     cell.contentView.transform = tableView.transform
-                     cell.configureCell(item: item, message: message, correctionTimestamp:correctionTimestamp)//(message: message)
-                     return cell
-                 case .none:
-                         print("none")
-                    return UITableViewCell()
-                  //   return tableView.dequeueReusableCell(withIdentifier: "ChatTableViewCellIncoming", for: indexPath);
-                 case .incoming_error(_, errorMessage: _):
-                     print("incoming error")
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "LeftViewCell") as! LeftViewCell
-                    cell.contentView.transform = tableView.transform
-                    cell.configureCell(item: item, message: message, correctionTimestamp: correctionTimestamp)//(message: message)
-                    return cell
-                    // return tableView.dequeueReusableCell(withIdentifier: "ChatTableViewCellIncoming", for: indexPath);
-                 case .outgoing_error(_, errorMessage: _):
-                     print("outgoing error")
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "RightViewCell") as! RightViewCell
-                    cell.contentView.transform = tableView.transform
-                    cell.configureCell(item: item, message: message, correctionTimestamp:correctionTimestamp)//(message: message)
-                    return cell
-                    // return tableView.dequeueReusableCell(withIdentifier: "ChatTableViewCellIncoming", for: indexPath);
-                 }
+          
                  
              }
         case .linkPreview(let url):

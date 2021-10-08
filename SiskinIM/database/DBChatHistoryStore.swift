@@ -204,7 +204,12 @@ class DBChatHistoryStore {
         var fromArchive = false;
 
         var inTimestamp: Date?;
-
+        var body = message.body ?? nil
+        if body != nil {
+            if ( message.body!.contains("aesgcm://chat.securesignal")){
+                itemType = .attachment
+            }
+        }
         switch source {
         case .archive(let source, let version, let messageId, let timestamp):
             if version == .MAM2 {
@@ -293,7 +298,7 @@ class DBChatHistoryStore {
         }
         
         let options = ConversationEntry.Options(recipient: recipient, encryption: .from(messageEncryption: encryption, fingerprint: fingerprint), isMarkable: message.isMarkable)
-
+       
         self.appendItemSync(for: conversation, state: state, sender: sender, type: itemType, timestamp: timestamp, stanzaId: stanzaId, serverMsgId: serverMsgId, remoteMsgId: remoteMsgId, data: body, chatState: message.chatState, appendix: appendix, options: options, linkPreviewAction: .auto, masterId: nil, completionHandler: nil);
 
         if state.direction == .outgoing {

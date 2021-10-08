@@ -72,12 +72,7 @@ class BaseChatViewController: UIViewController, UITextViewDelegate, ChatViewInpu
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        if let s = (conversation.account.stringValue.split(separator: "@").first)?.prefix(1).uppercased() {
-//        chatViewInputBar.placeholder = s.appending((conversation.account.stringValue.split(separator: "@").first!).dropFirst())
-//        }
-        chatViewInputBar.placeholder = "send Message"
-     //   chatViewInputBar.placeholder = "from \(conversation.account.stringValue)...";
+        chatViewInputBar.placeholder = "Send Message";
 
         navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem;
         navigationItem.leftItemsSupplementBackButton = true;
@@ -175,11 +170,12 @@ class BaseChatViewController: UIViewController, UITextViewDelegate, ChatViewInpu
     }
     
     private func setColors() {
-        if #available(iOS 13.0, *) {
-            navigationController?.navigationBar.barTintColor = UIColor.systemBackground;
-        } else {
-            navigationController?.navigationBar.barTintColor = UIColor.white;
-        }
+        let appearance = UINavigationBarAppearance();
+        appearance.configureWithDefaultBackground();
+        appearance.backgroundEffect = UIBlurEffect.init(style: .systemMaterial);
+        navigationController?.navigationBar.standardAppearance = appearance;
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance;
+        navigationController?.navigationBar.barTintColor = UIColor.systemBackground;
         navigationController?.navigationBar.tintColor = UIColor(named: "tintColor");
     }
     

@@ -103,6 +103,62 @@ class MessageEventHandler: XmppServiceEventHandler {
             }
             
         }
+        if messagetext.contains("TYPE_DH_ENCRYPTED"){
+                  let ecdh = OTRECDHKeyExchange()
+                  let groupdata = messagetext.data(using: .utf8)
+                  if let savemessage: MessageSave = try? JSONDecoder().decode(MessageSave.self, from: groupdata!) {
+                      if (ecdh.GetBotpublickey() == true){
+                          let decryptedJSON = ecdh.decryptmessage(Encrypteddata: (savemessage.body?.data)!)
+                          print(decryptedJSON)
+                          let jsonData = decryptedJSON.data(using: .utf8)
+                          do{
+                              let topLevel = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableLeaves) as? NSDictionary
+                              var remotemessageid:String?
+                              if topLevel!["body"] != nil {
+      
+                                  let roomId = topLevel!["roomid"] as! String
+                                  let original = topLevel!["original"] as! String
+                                  let roomJid = JID("\(roomId)")
+                                  var originalJid = (JID("\(original)@chat.securesignal.in"))
+                                  var finalBody = topLevel!["body"] as! String
+                                 remotemessageid = topLevel!["original-uuid"] as? String
+                                  if (finalBody.contains("aesgcm://chat.securesignal.in:54403/upload/")) && (finalBody.contains("^$$%^")){
+                                 var componenText = finalBody.components(separatedBy: "|")[0]
+                                      var replytext = finalBody.components(separatedBy: "|")[3]
+                                      var replyItems = replytext.components(separatedBy: "?")
+                                     finalBody = componenText + "?" + replyItems[1] + "?" + replyItems[2]
+      
+      
+                                  }else if(finalBody.contains("aesgcm://chat.securesignal.in:54403/upload/")){
+                                      finalBody = finalBody.components(separatedBy: "|")[0]
+                                  }else{
+                                      print("room Message is \(finalBody)")
+//                                     return (finalBody,encryption,fingerprint)
+                                  }
+                                  
+                                if let account = AccountManager.getActiveAccounts().first?.name {
+                                    guard let client = XmppService.instance.getClient(for: account) else {
+                                                return  (body,encryption,fingerprint)
+                                            }
+                                    message.from = roomJid
+                                    message.type = .groupchat
+                                    message.body = finalBody
+                                  let room = DBChatStore.instance.room(for: client, with: roomJid.bareJid)
+                                DBChatHistoryStore.instance.append(for: room as! ConversationKey, message: message, source: .stream);
+                                                  
+                                 }
+                                  
+                          }else{
+                             print("Error decrypting bot message")
+                          }
+                          }catch{
+                              print("GROUP MESSAGE RECEIVED but not added in group (handle direct message)")
+                          }
+      
+      
+                  }
+              }
+              }
         
         if messagetext.contains("TYPE_PUBLIC_KEY_REQUEST"){
             var publickeybase64encoded:String?
@@ -517,8 +573,9 @@ class MessageEventHandler: XmppServiceEventHandler {
     }
     
     static func itemType(fromMessage message: Message) -> ItemType {
+   
         if let oob = message.oob {
-            if (message.body == nil || oob == message.body), URL(string: oob) != nil {
+            if (message.body == nil || oob == message.body),URL(string: oob) != nil {
                 return .attachment;
             }
         }

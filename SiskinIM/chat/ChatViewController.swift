@@ -48,6 +48,8 @@ class ChatViewController : BaseChatViewControllerWithDataSourceAndContextMenuAnd
         super.viewDidLoad()
         
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(ChatViewController.showBuddyInfo));
+        let leftTitle = UIBarButtonItem.init(customView: titleView)
+       // self.navigationItem.leftBarButtonItems = [leftTitle]
         self.titleView.isUserInteractionEnabled = true;
         self.navigationController?.navigationBar.addGestureRecognizer(recognizer);
 
