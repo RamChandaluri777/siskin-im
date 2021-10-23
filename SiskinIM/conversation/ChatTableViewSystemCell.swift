@@ -22,14 +22,10 @@
 import UIKit
 
 class ChatTableViewSystemCell: UITableViewCell {
-    
     @IBOutlet var messageView: UILabel!
-    
 }
 
 class ChatTableViewMeCell: UITableViewCell {
-    
-
     @IBOutlet var messageView: MessageTextView!
     
     func set(item: ConversationEntry, message msg: String) {
@@ -39,5 +35,5 @@ class ChatTableViewMeCell: UITableViewCell {
         message.append(NSAttributedString(string: "\(msg.dropFirst(4))", attributes: [.font: UIFont(descriptor: preferredFont.fontDescriptor.withSymbolicTraits(.traitItalic)!, size: 0), .foregroundColor: UIColor.secondaryLabel]));
         self.messageView.attributedText = message;
     }
-
+    
 }

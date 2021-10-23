@@ -13,6 +13,8 @@ class RightViewCell: UITableViewCell {
     @IBOutlet weak var messageContainerView: UIView!
     @IBOutlet weak var textMessageLabel: UILabel!
     @IBOutlet var lblTimeOfMessage: UILabel!
+    @IBOutlet var heightTimeStampConstraints: NSLayoutConstraint!
+    @IBOutlet var lblTimeStamp: UILabel!
     var id: Int = 0;
     
     @IBOutlet var imgVWOfstate: UIImageView!
@@ -91,7 +93,6 @@ class RightViewCell: UITableViewCell {
                 }
             }
         }
-        
         textMessageLabel.attributedText = attrText
     }
     

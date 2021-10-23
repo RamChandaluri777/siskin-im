@@ -1373,7 +1373,7 @@
             <color white="0.85000002384185791" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </namedColor>
         <namedColor name="chatslistSemiBackground">
-            <color red="0.0" green="0.364877849817276" blue="0.51637166738510132" alpha="0.5" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.0" green="0.36500000953674316" blue="0.51599997282028198" alpha="0.5" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="tintColor">
             <color red="0.33000001311302185" green="0.33000001311302185" blue="0.48800000548362732" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
