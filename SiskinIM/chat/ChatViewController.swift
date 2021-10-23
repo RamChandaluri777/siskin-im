@@ -62,7 +62,6 @@ class ChatViewController : BaseChatViewControllerWithDataSourceAndContextMenuAnd
            // self.navigationItem.rightBarButtonItems = buttons;
         }
         
-        
         let namePublisher = chat.displayNamePublisher
         let avatarPublisher = chat.avatarPublisher
         

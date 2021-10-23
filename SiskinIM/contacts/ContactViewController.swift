@@ -46,7 +46,6 @@ class ContactViewController: UITableViewController {
         return vcard?.emails ?? [];
     }
     
-    
     fileprivate var sections: [Sections] = [.basic];
     
     override func viewDidLoad() {

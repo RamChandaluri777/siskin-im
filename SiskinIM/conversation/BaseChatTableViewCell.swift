@@ -106,8 +106,11 @@ class BaseChatTableViewCell: UITableViewCell, UIDocumentInteractionControllerDel
             avatarView!.layer.cornerRadius = avatarView!.frame.height / 2;
         }
         stateView?.textColor = UIColor.secondaryLabel;
-        nicknameView?.textColor = UIColor.secondaryLabel;
+        nicknameView?.textColor = .green//UIColor.secondaryLabel;
         nicknameView?.font = UIFontMetrics(forTextStyle: .footnote).scaledFont(for: UIFont(descriptor: UIFont.preferredFont(forTextStyle: .footnote).fontDescriptor.withSymbolicTraits(.traitBold)!, size: 0));
+        self.avatarView?.isHidden = true
+        self.nicknameView?.isHidden = true
+        self.stateView?.isHidden = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

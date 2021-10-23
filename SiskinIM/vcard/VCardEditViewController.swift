@@ -428,6 +428,7 @@ class VCardEditViewController: UITableViewController, UIImagePickerControllerDel
                         case .failure(let error):
                             DispatchQueue.main.async {
                                 let alert = UIAlertController(title: NSLocalizedString("Error", comment: "alert title"), message: String.localizedStringWithFormat(NSLocalizedString("User avatar publication failed.\nReason: %@", comment: "alert body"), error.localizedDescription), preferredStyle: .alert);
+                                print(error.localizedDescription)
                                 alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "button label"), style: .cancel, handler: nil));
                                 self.present(alert, animated: true, completion: nil);
                             }

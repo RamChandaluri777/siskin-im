@@ -215,7 +215,6 @@ class ConversationDataSource {
         }
 
         let oldestEntry = newStore.last(where: { $0.sender != .none });
-        
         let changes = newStore.calculateChanges(from: oldStore);
         let initial = self.state != .loaded;
         DispatchQueue.main.sync {

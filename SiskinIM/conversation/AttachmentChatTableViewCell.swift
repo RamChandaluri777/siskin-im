@@ -64,23 +64,20 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
         tapGestureRecognizer?.cancelsTouchesInView = false;
         tapGestureRecognizer?.numberOfTapsRequired = 2;
         customView.addGestureRecognizer(tapGestureRecognizer!);
-        
         customView.addInteraction(UIContextMenuInteraction(delegate: self));
     }
         
     func set(item: ConversationEntry, url: String, appendix: ChatAttachmentAppendix) {
         self.item = item;
         super.set(item: item);
-        
         self.customView?.isOpaque = true;
-//        self.customView?.backgroundColor = self.backgroundColor;
         
         guard case let .attachment(url, appendix) = item.payload else {
             return;
         }
-        
         if !(appendix.mimetype?.starts(with: "audio/") ?? false), let localUrl = DownloadStore.instance.url(for: "\(item.id)") {
-            documentController = UIDocumentInteractionController(url: localUrl);
+            print(localUrl)
+            documentController = UIDocumentInteractionController(url: localUrl)
             var metadata = MetadataCache.instance.metadata(for: "\(item.id)");
             let isNew = metadata == nil;
             if metadata == nil {
@@ -88,13 +85,14 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
                 metadata!.originalURL = localUrl;
             } else {
                 metadata!.originalURL = nil;
-                //metadata!.url = nil;
+               // metadata!.url = nil;
                 //metadata!.title = "";
                 //metadata!.originalURL = localUrl;
                 metadata!.url = localUrl;
             }
-                
-            let linkView = /*(self.linkView as? LPLinkView) ??*/ LPLinkView(metadata: metadata!);
+            
+            let linkView = LPLinkView(metadata: metadata!);
+                        
             linkView.setContentHuggingPriority(.defaultHigh, for: .vertical);
             linkView.setContentCompressionResistancePriority(.defaultHigh, for: .vertical);
             linkView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal);
@@ -104,12 +102,13 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
             self.linkView = linkView;
             
             NSLayoutConstraint.activate([
-                linkView.topAnchor.constraint(equalTo: self.customView.topAnchor, constant: 0),
+                linkView.topAnchor.constraint(equalTo: self.customView.topAnchor, constant: 10),
                 linkView.bottomAnchor.constraint(equalTo: self.customView.bottomAnchor, constant: 0),
                 linkView.leadingAnchor.constraint(equalTo: self.customView.leadingAnchor, constant: 0),
                 linkView.trailingAnchor.constraint(equalTo: self.customView.trailingAnchor, constant: 0),
-                linkView.heightAnchor.constraint(lessThanOrEqualToConstant: 350)
+                linkView.heightAnchor.constraint(lessThanOrEqualToConstant: 250)
             ]);
+                 
                 
             if isNew {
                 MetadataCache.instance.generateMetadata(for: localUrl, withId: "\(item.id)", completionHandler: { [weak self] meta1 in
@@ -125,10 +124,6 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
             documentController = nil;
 
             let attachmentInfo = (self.linkView as? AttachmentInfoView) ?? AttachmentInfoView(frame: .zero);
-            //attachmentInfo.backgroundColor = self.backgroundColor;
-            //attachmentInfo.isOpaque = true;
-
-            //attachmentInfo.cellView = self;
             self.linkView = attachmentInfo;
             NSLayoutConstraint.activate([
                 customView.leadingAnchor.constraint(equalTo: attachmentInfo.leadingAnchor),
@@ -368,7 +363,6 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
             self.clipsToBounds = true
             self.translatesAutoresizingMaskIntoConstraints = false;
             self.isOpaque = false;
-            
             addSubview(iconView);
             addSubview(filename);
             addSubview(details);
@@ -451,7 +445,6 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
                 actionButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
                 actionButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0)
             ];
-            
             actionButton.addTarget(self, action: #selector(actionTapped(_:)), for: .touchUpInside);
         }
         

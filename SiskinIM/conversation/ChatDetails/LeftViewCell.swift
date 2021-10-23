@@ -13,6 +13,8 @@ class LeftViewCell : BaseChatTableViewCell {
     @IBOutlet weak var messageContainerView: UIView!
     @IBOutlet weak var textMessageLabel: UILabel!
     @IBOutlet var lblTimeOfMessage: UILabel!
+    @IBOutlet var heightTimestampCons: NSLayoutConstraint!
+    @IBOutlet var lblTimeStamp: UILabel!
     var id: Int = 0;
     
     override func awakeFromNib() {

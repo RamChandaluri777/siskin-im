@@ -21,6 +21,7 @@
 
 import UIKit
 import Combine
+import CoreAudio
 
 class ConversationLogController: UIViewController, ConversationDataSourceDelegate, UITableViewDataSource, UITableViewDelegate {
     
@@ -30,7 +31,11 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
 
     @IBOutlet var tableView: UITableView!;
     
-    let dataSource = ConversationDataSource();
+    var dataSource = ConversationDataSource();
+    var newlyAddedRow:Int?
+   // let dataSource = ConversationDataSource();
+    var dataSourceArraySection = [[ConversationEntry]]()
+    var arrayDateSection = NSMutableArray()
 
     var conversation: Conversation!;
         
@@ -44,12 +49,6 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
         super.viewDidLoad();
         self.setupTable()
         dataSource.delegate = self;
-
-        tableView.rowHeight = UITableView.automaticDimension;
-        tableView.estimatedRowHeight = 160.0;
-        tableView.separatorStyle = .none;
-        tableView.transform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: 0);
-        
         if let refreshControl = self.refreshControl {
             tableView.addSubview(refreshControl);
         }
@@ -60,16 +59,17 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
         
         NotificationCenter.default.addObserver(self, selector: #selector(showEditToolbar), name: NSNotification.Name("tableViewCellShowEditToolbar"), object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(refreshCell(_:)), name: ConversationLogController.REFRESH_CELL, object: nil);
-    }
+            }
     
     func setupTable() {
         // config tableView
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 160.0;
+        tableView.estimatedRowHeight = 160;
         tableView.separatorStyle = .none;
         tableView.transform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: 0);
         tableView.dataSource = self
-        tableView.delegate = self;
+        tableView.delegate = self
+        
         
         /*
          if Settings.appearance.description == "Auto" || Settings.appearance.description == "Light" {
@@ -104,23 +104,32 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
         super.viewWillAppear(animated);
     }
     
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated);
         hideEditToolbar();
     }
             
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1;
-    }
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//     //   print(arrayDateSection.count)
+//      //  return arrayDateSection.count;
+//
+//    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource.count;
+       // print("section>>>", section)
+      ///  print(dataSourceArraySection[section].count)
+      //  return dataSourceArraySection[section].count
+       // return dataSourceArraySection!.count;
+        return dataSource.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let item = dataSource.getItem(at: indexPath.row) else {
             return tableView.dequeueReusableCell(withIdentifier: "ChatTableViewCellIncoming", for: indexPath);
         }
+      //  let abc = dataSourceArraySection[indexPath.section]
+      //  let item = abc[indexPath.row]
 
         switch item.payload {
         case .unreadMessages:
@@ -158,11 +167,128 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
                         
                         let cell = tableView.dequeueReusableCell(withIdentifier: "LeftViewCell") as! LeftViewCell
                         cell.contentView.transform = tableView.transform
+                        if indexPath.row == 0 && self.newlyAddedRow == nil && dataSource.count == 1 {
+                           if dataSource.getItem(at: indexPath.row) != nil {
+                               cell.lblTimeStamp.isHidden = false
+                               let dateFormatterPrint = DateFormatter()
+                               dateFormatterPrint.dateFormat = "dd MMMM YYYY"
+                               let item = dataSource.getItem(at: indexPath.row)
+                               cell.heightTimestampCons.constant = 30
+                                   cell.lblTimeStamp.text = dateFormatterPrint.string(from: item!.timestamp)
+                           }
+                       } else if dataSource.count > 1 && self.newlyAddedRow == nil {
+                           if indexPath.row + 1 != dataSource.count {
+                               if dataSource.getItem(at: indexPath.row + 1) != nil && dataSource.getItem(at: indexPath.row) != nil {
+                                   let str1 = self.dataAccordingToDate(item1: dataSource.getItem(at: indexPath.row + 1)!, item2: dataSource.getItem(at: indexPath.row)!, index:indexPath.row, message:message)
+                                   cell.heightTimestampCons.constant = 30
+                                   if str1 == "" {
+                                       cell.heightTimestampCons.constant = 0
+                                       cell.lblTimeStamp.isHidden = true
+                                   } else {
+                                       cell.lblTimeStamp.isHidden = false
+                                       cell.lblTimeStamp.text = str1
+                                   }
+                               }
+                           } else if indexPath.row + 1 == dataSource.count {
+                               if dataSource.getItem(at: indexPath.row) != nil {
+                                   cell.lblTimeStamp.isHidden = false
+                                   let dateFormatterPrint = DateFormatter()
+                                   dateFormatterPrint.dateFormat = "dd MMMM YYYY"
+                                   let item = dataSource.getItem(at: indexPath.row)
+                                   cell.heightTimestampCons.constant = 30
+                                       cell.lblTimeStamp.text = dateFormatterPrint.string(from: item!.timestamp)
+                               }
+                           }
+                            
+                       } else if self.newlyAddedRow != nil && dataSource.count > 1 {
+                           if dataSource.getItem(at: self.newlyAddedRow! + 1) != nil && dataSource.getItem(at: self.newlyAddedRow!) != nil {
+                               let str1 = self.dataAccordingToDate(item1: dataSource.getItem(at: self.newlyAddedRow! + 1)!, item2: dataSource.getItem(at: self.newlyAddedRow!)!, index:indexPath.row, message:message)
+                               cell.heightTimestampCons.constant = 30
+                               if str1 == "" {
+                                cell.heightTimestampCons.constant = 0
+                                   cell.lblTimeStamp.isHidden = true
+                               } else {
+                                   cell.lblTimeStamp.isHidden = false
+                                   cell.lblTimeStamp.text = str1
+                               }
+                           }
+                           self.newlyAddedRow = nil
+                       } else if self.newlyAddedRow != nil && dataSource.count == 1 {
+                           
+                           if dataSource.getItem(at: indexPath.row) != nil {
+                               cell.lblTimeStamp.isHidden = false
+                               let dateFormatterPrint = DateFormatter()
+                               dateFormatterPrint.dateFormat = "dd MMMM YYYY"
+                               let item = dataSource.getItem(at: indexPath.row)
+                               cell.heightTimestampCons.constant = 30
+                                   cell.lblTimeStamp.text = dateFormatterPrint.string(from: item!.timestamp)
+                           }
+                           self.newlyAddedRow = nil
+                       }
                         cell.configureCell(item: item, message: message, correctionTimestamp: correctionTimestamp)//(message: message)
                         return cell
                     case.outgoing(_):
                         let cell = tableView.dequeueReusableCell(withIdentifier: "RightViewCell") as! RightViewCell
                         cell.contentView.transform = tableView.transform
+                        if indexPath.row == 0 && self.newlyAddedRow == nil && dataSource.count == 1 {
+                           if dataSource.getItem(at: indexPath.row) != nil {
+                               cell.lblTimeStamp.isHidden = false
+                               let dateFormatterPrint = DateFormatter()
+                               dateFormatterPrint.dateFormat = "dd MMMM YYYY"
+                               let item = dataSource.getItem(at: indexPath.row)
+                               cell.heightTimeStampConstraints.constant = 30
+                                   cell.lblTimeStamp.text = dateFormatterPrint.string(from: item!.timestamp)
+                           }
+                       } else if dataSource.count > 1 && self.newlyAddedRow == nil {
+                           if indexPath.row + 1 != dataSource.count {
+                               if dataSource.getItem(at: indexPath.row + 1) != nil && dataSource.getItem(at: indexPath.row) != nil {
+                                   let str1 = self.dataAccordingToDate(item1: dataSource.getItem(at: indexPath.row + 1)!, item2: dataSource.getItem(at: indexPath.row)!, index:indexPath.row, message:message)
+                                   print(str1)
+                                   cell.heightTimeStampConstraints.constant = 30
+                                   if str1 == "" {
+                                       cell.heightTimeStampConstraints.constant = 0
+                                       cell.lblTimeStamp.isHidden = true
+                                   } else {
+                                       cell.lblTimeStamp.isHidden = false
+                                       cell.lblTimeStamp.text = str1
+                                   }
+                               }
+                           } else if indexPath.row + 1 == dataSource.count {
+                               if dataSource.getItem(at: indexPath.row) != nil {
+                                   cell.lblTimeStamp.isHidden = false
+                                   let dateFormatterPrint = DateFormatter()
+                                   dateFormatterPrint.dateFormat = "dd MMMM YYYY"
+                                   let item = dataSource.getItem(at: indexPath.row)
+                                   cell.heightTimeStampConstraints.constant = 30
+                                       cell.lblTimeStamp.text = dateFormatterPrint.string(from: item!.timestamp)
+                               }
+                           }
+                            
+                       } else if self.newlyAddedRow != nil && dataSource.count > 1 {
+                           if dataSource.getItem(at: self.newlyAddedRow! + 1) != nil && dataSource.getItem(at: self.newlyAddedRow!) != nil {
+                               let str1 = self.dataAccordingToDate(item1: dataSource.getItem(at: self.newlyAddedRow! + 1)!, item2: dataSource.getItem(at: self.newlyAddedRow!)!, index:indexPath.row, message:message)
+                               cell.heightTimeStampConstraints.constant = 30
+                               if str1 == "" {
+                                   cell.heightTimeStampConstraints.constant = 0
+                                   cell.lblTimeStamp.isHidden = true
+                               } else {
+                                   cell.lblTimeStamp.isHidden = false
+                                   cell.lblTimeStamp.text = str1
+                               }
+                           }
+                           self.newlyAddedRow = nil
+                       } else if self.newlyAddedRow != nil && dataSource.count == 1 {
+                           
+                           if dataSource.getItem(at: indexPath.row) != nil {
+                               cell.lblTimeStamp.isHidden = false
+                               let dateFormatterPrint = DateFormatter()
+                               cell.heightTimeStampConstraints.constant = 30
+                               dateFormatterPrint.dateFormat = "dd MMMM YYYY"
+                               let item = dataSource.getItem(at: indexPath.row)
+                                   cell.lblTimeStamp.text = dateFormatterPrint.string(from: item!.timestamp)
+                           }
+                           self.newlyAddedRow = nil
+                       }
                         cell.configureCell(item: item, message: message, correctionTimestamp:correctionTimestamp)//(message: message)
                         return cell
                     case .none:
@@ -185,9 +311,6 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
                        // return tableView.dequeueReusableCell(withIdentifier: "ChatTableViewCellIncoming", for: indexPath);
                     }
                 }
-                 
-          
-                 
              }
         case .linkPreview(let url):
             let id = "ChatTableViewLinkPreviewCell";
@@ -199,10 +322,76 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
             let id = isContinuation(at: indexPath.row, for: item) ? "ChatTableViewAttachmentContinuationCell" : "ChatTableViewAttachmentCell" ;
             let cell: AttachmentChatTableViewCell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! AttachmentChatTableViewCell;
             cell.contentView.transform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: 0);
-            cell.set(item: item, url: url, appendix: appendix);
-//            cell.setNeedsUpdateConstraints();
-//            cell.updateConstraintsIfNeeded();
+            let lbl = UILabel()
+            lbl.frame = CGRect(x: 0, y: 0, width: cell.frame.size.width, height: 30)
+            lbl.font = UIFont.systemFont(ofSize: 12.0)
+            lbl.backgroundColor = .white
+            lbl.textAlignment = .center
+            lbl.textColor = .black
+            lbl.text = "today"
+            cell.contentView.addSubview(lbl)
             
+            
+            if indexPath.row == 0 && self.newlyAddedRow == nil && dataSource.count == 1 {
+               if dataSource.getItem(at: indexPath.row) != nil {
+                   lbl.isHidden = false
+                   let dateFormatterPrint = DateFormatter()
+                   dateFormatterPrint.dateFormat = "dd MMMM YYYY"
+                   let item = dataSource.getItem(at: indexPath.row)
+                   lbl.frame.size.height = 0
+                   lbl.text = dateFormatterPrint.string(from: item!.timestamp)
+               }
+           } else if dataSource.count > 1 && self.newlyAddedRow == nil {
+               if indexPath.row + 1 != dataSource.count {
+                   if dataSource.getItem(at: indexPath.row + 1) != nil && dataSource.getItem(at: indexPath.row) != nil {
+                       let str1 = self.dataAccordingToDate(item1: dataSource.getItem(at: indexPath.row + 1)!, item2: dataSource.getItem(at: indexPath.row)!, index:indexPath.row, message:"")
+                       print(str1)
+                       lbl.frame.size.height = 30
+                       if str1 == "" {
+                           lbl.frame.size.height = 0
+                           lbl.isHidden = true
+                       } else {
+                           lbl.isHidden = false
+                           lbl.text = str1
+                       }
+                   }
+               } else if indexPath.row + 1 == dataSource.count {
+                   if dataSource.getItem(at: indexPath.row) != nil {
+                       lbl.isHidden = false
+                       let dateFormatterPrint = DateFormatter()
+                       dateFormatterPrint.dateFormat = "dd MMMM YYYY"
+                       let item = dataSource.getItem(at: indexPath.row)
+                       lbl.frame.size.height = 0
+                       lbl.text = dateFormatterPrint.string(from: item!.timestamp)
+                   }
+               }
+                
+           } else if self.newlyAddedRow != nil && dataSource.count > 1 {
+               if dataSource.getItem(at: self.newlyAddedRow! + 1) != nil && dataSource.getItem(at: self.newlyAddedRow!) != nil {
+                   let str1 = self.dataAccordingToDate(item1: dataSource.getItem(at: self.newlyAddedRow! + 1)!, item2: dataSource.getItem(at: self.newlyAddedRow!)!, index:indexPath.row, message:"")
+                   lbl.frame.size.height = 30
+                   if str1 == "" {
+                       lbl.frame.size.height = 0
+                       lbl.isHidden = true
+                   } else {
+                       lbl.isHidden = false
+                       lbl.text = str1
+                   }
+               }
+               self.newlyAddedRow = nil
+           } else if self.newlyAddedRow != nil && dataSource.count == 1 {
+               
+               if dataSource.getItem(at: indexPath.row) != nil {
+                   lbl.isHidden = false
+                   let dateFormatterPrint = DateFormatter()
+                   lbl.frame.size.height = 0
+                   dateFormatterPrint.dateFormat = "dd MMMM YYYY"
+                   let item = dataSource.getItem(at: indexPath.row)
+                       lbl.text = dateFormatterPrint.string(from: item!.timestamp)
+               }
+               self.newlyAddedRow = nil
+           }
+            cell.set(item: item, url: url, appendix: appendix);
             return cell;
         case .invitation(let message, let appendix):
             let id = "ChatTableViewInvitationCell";
@@ -221,6 +410,57 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
         }
     }
     
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//
+//        //if section < arrayDateSection.count {
+//            if (arrayDateSection[section-1] as! Date).compare(Date()) == .orderedSame {
+//                return "today"
+//            } else {
+//                let dateFormatterPrint = DateFormatter()
+//                dateFormatterPrint.dateFormat = "dd MMMM YYYY"
+//                print(dateFormatterPrint.string(from: arrayDateSection[section-1] as! Date))
+//                return dateFormatterPrint.string(from: arrayDateSection[section-1] as! Date)
+//            }
+//          // }
+//        //   return nil
+//    }
+    
+    
+    
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//            return 20
+//        }
+//
+//     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//             let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 20))
+//
+//             let label = UILabel()
+//            // label.frame = CGRect.init(x: 5, y: 5, width: headerView.frame.width-10, height: headerView.frame.height-10)
+//             label.font = .systemFont(ofSize: 16)
+//             label.textColor = .white
+//         label.textAlignment = .center
+//         print(section)
+//         print(arrayDateSection[section] as! Date)
+//        if (arrayDateSection[section] as! Date).compare(Date()) == .orderedSame {
+//                         label.text = "today"
+//        } else {
+//                         let dateFormatterPrint = DateFormatter()
+//                         dateFormatterPrint.dateFormat = "dd MMMM YYYY"
+//                         label.text = dateFormatterPrint.string(from: arrayDateSection[section] as! Date)
+//        }
+//         label.backgroundColor = .darkGray
+//         label.layer.cornerRadius = 10.0
+//         label.layer.borderColor = UIColor.gray.cgColor
+//         label.layer.borderWidth = 0.5
+//         label.clipsToBounds = true
+//         label.sizeToFit()
+//         label.frame.size.width = label.frame.size.width + 20
+//         label.center.x = headerView.center.x
+//
+//             headerView.addSubview(label)
+//             return headerView
+//         }
+
     private func getPreviousEntry(before row: Int) -> ConversationEntry? {
         guard row >= 0 && (row + 1) < dataSource.count else {
             return nil;
@@ -251,7 +491,13 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
     }
     
     func itemsAdded(at rows: IndexSet, initial: Bool) {
-        let paths = rows.map({ IndexPath(row: $0, section: 0) });
+        let paths = rows.map({ IndexPath(row: $0, section: 0)});
+        self.newlyAddedRow = paths.last?.row
+//        let abc = (previousViewController as! ChatsListViewController).getDatabaseData()
+//        self.dataSource = abc.item(at: 0).chat
+//
+//        print(self.dataSourceArraySection[0].count)
+      //  tableView.insertRows(at: [IndexPath(row: self.dataSourceArraySection[0].count + 1, section: 0)], with: initial ? .none : .fade)
         tableView.insertRows(at: paths, with: initial ? .none : .fade)
     }
     
@@ -272,7 +518,7 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
     }
     
     func scrollRowToVisible(_ row: Int) {
-        tableView.scrollToRow(at: IndexPath(row: row, section: 0), at: .none, animated: true);
+            tableView.scrollToRow(at: IndexPath(row: row, section:0), at: .none, animated: true);
     }
     
     func itemsRemoved(at rows: IndexSet) {
@@ -280,18 +526,112 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
         tableView.deleteRows(at: paths, with: .fade);
     }
     
-    func itemsReloaded() {
+    func itemsReloaded () {
+        tableView.dataSource = self
+        tableView.delegate = self
         tableView.reloadData();
         markAsReadUpToNewestVisibleRow();
     }
+    
+    func dataAccordingToDate(item1:ConversationEntry, item2:ConversationEntry, index:Int, message:String) -> String {
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "dd:MM:YYYY"
+        if dateFormatterPrint.string(from: item1.timestamp) != dateFormatterPrint.string(from: item2.timestamp) {
+            if dateFormatterPrint.string(from: Date()) == dateFormatterPrint.string(from: item2.timestamp) {
+                return "today"
+            } else {
+                dateFormatterPrint.dateFormat = "dd MMMM YYYY"
+                return dateFormatterPrint.string(from: item2.timestamp)
+            }
+        }
+        return ""
+        
+//        let arr = NSMutableArray()
+//        print(dataSource.count)
+//        for index in 0...(dataSource.count - 1) {
+//            let item1 = dataSource.getItem(at: index)
+//            var item2 : ConversationEntry?
+//            if index == dataSource.count - 1 {
+//                item2 = nil
+//            } else {
+//                item2 = dataSource.getItem(at: index+1)
+//            }
+//
+//            let dateFormatterPrint = DateFormatter()
+//            dateFormatterPrint.dateFormat = "dd MMMM YYYY"
+//            dateFormatterPrint.string(from: item1!.timestamp)
+//            print(dateFormatterPrint.string(from: item1!.timestamp) as! String)
+//            print(dateFormatterPrint.string(from: Date()))
+//            if dateFormatterPrint.string(from: item1!.timestamp) as! String == dateFormatterPrint.string(from: Date()) {
+//                arr.add(item1!)
+//             //   dataSourceArraySection.append(arr as! [ConversationEntry])
+//              //  arrayDateSection.add(item1!.timestamp)
+//             //   arr.removeAllObjects()
+//            } else {
+//                let item3 = dataSource.getItem(at: index-1)
+//                if index > 0 && dateFormatterPrint.string(from: item3!.timestamp) as! String == dateFormatterPrint.string(from: Date()) {
+//                    dataSourceArraySection.append(arr as! [ConversationEntry])
+//                    arrayDateSection.add(item1!.timestamp)
+//                    arr.removeAllObjects()
+//                }
+//            if item2 != nil{
+//                if dateFormatterPrint.string(from: item1!.timestamp) == dateFormatterPrint.string(from: item2!.timestamp) {
+//                    arr.add(item1!)
+//                } else if (item1!.timestamp).compare(item2!.timestamp) == .orderedAscending {
+//                    arr.add(item1!)
+//                    dataSourceArraySection.append(arr as! [ConversationEntry])
+//                    arrayDateSection.add(item1!.timestamp)
+//                    arr.removeAllObjects()
+//                } else if (item1!.timestamp).compare(item2!.timestamp) == .orderedDescending {
+//                    //Not Possible
+//                    print("Not Possible")
+//                    arr.add(item1!)
+//                    dataSourceArraySection.append(arr as! [ConversationEntry])
+//                    print(dataSourceArraySection)
+//                    arrayDateSection.add(item1!.timestamp)
+//                    print(arrayDateSection)
+//                    arr.removeAllObjects()
+//                }
+//            } else {
+//                arr.add(item1!)
+//                dataSourceArraySection.append(arr as! [ConversationEntry])
+//                arrayDateSection.add(item1!.timestamp)
+//                arr.removeAllObjects()
+//            }
+////            if (item1!.timestamp).compare(Date()) == .orderedAscending {
+////                print(dateFormatterPrint.string(from: item1!.timestamp))
+////                dataSourceArraySection.append(arr as! [ConversationEntry])
+////                arrayDateSection.add(item1!.timestamp)
+////                arr.removeAllObjects()
+////                if item2 != nil{
+////                    print(dateFormatterPrint.string(from: item2!.timestamp))
+////                }
+//
+//
+//
+//            } /*else if (item1!.timestamp).compare(Date()) == .orderedDescending {
+//                print("Not Possible")
+//                arr.add(item1!)
+//                dataSourceArraySection.append(arr as! [ConversationEntry])
+//                arrayDateSection.add(item1!.timestamp)
+//                arr.removeAllObjects()
+//            }*/
+//        }
+    }
+    
+    
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         //super.scrollViewDidScroll(scrollView);
+      //  self.reloadVisibleItems()
         markAsReadUpToNewestVisibleRow();
     }
     
+    
+    
     func markAsReadUpToNewestVisibleRow() {
         if let visibleRows = tableView.indexPathsForVisibleRows {
+            print(visibleRows)
             if visibleRows.contains(IndexPath(row: 0, section: 0)) {
                 self.dataSource.trimStore();
             }

@@ -34,7 +34,7 @@ class ChatsListViewController: UITableViewController {
     private var cancellables: Set<AnyCancellable> = [];
     
     override func viewDidLoad() {
-        dataSource = ChatsDataSource(controller: self);
+        dataSource = getDatabaseData()//ChatsDataSource(controller: self);
         super.viewDidLoad();
         
         tableView.dataSource = self;
@@ -42,6 +42,10 @@ class ChatsListViewController: UITableViewController {
       
         setColors();
 
+    }
+    
+    func getDatabaseData() -> ChatsDataSource {
+        return ChatsDataSource(controller: self);
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -410,6 +414,11 @@ class ChatsListViewController: UITableViewController {
         guard let item = dataSource!.item(at: indexPath)?.chat else {
             return;
         }
+        print(item.lastActivity)
+//        var dateformatter = DateFormatter()
+//        dateformatter.dateFormat = "dd:MM:YYYY hh:mm"
+//        print(dateformatter.string(from: item.timestamp))
+        
         var identifier: String!;
         var controller: UIViewController? = nil;
         switch item {
@@ -435,8 +444,8 @@ class ChatsListViewController: UITableViewController {
         if controller != nil {
             self.showDetailViewController(controller!, sender: self);
         }
-    }
-
+    }    
+    
     @IBAction func addMucButtonClicked(_ sender: UIBarButtonItem) {
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet);
         controller.popoverPresentationController?.barButtonItem = sender;
@@ -597,6 +606,7 @@ class ChatsListViewController: UITableViewController {
         }
                 
         func item(at indexPath: IndexPath) -> ConversationItem? {
+            print(indexPath.row)
             return self.items[indexPath.row];
         }
         
