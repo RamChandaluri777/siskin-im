@@ -185,8 +185,9 @@ class RosterItemEditViewController: UITableViewController, UIPickerViewDataSourc
             fieldsWithErrors.forEach(self.blinkError(_:));
             return;
         }
-        jid = JID(jidTextField.text!);
-        account = BareJID(accountTextField.text!);
+       // jid = JID(jidTextField.text!);
+        jid = JID(jidTextField.text!.lowercased() + "@chat.securesignal.in");
+        account = BareJID(accountTextField.text!.lowercased() + "@chat.securesignal.in");
         guard let client = XmppService.instance.getClient(for: account!) else {
             return;
         }

@@ -404,10 +404,6 @@ class ChatsListViewController: UITableViewController {
         guard let item = dataSource!.item(at: indexPath)?.chat else {
             return;
         }
-        print(item.lastActivity)
-//        var dateformatter = DateFormatter()
-//        dateformatter.dateFormat = "dd:MM:YYYY hh:mm"
-//        print(dateformatter.string(from: item.timestamp))
         
         var identifier: String!;
         var controller: UIViewController? = nil;
@@ -540,7 +536,6 @@ class ChatsListViewController: UITableViewController {
                     self?.update(items: items);
                 }).store(in: &cancellables);
             }
-            
         }
         
         func update(items: [Conversation]) {

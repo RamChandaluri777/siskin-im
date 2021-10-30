@@ -36,7 +36,6 @@ class RightViewCell: UITableViewCell {
     
     func configureCell(item: ConversationEntry, message inMessage: String, correctionTimestamp: Date?, nickname: String? = nil) {
      //   set(item: item);
-        
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = "hh:mm"
                         
@@ -48,27 +47,34 @@ class RightViewCell: UITableViewCell {
             if item.state.code == 3 {
                 //UNSENT
                 imgVWOfstate.image = UIImage(named: "unsent")
+                imgVWOfstate.backgroundColor = .red
             } else if item.state.code == 1 {
                 //SENT
                 imgVWOfstate.image = UIImage(named: "singletik")
-            } else if item.state.code == 9 {
+                imgVWOfstate.backgroundColor = .black
+            } else if item.state.code == 9 || item.state.code == 5 {
                 //Delivered
-                imgVWOfstate.image = UIImage(named: "grayTik")
-                    
-            } else if item.state.code == 11 {
-                //DISPLAYED
                 imgVWOfstate.image = UIImage(named: "greenTik")
+                imgVWOfstate.backgroundColor = .green
+                    
+            } else if item.state.code == 11 || item.state.code == 7 {
+                //DISPLAYED
+                imgVWOfstate.image = UIImage(named: "grayTik")
+                imgVWOfstate.backgroundColor = .gray
             }
-           
             
         } else {
            print("There was an error decoding the string")
         }
                 
         let message = messageBody(item: item, message: inMessage);
+       /* if message == "" {
+                   messageContainerView.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                   textMessageLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                   lblTimeOfMessage.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            heightTimeStampConstraints.constant = 0
+               }*/
         let attrText = NSMutableAttributedString(string: message);
-
-       
 
         if let detect = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue | NSTextCheckingResult.CheckingType.phoneNumber.rawValue | NSTextCheckingResult.CheckingType.address.rawValue | NSTextCheckingResult.CheckingType.date.rawValue) {
             let matches = detect.matches(in: message, options: .reportCompletion, range: NSMakeRange(0, message.count));
@@ -101,7 +107,8 @@ class RightViewCell: UITableViewCell {
             switch item.state {
             case .incoming_error(_, let errorMessage), .outgoing_error(_, let errorMessage):
                 if let error = errorMessage {
-                    return "\(message)\n-----\n\(error)"
+                    //return "\(message)\n-----\n\(error)"
+                    return "\(message)"
                 }
             default:
                 break;
