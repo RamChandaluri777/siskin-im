@@ -130,7 +130,9 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
         }
       //  let abc = dataSourceArraySection[indexPath.section]
       //  let item = abc[indexPath.row]
-
+        print(item.state)
+        print(item.state.errorMessage)
+        print(item.state.isError)
         switch item.payload {
         case .unreadMessages:
             let cell: ChatTableViewSystemCell = tableView.dequeueReusableCell(withIdentifier: "ChatTableViewSystemCell", for: indexPath) as! ChatTableViewSystemCell;
@@ -299,13 +301,129 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
                         print("incoming error")
                        let cell = tableView.dequeueReusableCell(withIdentifier: "LeftViewCell") as! LeftViewCell
                        cell.contentView.transform = tableView.transform
+                        if indexPath.row == 0 && self.newlyAddedRow == nil && dataSource.count == 1 {
+                           if dataSource.getItem(at: indexPath.row) != nil {
+                               cell.lblTimeStamp.isHidden = false
+                               let dateFormatterPrint = DateFormatter()
+                               dateFormatterPrint.dateFormat = "dd MMMM YYYY"
+                               let item = dataSource.getItem(at: indexPath.row)
+                               cell.heightTimestampCons.constant = 30
+                                   cell.lblTimeStamp.text = dateFormatterPrint.string(from: item!.timestamp)
+                           }
+                       } else if dataSource.count > 1 && self.newlyAddedRow == nil {
+                           if indexPath.row + 1 != dataSource.count {
+                               if dataSource.getItem(at: indexPath.row + 1) != nil && dataSource.getItem(at: indexPath.row) != nil {
+                                   let str1 = self.dataAccordingToDate(item1: dataSource.getItem(at: indexPath.row + 1)!, item2: dataSource.getItem(at: indexPath.row)!, index:indexPath.row, message:message)
+                                   cell.heightTimestampCons.constant = 30
+                                   if str1 == "" {
+                                       cell.heightTimestampCons.constant = 0
+                                       cell.lblTimeStamp.isHidden = true
+                                   } else {
+                                       cell.lblTimeStamp.isHidden = false
+                                       cell.lblTimeStamp.text = str1
+                                   }
+                               }
+                           } else if indexPath.row + 1 == dataSource.count {
+                               if dataSource.getItem(at: indexPath.row) != nil {
+                                   cell.lblTimeStamp.isHidden = false
+                                   let dateFormatterPrint = DateFormatter()
+                                   dateFormatterPrint.dateFormat = "dd MMMM YYYY"
+                                   let item = dataSource.getItem(at: indexPath.row)
+                                   cell.heightTimestampCons.constant = 30
+                                       cell.lblTimeStamp.text = dateFormatterPrint.string(from: item!.timestamp)
+                               }
+                           }
+                            
+                       } else if self.newlyAddedRow != nil && dataSource.count > 1 {
+                           if dataSource.getItem(at: self.newlyAddedRow! + 1) != nil && dataSource.getItem(at: self.newlyAddedRow!) != nil {
+                               let str1 = self.dataAccordingToDate(item1: dataSource.getItem(at: self.newlyAddedRow! + 1)!, item2: dataSource.getItem(at: self.newlyAddedRow!)!, index:indexPath.row, message:message)
+                               cell.heightTimestampCons.constant = 30
+                               if str1 == "" {
+                                cell.heightTimestampCons.constant = 0
+                                   cell.lblTimeStamp.isHidden = true
+                               } else {
+                                   cell.lblTimeStamp.isHidden = false
+                                   cell.lblTimeStamp.text = str1
+                               }
+                           }
+                           self.newlyAddedRow = nil
+                       } else if self.newlyAddedRow != nil && dataSource.count == 1 {
+                           
+                           if dataSource.getItem(at: indexPath.row) != nil {
+                               cell.lblTimeStamp.isHidden = false
+                               let dateFormatterPrint = DateFormatter()
+                               dateFormatterPrint.dateFormat = "dd MMMM YYYY"
+                               let item = dataSource.getItem(at: indexPath.row)
+                               cell.heightTimestampCons.constant = 30
+                                   cell.lblTimeStamp.text = dateFormatterPrint.string(from: item!.timestamp)
+                           }
+                           self.newlyAddedRow = nil
+                       }
                        cell.configureCell(item: item, message: message, correctionTimestamp: correctionTimestamp)//(message: message)
                        return cell
                        // return tableView.dequeueReusableCell(withIdentifier: "ChatTableViewCellIncoming", for: indexPath);
                     case .outgoing_error(_, errorMessage: _):
-                        print("outgoing error")
                        let cell = tableView.dequeueReusableCell(withIdentifier: "RightViewCell") as! RightViewCell
                        cell.contentView.transform = tableView.transform
+                        if indexPath.row == 0 && self.newlyAddedRow == nil && dataSource.count == 1 {
+                           if dataSource.getItem(at: indexPath.row) != nil {
+                               cell.lblTimeStamp.isHidden = false
+                               let dateFormatterPrint = DateFormatter()
+                               dateFormatterPrint.dateFormat = "dd MMMM YYYY"
+                               let item = dataSource.getItem(at: indexPath.row)
+                               cell.heightTimeStampConstraints.constant = 30
+                                   cell.lblTimeStamp.text = dateFormatterPrint.string(from: item!.timestamp)
+                           }
+                       } else if dataSource.count > 1 && self.newlyAddedRow == nil {
+                           if indexPath.row + 1 != dataSource.count {
+                               if dataSource.getItem(at: indexPath.row + 1) != nil && dataSource.getItem(at: indexPath.row) != nil {
+                                   let str1 = self.dataAccordingToDate(item1: dataSource.getItem(at: indexPath.row + 1)!, item2: dataSource.getItem(at: indexPath.row)!, index:indexPath.row, message:message)
+                                   print(str1)
+                                   cell.heightTimeStampConstraints.constant = 30
+                                   if str1 == "" {
+                                       cell.heightTimeStampConstraints.constant = 0
+                                       cell.lblTimeStamp.isHidden = true
+                                   } else {
+                                       cell.lblTimeStamp.isHidden = false
+                                       cell.lblTimeStamp.text = str1
+                                   }
+                               }
+                           } else if indexPath.row + 1 == dataSource.count {
+                               if dataSource.getItem(at: indexPath.row) != nil {
+                                   cell.lblTimeStamp.isHidden = false
+                                   let dateFormatterPrint = DateFormatter()
+                                   dateFormatterPrint.dateFormat = "dd MMMM YYYY"
+                                   let item = dataSource.getItem(at: indexPath.row)
+                                   cell.heightTimeStampConstraints.constant = 30
+                                       cell.lblTimeStamp.text = dateFormatterPrint.string(from: item!.timestamp)
+                               }
+                           }
+                            
+                       } else if self.newlyAddedRow != nil && dataSource.count > 1 {
+                           if dataSource.getItem(at: self.newlyAddedRow! + 1) != nil && dataSource.getItem(at: self.newlyAddedRow!) != nil {
+                               let str1 = self.dataAccordingToDate(item1: dataSource.getItem(at: self.newlyAddedRow! + 1)!, item2: dataSource.getItem(at: self.newlyAddedRow!)!, index:indexPath.row, message:message)
+                               cell.heightTimeStampConstraints.constant = 30
+                               if str1 == "" {
+                                   cell.heightTimeStampConstraints.constant = 0
+                                   cell.lblTimeStamp.isHidden = true
+                               } else {
+                                   cell.lblTimeStamp.isHidden = false
+                                   cell.lblTimeStamp.text = str1
+                               }
+                           }
+                           self.newlyAddedRow = nil
+                       } else if self.newlyAddedRow != nil && dataSource.count == 1 {
+                           
+                           if dataSource.getItem(at: indexPath.row) != nil {
+                               cell.lblTimeStamp.isHidden = false
+                               let dateFormatterPrint = DateFormatter()
+                               cell.heightTimeStampConstraints.constant = 30
+                               dateFormatterPrint.dateFormat = "dd MMMM YYYY"
+                               let item = dataSource.getItem(at: indexPath.row)
+                                   cell.lblTimeStamp.text = dateFormatterPrint.string(from: item!.timestamp)
+                           }
+                           self.newlyAddedRow = nil
+                       }
                        cell.configureCell(item: item, message: message, correctionTimestamp:correctionTimestamp)//(message: message)
                        return cell
                        // return tableView.dequeueReusableCell(withIdentifier: "ChatTableViewCellIncoming", for: indexPath);
@@ -331,6 +449,13 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
             lbl.text = "today"
             cell.contentView.addSubview(lbl)
             
+            let dateFormatterPrint = DateFormatter()
+            dateFormatterPrint.dateFormat = "hh:mm"
+                            
+
+            if let dateChat = item.timestamp as Date? {
+                cell.lblTime?.text = dateFormatterPrint.string(from: dateChat)
+            }
             
             if indexPath.row == 0 && self.newlyAddedRow == nil && dataSource.count == 1 {
                if dataSource.getItem(at: indexPath.row) != nil {
@@ -380,7 +505,6 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
                }
                self.newlyAddedRow = nil
            } else if self.newlyAddedRow != nil && dataSource.count == 1 {
-               
                if dataSource.getItem(at: indexPath.row) != nil {
                    lbl.isHidden = false
                    let dateFormatterPrint = DateFormatter()
@@ -392,6 +516,7 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
                self.newlyAddedRow = nil
            }
             cell.set(item: item, url: url, appendix: appendix);
+            cell.frame.size.height = 250
             return cell;
         case .invitation(let message, let appendix):
             let id = "ChatTableViewInvitationCell";

@@ -111,6 +111,7 @@ class BaseChatTableViewCell: UITableViewCell, UIDocumentInteractionControllerDel
         self.avatarView?.isHidden = true
         self.nicknameView?.isHidden = true
         self.stateView?.isHidden = true
+        self.timestampView?.isHidden = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -172,7 +173,7 @@ class BaseChatTableViewCell: UITableViewCell, UIDocumentInteractionControllerDel
             CurrentTimePublisher.publisher.map({ now in BaseChatTableViewCell.formatTimestamp(timestamp, now, prefix: timestampPrefix) }).assign(to: \.text, on: timestampView).store(in: &cancellables);
         }
 
-        if stateView != nil {
+        /*if stateView != nil {
             switch item.state {
             case .none:
                 self.stateView?.text = nil;
@@ -203,7 +204,7 @@ class BaseChatTableViewCell: UITableViewCell, UIDocumentInteractionControllerDel
 //                    timestamp = "\(timestamp) \u{2713}";
 //                }
 //            }
-        }
+        }*/
                 
         if item.state.isError {
             if item.state.direction == .outgoing {

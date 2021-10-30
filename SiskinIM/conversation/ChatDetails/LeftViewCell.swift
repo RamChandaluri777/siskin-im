@@ -43,6 +43,12 @@ class LeftViewCell : BaseChatTableViewCell {
         }
         
         let message = messageBody(item: item, message: inMessage);
+      /*  if message == "" {
+            messageContainerView.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            textMessageLabel.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            lblTimeOfMessage.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            heightTimestampCons.constant = 0
+        }*/
         let attrText = NSMutableAttributedString(string: message);       
 
         if let detect = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue | NSTextCheckingResult.CheckingType.phoneNumber.rawValue | NSTextCheckingResult.CheckingType.address.rawValue | NSTextCheckingResult.CheckingType.date.rawValue) {
@@ -77,6 +83,7 @@ class LeftViewCell : BaseChatTableViewCell {
             switch item.state {
             case .incoming_error(_, let errorMessage), .outgoing_error(_, let errorMessage):
                 if let error = errorMessage {
+                    //return "\(message)"
                     return "\(message)\n-----\n\(error)"
                 }
             default:

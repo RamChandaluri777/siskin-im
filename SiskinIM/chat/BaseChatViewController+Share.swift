@@ -82,13 +82,14 @@ extension BaseChatViewController: URLSessionDelegate {
         
     func checkIfEnabledOrAsk(completionHandler: @escaping ()->Void) -> Bool {
         guard Settings.sharingViaHttpUpload else {
-            let alert = UIAlertController(title: NSLocalizedString("Question", comment: "alert title"), message: NSLocalizedString("When you share files, they are uploaded to HTTP server with unique URL. Anyone who knows the unique URL to the file is able to download it.\nDo you wish to proceed?", comment: "alert body"), preferredStyle: .alert);
+           /* let alert = UIAlertController(title: NSLocalizedString("Question", comment: "alert title"), message: NSLocalizedString("When you share files, they are uploaded to HTTP server with unique URL. Anyone who knows the unique URL to the file is able to download it.\nDo you wish to proceed?", comment: "alert body"), preferredStyle: .alert);
             alert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: "button label"), style: .default, handler: { (action) in
                 Settings.sharingViaHttpUpload = true;
                 completionHandler();
             }));
             alert.addAction(UIAlertAction(title: NSLocalizedString("No", comment: "button label"), style: .cancel, handler: nil));
-            present(alert, animated: true, completion: nil);
+            present(alert, animated: true, completion: nil);*/
+            Settings.sharingViaHttpUpload = true;
 
             return false;
         }
