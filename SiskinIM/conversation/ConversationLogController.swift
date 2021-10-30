@@ -456,7 +456,6 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
             if let dateChat = item.timestamp as Date? {
                 cell.lblTime?.text = dateFormatterPrint.string(from: dateChat)
             }
-            cell.lblTime.frame.origin.y = cell.customView.frame.size.height + cell.customView.frame.origin.y + 05
             
             if indexPath.row == 0 && self.newlyAddedRow == nil && dataSource.count == 1 {
                if dataSource.getItem(at: indexPath.row) != nil {
