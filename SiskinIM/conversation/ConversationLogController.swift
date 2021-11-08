@@ -454,7 +454,7 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
                             
 
             if let dateChat = item.timestamp as Date? {
-                cell.lblTime?.text = dateFormatterPrint.string(from: dateChat)
+               // cell.lblTime?.text = dateFormatterPrint.string(from: dateChat)
             }
             
             if indexPath.row == 0 && self.newlyAddedRow == nil && dataSource.count == 1 {
