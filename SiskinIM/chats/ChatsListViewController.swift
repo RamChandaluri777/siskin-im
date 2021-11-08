@@ -259,7 +259,7 @@ class ChatsListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       
+
         return  dataSource?.count ?? 0;
     }
     
@@ -267,9 +267,7 @@ class ChatsListViewController: UITableViewController {
         let cellIdentifier = Settings.recentsMessageLinesNo == 1 ? "ChatsListTableViewCellNew" : "ChatsListTableViewCellBig";
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath) as! ChatsListTableViewCell;
         
-//        if let item = dataSource?.item(at: indexPath) {
-//            cell.update(conversation: item.chat);
-//        }        
+       
      
         
         if let item = dataSource?.item(at: indexPath) {
@@ -281,6 +279,7 @@ class ChatsListViewController: UITableViewController {
                 cell.nameLabel.text = s.appending((item.name.split(separator: "@").first!).dropFirst())
             }
         }
+        
         cell.avatarStatusView.updateCornerRadius();
         
         return cell;
@@ -397,6 +396,17 @@ class ChatsListViewController: UITableViewController {
             }
             UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: toRemove);            
         }
+    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let item = dataSource?.item(at: indexPath) {
+            if item.name.contains("Bot") || item.name.contains("enhanced-apk"){
+                return 0
+            }
+            else{
+                return 60
+            }
+        }
+        return 0
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

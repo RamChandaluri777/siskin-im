@@ -248,6 +248,7 @@ class ChannelJoinViewController: UITableViewController {
                         case .success(let r):
                             switch r {
                             case .created(let room), .joined(let room):
+                                mucModule.setRoomSubject(roomJid: room.jid, newSubject: roomName);
                                 var features = Set<Room.Feature>();
                                 features.insert(.nonAnonymous);
                                 if priv {
@@ -259,9 +260,10 @@ class ChannelJoinViewController: UITableViewController {
                                     vcard.photos = [VCard.Photo(uri: nil, type: "image/jpeg", binval: binval, types: [.home])];
                                 }
                                 client.module(.vcardTemp).publishVCard(vcard, to: room.jid, completionHandler: nil);
-                                if description != nil {
-                                    mucModule.setRoomSubject(roomJid: room.jid, newSubject: description);
-                                }
+                               
+                               // if description != nil {
+                                    
+                               // }
                                 DispatchQueue.main.async {
                                     self.dismiss(animated: true, completion: nil);
                                 }

@@ -125,37 +125,37 @@ class NotificationCenterDelegate: NSObject, UNUserNotificationCenterDelegate {
         if senderName != senderJid.stringValue {
             senderName = "\(senderName) (\(senderJid.stringValue))";
         }
-        let alert = UIAlertController(title: NSLocalizedString("Subscription request", comment: "alert title"), message: String.localizedStringWithFormat(NSLocalizedString("Received presence subscription request from\n%@\non account %@", comment: "alert title body"), senderName, accountJid.stringValue), preferredStyle: .alert);
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Accept", comment: "button label"), style: .default, handler: {(action) in
-            guard let client = XmppService.instance.getClient(for: accountJid) else {
-                return;
-            }
-            let presenceModule = client.module(.presence);
-            presenceModule.subscribed(by: JID(senderJid));
-            let subscription = DBRosterStore.instance.item(for: client.context, jid: JID(senderJid))?.subscription ?? .none;
-            guard !subscription.isTo else {
-                return;
-            }
-            if Settings.autoSubscribeOnAcceptedSubscriptionRequest {
+//        let alert = UIAlertController(title: NSLocalizedString("Subscription request", comment: "alert title"), message: String.localizedStringWithFormat(NSLocalizedString("Received presence subscription request from\n%@\non account %@", comment: "alert title body"), senderName, accountJid.stringValue), preferredStyle: .alert);
+//        alert.addAction(UIAlertAction(title: NSLocalizedString("Accept", comment: "button label"), style: .default, handler: {(action) in
+//           
+//        }));
+//        alert.addAction(UIAlertAction(title: NSLocalizedString("Reject", comment: "button label"), style: .destructive, handler: {(action) in
+//            guard let client = XmppService.instance.getClient(for: accountJid) else {
+//                return;
+//            }
+//            client.module(.presence).unsubscribed(by: JID(senderJid));
+//        }));
+        guard let client = XmppService.instance.getClient(for: accountJid) else {
+            return;
+        }
+        let presenceModule = client.module(.presence);
+        presenceModule.subscribed(by: JID(senderJid));
+        let subscription = DBRosterStore.instance.item(for: client.context, jid: JID(senderJid))?.subscription ?? .none;
+        guard !subscription.isTo else {
+            return;
+        }
+        if Settings.autoSubscribeOnAcceptedSubscriptionRequest {
+            presenceModule.subscribe(to: JID(senderJid));
+        } else {
+            let alert2 = UIAlertController(title: String.localizedStringWithFormat(NSLocalizedString("Subscribe to %@", comment: "alert title"), senderName), message: String.localizedStringWithFormat(NSLocalizedString("Do you wish to subscribe to \n%@\non account %@", comment: "alert body"), senderName, accountJid.stringValue), preferredStyle: .alert);
+            alert2.addAction(UIAlertAction(title: NSLocalizedString("Accept", comment: "button label"), style: .default, handler: {(action) in
                 presenceModule.subscribe(to: JID(senderJid));
-            } else {
-                let alert2 = UIAlertController(title: String.localizedStringWithFormat(NSLocalizedString("Subscribe to %@", comment: "alert title"), senderName), message: String.localizedStringWithFormat(NSLocalizedString("Do you wish to subscribe to \n%@\non account %@", comment: "alert body"), senderName, accountJid.stringValue), preferredStyle: .alert);
-                alert2.addAction(UIAlertAction(title: NSLocalizedString("Accept", comment: "button label"), style: .default, handler: {(action) in
-                    presenceModule.subscribe(to: JID(senderJid));
-                }));
-                alert2.addAction(UIAlertAction(title: NSLocalizedString("Reject", comment: "button label"), style: .destructive, handler: nil));
-                
-                self.topController()?.present(alert2, animated: true, completion: nil);
-            }
-        }));
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Reject", comment: "button label"), style: .destructive, handler: {(action) in
-            guard let client = XmppService.instance.getClient(for: accountJid) else {
-                return;
-            }
-            client.module(.presence).unsubscribed(by: JID(senderJid));
-        }));
-        
-        topController()?.present(alert, animated: true, completion: nil);
+            }));
+            alert2.addAction(UIAlertAction(title: NSLocalizedString("Reject", comment: "button label"), style: .destructive, handler: nil));
+            
+            self.topController()?.present(alert2, animated: true, completion: nil);
+        }
+        //topController()?.present(alert, animated: true, completion: nil);
         completionHandler();
     }
     
