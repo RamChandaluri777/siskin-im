@@ -448,11 +448,9 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
             lbl.textColor = .black
             lbl.text = "today"
             cell.contentView.addSubview(lbl)
-            
             let dateFormatterPrint = DateFormatter()
             dateFormatterPrint.dateFormat = "hh:mm"
                             
-
             if let dateChat = item.timestamp as Date? {
                 cell.lblTime?.text = dateFormatterPrint.string(from: dateChat)
             }
@@ -516,7 +514,6 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
                self.newlyAddedRow = nil
            }
             cell.set(item: item, url: url, appendix: appendix);
-            cell.frame.size.height = 250
             return cell;
         case .invitation(let message, let appendix):
             let id = "ChatTableViewInvitationCell";

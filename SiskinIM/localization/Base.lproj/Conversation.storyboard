@@ -155,30 +155,29 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="130"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="07k-SM-StR">
-                                            <rect key="frame" x="20" y="2" width="348" height="77"/>
+                                        <view opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="07k-SM-StR">
+                                            <rect key="frame" x="8" y="2" width="397" height="77"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9wd-ub-pIi">
+                                                    <rect key="frame" x="78" y="-25.5" width="240" height="128"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
                                             <color key="backgroundColor" name="chatMessageText"/>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kZC-pO-0rb">
-                                            <rect key="frame" x="228" y="87" width="143" height="13"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="143" id="QQf-Pk-KDO"/>
-                                                <constraint firstAttribute="height" constant="13" id="d03-9s-Tl5"/>
-                                            </constraints>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kZC-pO-0rb">
+                                            <rect key="frame" x="228" y="87" width="177" height="13"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <constraints>
-                                        <constraint firstItem="kZC-pO-0rb" firstAttribute="top" secondItem="07k-SM-StR" secondAttribute="bottom" constant="2" id="KKW-zm-gFN"/>
-                                        <constraint firstItem="07k-SM-StR" firstAttribute="leading" secondItem="TRq-2V-4Hc" secondAttribute="leading" constant="44" id="Y1A-vx-AZL"/>
-                                        <constraint firstItem="07k-SM-StR" firstAttribute="trailing" secondItem="kZC-pO-0rb" secondAttribute="trailing" id="nCC-YA-z8p"/>
-                                        <constraint firstAttribute="bottom" secondItem="kZC-pO-0rb" secondAttribute="bottom" constant="4" id="ztC-pq-uyS"/>
-                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="customView" destination="07k-SM-StR" id="UHd-zs-8Dd"/>
+                                    <outlet property="imgViewOfAttachment" destination="9wd-ub-pIi" id="eUq-KI-qeP"/>
                                     <outlet property="lblTime" destination="kZC-pO-0rb" id="wFf-TD-c2R"/>
                                 </connections>
                             </tableViewCell>

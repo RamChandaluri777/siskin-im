@@ -46,6 +46,8 @@ class DownloadManager {
     
     func downloadInProgress(for item: ConversationEntry) -> Bool {
         return dispatcher.sync {
+            print(item.id)
+            print(self.itemDownloadInProgress.contains(item.id))
             return self.itemDownloadInProgress.contains(item.id);
         }
     }
