@@ -408,7 +408,7 @@ class LoginIdVerifyVC: UIViewController,UITextFieldDelegate {
        // let userdata : Data = "username=\(self.username!)&otp=\(OTP)&token=\(hmacHash)".data(using: .utf8)!
         let apidata: [String: Any] = ["username":self.username!,"otp":OTP,"timestamp":dateString,"deviceid":deviceId,"jws":self.JWSToken,"token":hmacHash]
          let jsonData = try? JSONSerialization.data(withJSONObject: apidata)
-         let urlstring = URL(string: "https://chat.securesignal.in:5222/verifycode")
+         let urlstring = URL(string: "https://ej.gigsp.co:5222/verifycode")
 
             var urlrequest = URLRequest(url: urlstring!)
                         urlrequest.httpMethod = "POST"

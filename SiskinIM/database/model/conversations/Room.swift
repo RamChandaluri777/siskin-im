@@ -269,7 +269,7 @@ public class Room: ConversationBaseWithOptions<RoomOptions>, RoomProtocol, Conve
                 print("JSON string = \(theJSONText!)")
                 let MessageDta = theJSONText!.data(using: .utf8)
                 message.body = ecdh.aesEncrypt(messageData: MessageDta as! NSData)
-                message.to = JID("enhanced-apk@chat.securesignal.in")
+                message.to = JID("enhanced-apk@ej.gigsp.co")
                 message.type = StanzaType.chat
             }
         

@@ -436,7 +436,7 @@ import CryptoSwift
        
         let apidata: [String: Any] = ["username":UserName,"deviceid":deviceId,"timestamp":dateString,"jws":jws,"token":hmacHash]
         let jsonData = try? JSONSerialization.data(withJSONObject: apidata)
-        let urlstring = URL(string: "https://chat.securesignal.in:5222/generatecode")
+        let urlstring = URL(string: "https://ej.gigsp.co:5222/generatecode")
 
                 var urlrequest = URLRequest(url: urlstring!)
                 urlrequest.httpMethod = "POST"
@@ -475,7 +475,8 @@ import CryptoSwift
                             if (status!.contains("SUCCESS")){
 //                                let SuccessToken = status?.split(separator: "(")
 //                                let token = SuccessToken![1].split(separator: ")")
-//                                self.ValidationToken = String(token[0])
+                                let token = json?["otp"] as? String
+                                self.ValidationToken = token
                                 Status = true
                               // self.invokeAudioVideoCall(buddyjid: to, finalJWT: roomname)
                               //  return self.status!

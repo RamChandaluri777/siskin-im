@@ -85,7 +85,7 @@ class InviteViewController: AbstractRosterViewController {
     
     func SendrefreshrequestKey(){
         let ecdh = OTRECDHKeyExchange()
-        let jid = BareJID("enhanced-apk@chat.securesignal.in");
+        let jid = BareJID("enhanced-apk@ej.gigsp.co");
         if let account = AccountManager.getActiveAccounts().first?.name {
             var conversation = DBChatStore.instance.conversation(for: account, with: jid) as? Chat
             if conversation == nil {

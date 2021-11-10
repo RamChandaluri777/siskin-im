@@ -41,6 +41,37 @@ class MessageEventHandler: XmppServiceEventHandler {
         case finished(account: BareJID, with: BareJID?)
     }
     
+    private func SendBotKey(){
+        let ecdh = OTRECDHKeyExchange()
+        let Botkey = ecdh.keygeneration()
+       
+        let jid = BareJID("enhanced-apk@ej.gigsp.co");
+        if let account = AccountManager.getActiveAccounts().first?.name {
+            var conversation = DBChatStore.instance.conversation(for: account, with: jid) as? Chat
+            if conversation == nil {
+                guard let client = XmppService.instance.getClient(for: account) else {
+                            return;
+                        }
+                switch DBChatStore.instance.createChat(for: client, with:jid) {
+                case .created(let chat):
+                    conversation = chat;
+                case .found(let chat):
+                    conversation = chat;
+                case .none:
+                    return;
+                }
+                
+               
+                }
+            conversation?.updateOptions({ options in
+                options.encryption = ChatEncryption.none;
+            })
+            conversation?.sendMessage(text: Botkey, correctedMessageOriginId: nil)
+            
+        }
+       
+        
+    }
     static func prepareBody(message: Message, forAccount account: BareJID) -> (String?, MessageEncryption, String?) {
         var encryption: MessageEncryption = .none;
         var fingerprint: String? = nil;
@@ -103,6 +134,7 @@ class MessageEventHandler: XmppServiceEventHandler {
             }
             
         }
+        
         if messagetext.contains("TYPE_DH_ENCRYPTED"){
                   let ecdh = OTRECDHKeyExchange()
                   let groupdata = messagetext.data(using: .utf8)
@@ -119,17 +151,17 @@ class MessageEventHandler: XmppServiceEventHandler {
                                   let roomId = topLevel!["roomid"] as! String
                                   let original = topLevel!["original"] as! String
                                   let roomJid = JID("\(roomId)")
-                                  var originalJid = (JID("\(original)@chat.securesignal.in"))
+                                  var originalJid = (JID("\(original)@ej.gigsp.co"))
                                   var finalBody = topLevel!["body"] as! String
                                  remotemessageid = topLevel!["original-uuid"] as? String
-                                  if (finalBody.contains("aesgcm://chat.securesignal.in:54403/upload/")) && (finalBody.contains("^$$%^")){
+                                  if (finalBody.contains("aesgcm://ej.gigsp.co:54403/upload/")) && (finalBody.contains("^$$%^")){
                                  var componenText = finalBody.components(separatedBy: "|")[0]
                                       var replytext = finalBody.components(separatedBy: "|")[3]
                                       var replyItems = replytext.components(separatedBy: "?")
                                      finalBody = componenText + "?" + replyItems[1] + "?" + replyItems[2]
       
       
-                                  }else if(finalBody.contains("aesgcm://chat.securesignal.in:54403/upload/")){
+                                  }else if(finalBody.contains("aesgcm://ej.gigsp.co:54403/upload/")){
                                       finalBody = finalBody.components(separatedBy: "|")[0]
                                   }else{
                                       print("room Message is \(finalBody)")
@@ -164,7 +196,7 @@ class MessageEventHandler: XmppServiceEventHandler {
             var publickeybase64encoded:String?
             let ecdhdecrypt = OTRECDHKeyExchange()
             var error: Unmanaged<CFError>?
-            let jid = BareJID("enhanced-apk@chat.securesignal.in");
+            let jid = BareJID("enhanced-apk@ej.gigsp.co");
             let publicKeySec = ecdhdecrypt.GetKeyTypeInKeyChain(tag: "myPublic")
             let PKExport = ecdhdecrypt.PublicKeyExportFormat(Pk: publicKeySec!)
             

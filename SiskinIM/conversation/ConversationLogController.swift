@@ -59,7 +59,8 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
         
         NotificationCenter.default.addObserver(self, selector: #selector(showEditToolbar), name: NSNotification.Name("tableViewCellShowEditToolbar"), object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(refreshCell(_:)), name: ConversationLogController.REFRESH_CELL, object: nil);
-            }
+        
+        }
     
     func setupTable() {
         // config tableView
@@ -70,7 +71,6 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
         tableView.dataSource = self
         tableView.delegate = self
         
-        
         /*
          if Settings.appearance.description == "Auto" || Settings.appearance.description == "Light" {
          //           nb.barTintColor = UIColor.white
@@ -80,6 +80,7 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
          //            nb.tintColor = UIColor.white;
          //       }
          */
+        
         if Settings.appearance.description == "Auto" || Settings.appearance.description == "Light" {
             tableView.backgroundColor = .white
         } else if Settings.appearance.description == "Dark" {
@@ -168,6 +169,7 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
                     case.incoming(_):
                         
                         let cell = tableView.dequeueReusableCell(withIdentifier: "LeftViewCell") as! LeftViewCell
+                        cell.backgroundColor =  UIColor(named: "chatslistBackground")?.withAlphaComponent(0.2);
                         cell.contentView.transform = tableView.transform
                         if indexPath.row == 0 && self.newlyAddedRow == nil && dataSource.count == 1 {
                            if dataSource.getItem(at: indexPath.row) != nil {
@@ -301,6 +303,7 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
                         print("incoming error")
                        let cell = tableView.dequeueReusableCell(withIdentifier: "LeftViewCell") as! LeftViewCell
                        cell.contentView.transform = tableView.transform
+                    
                         if indexPath.row == 0 && self.newlyAddedRow == nil && dataSource.count == 1 {
                            if dataSource.getItem(at: indexPath.row) != nil {
                                cell.lblTimeStamp.isHidden = false
@@ -308,6 +311,7 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
                                dateFormatterPrint.dateFormat = "dd MMMM YYYY"
                                let item = dataSource.getItem(at: indexPath.row)
                                cell.heightTimestampCons.constant = 30
+                               
                                    cell.lblTimeStamp.text = dateFormatterPrint.string(from: item!.timestamp)
                            }
                        } else if dataSource.count > 1 && self.newlyAddedRow == nil {
@@ -450,7 +454,7 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
             cell.contentView.addSubview(lbl)
             
             let dateFormatterPrint = DateFormatter()
-            dateFormatterPrint.dateFormat = "hh:mm"
+            dateFormatterPrint.dateFormat = "hh:mm a"
                             
 
             if let dateChat = item.timestamp as Date? {

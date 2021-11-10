@@ -37,30 +37,31 @@ class RightViewCell: UITableViewCell {
     func configureCell(item: ConversationEntry, message inMessage: String, correctionTimestamp: Date?, nickname: String? = nil) {
      //   set(item: item);
         let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = "hh:mm"
+        dateFormatterPrint.dateFormat = "hh:mm a"
                         
 
         if let dateChat = item.timestamp as Date? {
             self.lblTimeOfMessage?.text = dateFormatterPrint.string(from: dateChat)
                        
             
-            if item.state.code == 3 {
-                //UNSENT
-                imgVWOfstate.image = UIImage(named: "unsent")
-                imgVWOfstate.backgroundColor = .red
+            if item.state.code == 11 {
+                //Delivered
+                imgVWOfstate.image = UIImage(named: "greenTik")
+                //imgVWOfstate.backgroundColor = .green
+                    
+            } else if item.state.code == 9{
+                //DISPLAYED
+                imgVWOfstate.image = UIImage(named: "grayTik")
+                //imgVWOfstate.backgroundColor = .gray
             } else if item.state.code == 1 {
                 //SENT
                 imgVWOfstate.image = UIImage(named: "singletik")
-                imgVWOfstate.backgroundColor = .black
-            } else if item.state.code == 9 || item.state.code == 5 {
-                //Delivered
-                imgVWOfstate.image = UIImage(named: "greenTik")
-                imgVWOfstate.backgroundColor = .green
-                    
-            } else if item.state.code == 11 || item.state.code == 7 {
-                //DISPLAYED
-                imgVWOfstate.image = UIImage(named: "grayTik")
-                imgVWOfstate.backgroundColor = .gray
+               // imgVWOfstate.backgroundColor = .black
+            }
+           else if item.state.code == 3 {
+                //UNSENT
+                imgVWOfstate.image = UIImage(named: "unsent")
+               // imgVWOfstate.backgroundColor = .red
             }
             
         } else {

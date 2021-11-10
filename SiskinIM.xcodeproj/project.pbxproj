@@ -27,11 +27,15 @@
 		010A28EE27017A38004E702F /* LoginVerifyIDVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28EA27017A38004E702F /* LoginVerifyIDVC.swift */; };
 		010A28F027028CA3004E702F /* OTRECDHKeyExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28EF27028CA3004E702F /* OTRECDHKeyExchange.swift */; };
 		010A28F227028D11004E702F /* CryptoExportImportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28F127028D11004E702F /* CryptoExportImportManager.swift */; };
+		3A28DDCBE1B8FC0ACF1EB296 /* Pods_Siskin_IM___Share.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0971A74D97F90837DC994ECB /* Pods_Siskin_IM___Share.framework */; };
 		5C30D031270C4A6300D17A72 /* AttachmentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C30D030270C4A6300D17A72 /* AttachmentsCell.swift */; };
 		5CE5ABB5270AF8000063C1C8 /* RightViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CE5ABB1270AF8000063C1C8 /* RightViewCell.xib */; };
 		5CE5ABB6270AF8000063C1C8 /* LeftViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CE5ABB2270AF8000063C1C8 /* LeftViewCell.xib */; };
 		5CE5ABB7270AF8000063C1C8 /* RightViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE5ABB3270AF8000063C1C8 /* RightViewCell.swift */; };
 		5CE5ABB8270AF8000063C1C8 /* LeftViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE5ABB4270AF8000063C1C8 /* LeftViewCell.swift */; };
+		A4F94E92651D978A28067CA5 /* Pods_NotificationService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EB574FD05A914C178EA7F16 /* Pods_NotificationService.framework */; };
+		C50F4FCAAC5637F89D3B797F /* Pods_Shared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4E89DB2C4EA0BD0B172EF4 /* Pods_Shared.framework */; };
+		E3A2509425FAC6AB42DF700E /* Pods_Siskin_IM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8282ABDD2F9DBE0E442A296 /* Pods_Siskin_IM.framework */; };
 		FE00157D2017617B00490340 /* StreamFeaturesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE00157C2017617B00490340 /* StreamFeaturesCache.swift */; };
 		FE00157F2019090300490340 /* ExperimentalSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE00157E2019090300490340 /* ExperimentalSettingsViewController.swift */; };
 		FE01ADA91E224CF400FA7E65 /* SiskinPushNotificationsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE01ADA81E224CF400FA7E65 /* SiskinPushNotificationsModule.swift */; };
@@ -371,6 +375,7 @@
 		010A28EF27028CA3004E702F /* OTRECDHKeyExchange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTRECDHKeyExchange.swift; sourceTree = "<group>"; };
 		010A28F127028D11004E702F /* CryptoExportImportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoExportImportManager.swift; sourceTree = "<group>"; };
 		0123690DD7EAEB020F22908A /* Pods-NotificationService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationService.release.xcconfig"; path = "Target Support Files/Pods-NotificationService/Pods-NotificationService.release.xcconfig"; sourceTree = "<group>"; };
+		0971A74D97F90837DC994ECB /* Pods_Siskin_IM___Share.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Siskin_IM___Share.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A35B2C055C61D447FD9E98B /* Pods-Shared.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared.debug.xcconfig"; path = "Target Support Files/Pods-Shared/Pods-Shared.debug.xcconfig"; sourceTree = "<group>"; };
 		1BD37AA5F0EC76935CEBDC50 /* Pods-Shared.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared.release.xcconfig"; path = "Target Support Files/Pods-Shared/Pods-Shared.release.xcconfig"; sourceTree = "<group>"; };
 		3916E3A0673D9D8DE7882D14 /* Pods-Siskin IM - Share.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siskin IM - Share.debug.xcconfig"; path = "Target Support Files/Pods-Siskin IM - Share/Pods-Siskin IM - Share.debug.xcconfig"; sourceTree = "<group>"; };
@@ -379,10 +384,13 @@
 		5CE5ABB2270AF8000063C1C8 /* LeftViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeftViewCell.xib; sourceTree = "<group>"; };
 		5CE5ABB3270AF8000063C1C8 /* RightViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightViewCell.swift; sourceTree = "<group>"; };
 		5CE5ABB4270AF8000063C1C8 /* LeftViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftViewCell.swift; sourceTree = "<group>"; };
+		5EB574FD05A914C178EA7F16 /* Pods_NotificationService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NotificationService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		60FDAD703E9A1379B972E0D6 /* Pods-Siskin IM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siskin IM.release.xcconfig"; path = "Target Support Files/Pods-Siskin IM/Pods-Siskin IM.release.xcconfig"; sourceTree = "<group>"; };
 		7DD139AEABDA2140708D5AD6 /* Pods-Siskin IM - Share.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siskin IM - Share.release.xcconfig"; path = "Target Support Files/Pods-Siskin IM - Share/Pods-Siskin IM - Share.release.xcconfig"; sourceTree = "<group>"; };
+		AD4E89DB2C4EA0BD0B172EF4 /* Pods_Shared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF208294D915DDA6A231DF31 /* Pods-Siskin IM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siskin IM.debug.xcconfig"; path = "Target Support Files/Pods-Siskin IM/Pods-Siskin IM.debug.xcconfig"; sourceTree = "<group>"; };
 		CFE49B486917015C348A8F93 /* Pods-NotificationService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationService.debug.xcconfig"; path = "Target Support Files/Pods-NotificationService/Pods-NotificationService.debug.xcconfig"; sourceTree = "<group>"; };
+		D8282ABDD2F9DBE0E442A296 /* Pods_Siskin_IM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Siskin_IM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE00157C2017617B00490340 /* StreamFeaturesCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamFeaturesCache.swift; sourceTree = "<group>"; };
 		FE00157E2019090300490340 /* ExperimentalSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperimentalSettingsViewController.swift; sourceTree = "<group>"; };
 		FE01ADA81E224CF400FA7E65 /* SiskinPushNotificationsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiskinPushNotificationsModule.swift; sourceTree = "<group>"; };
@@ -650,6 +658,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE759FE22371C83D001E78D9 /* Shared.framework in Frameworks */,
+				3A28DDCBE1B8FC0ACF1EB296 /* Pods_Siskin_IM___Share.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,6 +667,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE759FD12370B2F2001E78D9 /* Shared.framework in Frameworks */,
+				A4F94E92651D978A28067CA5 /* Pods_NotificationService.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -671,6 +681,7 @@
 				FE759FE82371C972001E78D9 /* libxml2.tbd in Frameworks */,
 				FE1908B72584D70300CA049F /* OpenSSL.xcframework in Frameworks */,
 				FEC9B1162440E7B500A484EE /* TigaseSwiftOMEMO in Frameworks */,
+				C50F4FCAAC5637F89D3B797F /* Pods_Shared.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -682,6 +693,7 @@
 				FE5079F01CD3CA91001A015C /* Security.framework in Frameworks */,
 				FE759FCC2370B2A4001E78D9 /* Shared.framework in Frameworks */,
 				FE1908AA2584D6BC00CA049F /* OpenSSL.xcframework in Frameworks */,
+				E3A2509425FAC6AB42DF700E /* Pods_Siskin_IM.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -843,6 +855,10 @@
 			children = (
 				FE1A349F258CD3E10058B86A /* WebRTC.xcframework */,
 				FE1908962584D69400CA049F /* OpenSSL.xcframework */,
+				5EB574FD05A914C178EA7F16 /* Pods_NotificationService.framework */,
+				AD4E89DB2C4EA0BD0B172EF4 /* Pods_Shared.framework */,
+				D8282ABDD2F9DBE0E442A296 /* Pods_Siskin_IM.framework */,
+				0971A74D97F90837DC994ECB /* Pods_Siskin_IM___Share.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -1393,7 +1409,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1120;
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1300;
 				ORGANIZATIONNAME = "Tigase, Inc.";
 				TargetAttributes = {
 					FE4DDF521F39E0B500A4CE5A = {
@@ -1450,8 +1466,8 @@
 			mainGroup = FE94E5181CCBA74F00FAE755;
 			packageReferences = (
 				FEC9B1122440E79D00A484EE /* XCRemoteSwiftPackageReference "tigase-swift-omemo" */,
-				FEA5189D2661573F00523EF2 /* XCRemoteSwiftPackageReference "tigase-sqlite3.swift" */,
-				FEA518C0266165A100523EF2 /* XCRemoteSwiftPackageReference "tigase-logging.swift" */,
+				FEA5189D2661573F00523EF2 /* XCRemoteSwiftPackageReference "tigase-sqlite3.swift.git" */,
+				FEA518C0266165A100523EF2 /* XCRemoteSwiftPackageReference "tigase-logging.swift.git" */,
 			);
 			productRefGroup = FE94E5221CCBA74F00FAE755 /* Products */;
 			projectDirPath = "";
@@ -2331,6 +2347,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -2392,6 +2409,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -2561,7 +2579,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		FEA5189D2661573F00523EF2 /* XCRemoteSwiftPackageReference "tigase-sqlite3.swift" */ = {
+		FEA5189D2661573F00523EF2 /* XCRemoteSwiftPackageReference "tigase-sqlite3.swift.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tigase/tigase-sqlite3.swift.git";
 			requirement = {
@@ -2569,7 +2587,7 @@
 				kind = branch;
 			};
 		};
-		FEA518C0266165A100523EF2 /* XCRemoteSwiftPackageReference "tigase-logging.swift" */ = {
+		FEA518C0266165A100523EF2 /* XCRemoteSwiftPackageReference "tigase-logging.swift.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tigase/tigase-logging.swift.git";
 			requirement = {
@@ -2590,12 +2608,12 @@
 /* Begin XCSwiftPackageProductDependency section */
 		FEA518B0266159B900523EF2 /* TigaseSQLite3 */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FEA5189D2661573F00523EF2 /* XCRemoteSwiftPackageReference "tigase-sqlite3.swift" */;
+			package = FEA5189D2661573F00523EF2 /* XCRemoteSwiftPackageReference "tigase-sqlite3.swift.git" */;
 			productName = TigaseSQLite3;
 		};
 		FEA518C1266165A100523EF2 /* TigaseLogging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FEA518C0266165A100523EF2 /* XCRemoteSwiftPackageReference "tigase-logging.swift" */;
+			package = FEA518C0266165A100523EF2 /* XCRemoteSwiftPackageReference "tigase-logging.swift.git" */;
 			productName = TigaseLogging;
 		};
 		FEC9B1152440E7B500A484EE /* TigaseSwiftOMEMO */ = {

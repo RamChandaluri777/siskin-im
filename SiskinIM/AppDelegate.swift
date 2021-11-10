@@ -66,6 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         default:
             break;
         }
+        
         Settings.$appearance.map({ $0.value }).receive(on: DispatchQueue.main).sink(receiveValue: { value in
             for window in application.windows {
                 window.overrideUserInterfaceStyle = value;
@@ -152,7 +153,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func AddBotRoaster() {
         
-        let jid = JID("enhanced-apk@chat.securesignal.in");
+        let jid = JID("enhanced-apk@ej.gigsp.co");
         if let account = AccountManager.getActiveAccounts().first?.name {
             guard let client = XmppService.instance.getClient(for: account) else {
                         return;
@@ -195,7 +196,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let ecdh = OTRECDHKeyExchange()
         let Botkey = ecdh.keygeneration()
        
-        let jid = BareJID("enhanced-apk@chat.securesignal.in");
+        let jid = BareJID("enhanced-apk@ej.gigsp.co");
         if let account = AccountManager.getActiveAccounts().first?.name {
             var conversation = DBChatStore.instance.conversation(for: account, with: jid) as? Chat
             if conversation == nil {
@@ -224,7 +225,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     func SendBotrequestKey(){
         let ecdh = OTRECDHKeyExchange()
-        let jid = BareJID("enhanced-apk@chat.securesignal.in");
+        let jid = BareJID("enhanced-apk@ej.gigsp.co");
         if let account = AccountManager.getActiveAccounts().first?.name {
             var conversation = DBChatStore.instance.conversation(for: account, with: jid) as? Chat
             if conversation == nil {

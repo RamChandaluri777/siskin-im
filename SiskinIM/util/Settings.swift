@@ -186,7 +186,7 @@ class SettingsStore {
     @UserDefaultsSetting(key: "ShowEmoticons", defaultValue: true)
     var showEmoticons: Bool;
     
-    @UserDefaultsSetting(key: "linkPreviews", defaultValue: true)
+    @UserDefaultsSetting(key: "linkPreviews", defaultValue: false)
     var linkPreviews: Bool;
     @UserDefaultsRawSetting(key: "appearance", defaultValue: .auto)
     var appearance: Appearance

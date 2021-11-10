@@ -26,7 +26,7 @@ class ChatSettingsViewController: UITableViewController {
     let tree: [[SettingsEnum]] = {
             return [
             [SettingsEnum.recentsMessageLinesNo],
-            [SettingsEnum.sendMessageOnReturn, SettingsEnum.messageDeliveryReceipts, SettingsEnum.messageEncryption, SettingsEnum.linkPreviews],
+            [SettingsEnum.sendMessageOnReturn, SettingsEnum.messageDeliveryReceipts, SettingsEnum.messageEncryption],
                 [SettingsEnum.media]
                 ];
         }();
@@ -71,13 +71,13 @@ class ChatSettingsViewController: UITableViewController {
                 cell.sink(to: \.confirmMessages, on: Settings);
             })
             return cell;
-        case .linkPreviews:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "LinkPreviewsTableViewCell", for: indexPath) as! SwitchTableViewCell;
-            cell.bind({ cell in
-                cell.assign(from: Settings.$linkPreviews);
-                cell.sink(to: \.linkPreviews, on: Settings);
-            })
-            return cell;
+//        case .linkPreviews:
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "LinkPreviewsTableViewCell", for: indexPath) as! SwitchTableViewCell;
+//            cell.bind({ cell in
+//                cell.assign(from: Settings.$linkPreviews);
+//                cell.sink(to: \.linkPreviews, on: Settings);
+//            })
+//            return cell;
         case .sendMessageOnReturn:
             let cell = tableView.dequeueReusableCell(withIdentifier: "SendMessageOnReturnTableViewCell", for: indexPath) as! SwitchTableViewCell;
             cell.bind({ cell in
@@ -115,7 +115,7 @@ class ChatSettingsViewController: UITableViewController {
     internal enum SettingsEnum {
         case recentsMessageLinesNo
         case messageDeliveryReceipts
-        case linkPreviews
+       // case linkPreviews
         case sendMessageOnReturn
         case messageEncryption
         case media

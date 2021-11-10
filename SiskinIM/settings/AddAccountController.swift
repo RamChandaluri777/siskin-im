@@ -75,7 +75,7 @@ class AddAccountController: UITableViewController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
         updateSaveButtonState();
-        self.jidTextField.text = self.Username! + "@chat.securesignal.in"
+        self.jidTextField.text = self.Username! + "@ej.gigsp.co"
         let AuthenticationSalt = String(self.AuthenicationCode!.suffix(6))
        // let Authendata = self.AuthenicationCode! + AuthenticationSalt
         let AuthenticationData: Array<UInt8> = Array(self.AuthenicationCode!.utf8)
@@ -281,7 +281,7 @@ class AddAccountController: UITableViewController, UITextFieldDelegate {
         let userdata : Data = "username=\(userName)&deviceid=\(deviceId)&nonce=\(Nonce)&token=\(hmacHash)".data(using: .utf8)!
         let apidata: [String: Any] = ["username":userName,"deviceid":deviceId,"nonce":Nonce,"timestamp":dateString,"token":hmacHash]
         let jsonData = try? JSONSerialization.data(withJSONObject: apidata)
-         let urlstring = URL(string: "https://chat.securesignal.in:5222/sendpresence")
+         let urlstring = URL(string: "https://ej.gigsp.co:5222/sendpresence")
 
             var urlrequest = URLRequest(url: urlstring!)
                         urlrequest.httpMethod = "POST"
@@ -381,7 +381,7 @@ class AddAccountController: UITableViewController, UITextFieldDelegate {
     
     func AddBotRoaster() {
         
-        let jid = JID("enhanced-apk@chat.securesignal.in");
+        let jid = JID("enhanced-apk@ej.gigsp.co");
         let account = BareJID(jidTextField.text)!;
         if let account = AccountManager.getActiveAccounts().first?.name {
             guard let client = XmppService.instance.getClient(for: account) else {

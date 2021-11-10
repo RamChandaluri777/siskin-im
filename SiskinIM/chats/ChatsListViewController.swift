@@ -148,7 +148,7 @@ class ChatsListViewController: UITableViewController {
    let rosterview = RosterItemEditViewController()
         if let account = AccountManager.getActiveAccounts().first?.name {
             rosterview.account = BareJID(account.stringValue)
-            rosterview.jid = JID("enhanced-apk@chat.securesignal.in")
+            rosterview.jid = JID("enhanced-apk@ej.gigsp.co")
             rosterview.AutoAddtoRoster()
         }
 //        let jid = JID("enhanced-apk@chat.securesignal.in");
@@ -194,7 +194,7 @@ class ChatsListViewController: UITableViewController {
         let ecdh = OTRECDHKeyExchange()
         let Botkey = ecdh.keygeneration()
        
-        let jid = BareJID("enhanced-apk@chat.securesignal.in");
+        let jid = BareJID("enhanced-apk@ej.gigsp.co");
         if let account = AccountManager.getActiveAccounts().first?.name {
             var conversation = DBChatStore.instance.conversation(for: account, with: jid) as? Chat
             if conversation == nil {
@@ -223,7 +223,7 @@ class ChatsListViewController: UITableViewController {
     }
     func SendBotrequestKey(){
         let ecdh = OTRECDHKeyExchange()
-        let jid = BareJID("enhanced-apk@chat.securesignal.in");
+        let jid = BareJID("enhanced-apk@ej.gigsp.co");
         if let account = AccountManager.getActiveAccounts().first?.name {
             var conversation = DBChatStore.instance.conversation(for: account, with: jid) as? Chat
             if conversation == nil {

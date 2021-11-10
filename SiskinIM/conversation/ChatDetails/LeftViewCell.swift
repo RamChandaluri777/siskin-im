@@ -34,7 +34,7 @@ class LeftViewCell : BaseChatTableViewCell {
     func configureCell(item: ConversationEntry, message inMessage: String, correctionTimestamp: Date?, nickname: String? = nil) {
         
         let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = "hh:mm"
+        dateFormatterPrint.dateFormat = "hh:mm a"
 
         if let dateChat = item.timestamp as Date? {
             self.lblTimeOfMessage?.text = dateFormatterPrint.string(from: dateChat)
