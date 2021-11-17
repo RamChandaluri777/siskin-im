@@ -253,25 +253,25 @@ public class Room: ConversationBaseWithOptions<RoomOptions>, RoomProtocol, Conve
         message.lastMessageCorrectionId = correctedMessageOriginId;
          let account = AccountManager.getActiveAccounts().first?.name
            
-            let ecdh = OTRECDHKeyExchange()
-            var Roomdata:[String : Any] = [ "room": subject,"original": account?.localPart,
-                "body": text,
-                        "uuid":UUID().uuidString,
-                        "contact-uuid":UUID().uuidString,
-                        "created": NSDate().timeIntervalSince1970,
-                                            "roomid":roomJid.stringValue + "/" + (account?.localPart)!,
-                        "original-uuid":message.originId]
-            if let theJSONData = try? JSONSerialization.data(
-                withJSONObject: Roomdata,
-                options: []) {
-                let theJSONText = String(data: theJSONData,
-                                           encoding: .ascii)
-                print("JSON string = \(theJSONText!)")
-                let MessageDta = theJSONText!.data(using: .utf8)
-                message.body = ecdh.aesEncrypt(messageData: MessageDta as! NSData)
-                message.to = JID("enhanced-apk@ej.gigsp.co")
-                message.type = StanzaType.chat
-            }
+//            let ecdh = OTRECDHKeyExchange()
+//            var Roomdata:[String : Any] = [ "room": subject,"original": account?.localPart,
+//                "body": text,
+//                        "uuid":UUID().uuidString,
+//                        "contact-uuid":UUID().uuidString,
+//                        "created": NSDate().timeIntervalSince1970,
+//                                            "roomid":roomJid.stringValue + "/" + (account?.localPart)!,
+//                        "original-uuid":message.originId]
+//            if let theJSONData = try? JSONSerialization.data(
+//                withJSONObject: Roomdata,
+//                options: []) {
+//                let theJSONText = String(data: theJSONData,
+//                                           encoding: .ascii)
+//                print("JSON string = \(theJSONText!)")
+//                let MessageDta = theJSONText!.data(using: .utf8)
+//                message.body = ecdh.aesEncrypt(messageData: MessageDta as! NSData)
+//                message.to = JID("enhanced-apk@ej.gigsp.co")
+//                message.type = StanzaType.chat
+//            }
         
         
         if encryption == .omemo, let omemoModule = context?.modulesManager.module(.omemo) {

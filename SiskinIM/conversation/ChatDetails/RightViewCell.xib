@@ -18,10 +18,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="orZ-GS-mTp">
-                        <rect key="frame" x="143" y="38" width="274" height="34"/>
+                        <rect key="frame" x="143" y="0.0" width="274" height="72"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2:54 PM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2UW-IT-RBo">
-                                <rect key="frame" x="203" y="16" width="55" height="15"/>
+                                <rect key="frame" x="203" y="54" width="55" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="55" id="xPy-59-QLx"/>
                                 </constraints>
@@ -30,13 +30,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem Ipsum Sir Dolar Amit" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HvM-fS-Xkm">
-                                <rect key="frame" x="12" y="8" width="187" height="18"/>
+                                <rect key="frame" x="12" y="8" width="187" height="56"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sz3-DL-mDz">
-                                <rect key="frame" x="259" y="16" width="15" height="15"/>
+                                <rect key="frame" x="259" y="54" width="15" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="qbb-fz-BNz"/>
                                     <constraint firstAttribute="width" constant="15" id="vKk-84-qCd"/>
@@ -56,32 +56,18 @@
                             <constraint firstAttribute="bottom" secondItem="HvM-fS-Xkm" secondAttribute="bottom" constant="8" id="xrY-i8-ATS"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FJQ-HG-Xl5">
-                        <rect key="frame" x="0.0" y="3" width="433" height="30"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="30" id="Gpc-t1-Rpj"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="orZ-GS-mTp" secondAttribute="bottom" constant="4" id="Aaf-VS-ky4"/>
-                    <constraint firstItem="FJQ-HG-Xl5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="3" id="DQt-BA-yqs"/>
-                    <constraint firstAttribute="trailing" secondItem="FJQ-HG-Xl5" secondAttribute="trailing" id="LwX-O0-0qh"/>
-                    <constraint firstItem="orZ-GS-mTp" firstAttribute="top" secondItem="FJQ-HG-Xl5" secondAttribute="bottom" constant="5" id="WTt-N0-Vzz"/>
                     <constraint firstItem="orZ-GS-mTp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="64" id="WVf-e2-tpV"/>
-                    <constraint firstItem="FJQ-HG-Xl5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="nWf-7U-dTQ"/>
+                    <constraint firstItem="orZ-GS-mTp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="o6z-Ew-BgI"/>
                     <constraint firstAttribute="trailing" secondItem="orZ-GS-mTp" secondAttribute="trailing" constant="16" id="uHq-SN-HyO"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="heightTimeStampConstraints" destination="Gpc-t1-Rpj" id="4ea-Lx-FCb"/>
                 <outlet property="imgVWOfstate" destination="sz3-DL-mDz" id="6W5-pR-HG3"/>
                 <outlet property="lblTimeOfMessage" destination="2UW-IT-RBo" id="Pe6-z1-mOL"/>
-                <outlet property="lblTimeStamp" destination="FJQ-HG-Xl5" id="kzS-Jc-pKi"/>
                 <outlet property="messageContainerView" destination="orZ-GS-mTp" id="st8-wK-WVY"/>
                 <outlet property="textMessageLabel" destination="HvM-fS-Xkm" id="mjS-IB-uYL"/>
             </connections>

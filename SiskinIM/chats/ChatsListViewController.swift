@@ -50,15 +50,15 @@ class ChatsListViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
-        let ecdh = OTRECDHKeyExchange()
+       // let ecdh = OTRECDHKeyExchange()
         
-        if (ecdh.GetMyPrivateandPublickey() == false){
-            self.AddBotRoaster()
-            self.SendBotKey()
-                    }
-        if (ecdh.GetBotpublickey() == false){
-            self.SendBotrequestKey()
-           }
+//        if (ecdh.GetMyPrivateandPublickey() == false){
+//            self.AddBotRoaster()
+//            self.SendBotKey()
+//                    }
+//        if (ecdh.GetBotpublickey() == false){
+//            self.SendBotrequestKey()
+//           }
         DBChatStore.instance.$unreadMessagesCount.throttle(for: 0.1, scheduler: DispatchQueue.main, latest: true).map({ $0 == 0 ? nil : "\($0)" }).sink(receiveValue: { [weak self] value in
             self?.navigationController?.tabBarItem.badgeValue = value;
         }).store(in: &cancellables);

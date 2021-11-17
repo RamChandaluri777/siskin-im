@@ -127,13 +127,13 @@ class MessageEventHandler: XmppServiceEventHandler {
         }
         
         let messagetext = body
-        if messagetext.contains("TYPE_PUBLIC_KEY") {
-            if !(messagetext.contains("TYPE_PUBLIC_KEY_REQUEST")){
-                let ecdhkey = OTRECDHKeyExchange()
-                ecdhkey.decodekey(PublicString: message.body!)
-            }
-            
-        }
+//        if messagetext.contains("TYPE_PUBLIC_KEY") {
+//            if !(messagetext.contains("TYPE_PUBLIC_KEY_REQUEST")){
+//                let ecdhkey = OTRECDHKeyExchange()
+//                ecdhkey.decodekey(PublicString: message.body!)
+//            }
+//            
+//        }
         
         if messagetext.contains("TYPE_DH_ENCRYPTED"){
                   let ecdh = OTRECDHKeyExchange()
@@ -192,37 +192,37 @@ class MessageEventHandler: XmppServiceEventHandler {
               }
               }
         
-        if messagetext.contains("TYPE_PUBLIC_KEY_REQUEST"){
-            var publickeybase64encoded:String?
-            let ecdhdecrypt = OTRECDHKeyExchange()
-            var error: Unmanaged<CFError>?
-            let jid = BareJID("enhanced-apk@ej.gigsp.co");
-            let publicKeySec = ecdhdecrypt.GetKeyTypeInKeyChain(tag: "myPublic")
-            let PKExport = ecdhdecrypt.PublicKeyExportFormat(Pk: publicKeySec!)
-            
-            if let account = AccountManager.getActiveAccounts().first?.name {
-                var conversation = DBChatStore.instance.conversation(for: account, with: jid) as? Chat
-                if conversation == nil {
-                    guard let client = XmppService.instance.getClient(for: account) else {
-                       return (body, encryption, fingerprint);
-                            }
-                    switch DBChatStore.instance.createChat(for: client, with:jid) {
-                    case .created(let chat):
-                        conversation = chat;
-                    case .found(let chat):
-                        conversation = chat;
-                    case .none:
-                       return (body, encryption, fingerprint);
-                    }
-                    
-                   
-                    }
-                conversation?.updateOptions({ options in
-                    options.encryption = ChatEncryption.none;
-                })
-                conversation?.sendMessage(text: PKExport, correctedMessageOriginId: nil)
-            }
-        }
+//        if messagetext.contains("TYPE_PUBLIC_KEY_REQUEST"){
+//            var publickeybase64encoded:String?
+//            let ecdhdecrypt = OTRECDHKeyExchange()
+//            var error: Unmanaged<CFError>?
+//            let jid = BareJID("enhanced-apk@ej.gigsp.co");
+//            let publicKeySec = ecdhdecrypt.GetKeyTypeInKeyChain(tag: "myPublic")
+//            let PKExport = ecdhdecrypt.PublicKeyExportFormat(Pk: publicKeySec!)
+//            
+//            if let account = AccountManager.getActiveAccounts().first?.name {
+//                var conversation = DBChatStore.instance.conversation(for: account, with: jid) as? Chat
+//                if conversation == nil {
+//                    guard let client = XmppService.instance.getClient(for: account) else {
+//                       return (body, encryption, fingerprint);
+//                            }
+//                    switch DBChatStore.instance.createChat(for: client, with:jid) {
+//                    case .created(let chat):
+//                        conversation = chat;
+//                    case .found(let chat):
+//                        conversation = chat;
+//                    case .none:
+//                       return (body, encryption, fingerprint);
+//                    }
+//                    
+//                   
+//                    }
+//                conversation?.updateOptions({ options in
+//                    options.encryption = ChatEncryption.none;
+//                })
+//                conversation?.sendMessage(text: PKExport, correctedMessageOriginId: nil)
+//            }
+//        }
         return (body, encryption, fingerprint);
     }
     

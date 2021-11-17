@@ -114,9 +114,11 @@ class MucEventHandler: XmppServiceExtension {
                 });
         }).store(in: &cancellables);
     }
+    
     func fetchMUCRoomslist (for client: XMPPClient){
         
     }
+    
     static func showJoinError(_ err: XMPPError, for room: Room) {
         guard let error = MucModule.RoomError.from(error: err), let context = room.context else {
             return;
