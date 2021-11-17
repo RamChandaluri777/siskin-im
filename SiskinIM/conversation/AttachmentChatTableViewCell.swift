@@ -23,9 +23,14 @@ import UIKit
 import MobileCoreServices
 import LinkPresentation
 import TigaseSwift
-import AVFoundation
-
+@objc protocol attachmentFeaturesCellDelegate {
+    @objc optional func featuresWorking(indexPath:IndexPath, index:Int)
+}
 class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteractionDelegate {
+    
+    var cellDelegate:attachmentFeaturesCellDelegate?
+    var indexPath:IndexPath?
+    var index = Int()
     
     @IBOutlet var customView: UIView!;
     
@@ -36,6 +41,7 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
     }
     
     fileprivate var tapGestureRecognizer: UITapGestureRecognizer?;
+    fileprivate var longPressGestureRecognizer: UILongPressGestureRecognizer?;
     
     private var item: ConversationEntry?;
     
@@ -65,7 +71,15 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
         tapGestureRecognizer?.numberOfTapsRequired = 2;
         customView.addGestureRecognizer(tapGestureRecognizer!);
         
-        customView.addInteraction(UIContextMenuInteraction(delegate: self));
+        if #available(iOS 13.0, *) {
+            customView.addInteraction(UIContextMenuInteraction(delegate: self));
+        } else {
+            longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureDidFire));
+            longPressGestureRecognizer?.cancelsTouchesInView = true;
+            longPressGestureRecognizer?.delegate = self;
+                
+            customView.addGestureRecognizer(longPressGestureRecognizer!);
+        }
     }
         
     func set(item: ConversationEntry, url: String, appendix: ChatAttachmentAppendix) {
@@ -73,14 +87,11 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
         super.set(item: item);
         
         self.customView?.isOpaque = true;
-//        self.customView?.backgroundColor = self.backgroundColor;
+        self.customView?.backgroundColor = self.backgroundColor;
         
-        guard case let .attachment(url, appendix) = item.payload else {
-            return;
-        }
-        
-        if !(appendix.mimetype?.starts(with: "audio/") ?? false), let localUrl = DownloadStore.instance.url(for: "\(item.id)") {
+        if let localUrl = DownloadStore.instance.url(for: "\(item.id)") {
             documentController = UIDocumentInteractionController(url: localUrl);
+            //self.longPressGestureRecognizer?.isEnabled = false;
             var metadata = MetadataCache.instance.metadata(for: "\(item.id)");
             let isNew = metadata == nil;
             if metadata == nil {
@@ -112,13 +123,12 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
             ]);
                 
             if isNew {
-                MetadataCache.instance.generateMetadata(for: localUrl, withId: "\(item.id)", completionHandler: { [weak self] meta1 in
-                    DispatchQueue.main.async {
-                        guard let that = self, meta1 != nil, that.item?.id == item.id else {
-                            return;
-                        }
-                        NotificationCenter.default.post(name: ConversationLogController.REFRESH_CELL, object: that);
+                MetadataCache.instance.generateMetadata(for: localUrl, withId: "\(item.id)", completionHandler: { meta1 in
+                    guard meta1 != nil else {
+                        return;
                     }
+                    DBChatHistoryStore.instance.updateItem(for: item.conversation, id: item.id, updateAppendix: { appendix in
+                    });
                 })
             }
         } else {
@@ -140,17 +150,15 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
 
             switch appendix.state {
             case .new:
-                if DownloadStore.instance.url(for: "\(item.id)") == nil {
-                    let sizeLimit = Settings.fileDownloadSizeLimit;
-                    if sizeLimit > 0 {
-                        if (DBRosterStore.instance.item(for: item.conversation.account, jid: JID(item.conversation.jid))?.subscription ?? .none).isFrom || (DBChatStore.instance.conversation(for: item.conversation.account, with: item.conversation.jid) as? Room != nil) {
-                            _ = DownloadManager.instance.download(item: item, url: url, maxSize: sizeLimit >= Int.max ? Int64.max : Int64(sizeLimit * 1024 * 1024));
-                            attachmentInfo.progress(show: true);
-                            return;
-                        }
+                let sizeLimit = Settings.fileDownloadSizeLimit;
+                if sizeLimit > 0 {
+                    if (DBRosterStore.instance.item(for: item.conversation.account, jid: JID(item.conversation.jid))?.subscription ?? .none).isFrom || (DBChatStore.instance.conversation(for: item.conversation.account, with: item.conversation.jid) as? Room != nil) {
+                        _ = DownloadManager.instance.download(item: item, url: url, maxSize: sizeLimit >= Int.max ? Int64.max : Int64(sizeLimit * 1024 * 1024));
+                        attachmentInfo.progress(show: true);
+                        return;
                     }
-                    attachmentInfo.progress(show: DownloadManager.instance.downloadInProgress(for: item));
                 }
+                attachmentInfo.progress(show: DownloadManager.instance.downloadInProgress(for: item));
             default:
                 attachmentInfo.progress(show: DownloadManager.instance.downloadInProgress(for: item));
             }
@@ -170,37 +178,41 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
         
         if let localUrl = DownloadStore.instance.url(for: "\(item.id)") {
             let items = [
-                UIAction(title: NSLocalizedString("Preview", comment: "attachment cell context action"), image: UIImage(systemName: "eye.fill"), handler: { action in
+                UIAction(title: "Preview", image: UIImage(systemName: "eye.fill"), handler: { action in
+                    print("preview called");
                     self.open(url: localUrl, preview: true);
                 }),
-                UIAction(title: NSLocalizedString("Copy", comment: "attachment cell context action"), image: UIImage(systemName: "doc.on.doc"), handler: { action in
+                UIAction(title: "Copy", image: UIImage(systemName: "doc.on.doc"), handler: { action in
                     UIPasteboard.general.strings = [url];
                     UIPasteboard.general.string = url;
                 }),
-                UIAction(title: NSLocalizedString("Share..", comment: "attachment cell context action"), image: UIImage(systemName: "square.and.arrow.up"), handler: { action in
+                UIAction(title: "Share..", image: UIImage(systemName: "square.and.arrow.up"), handler: { action in
+                    print("share called");
                     self.open(url: localUrl, preview: false);
                 }),
-                UIAction(title: NSLocalizedString("Delete", comment: "attachment cell context action"), image: UIImage(systemName: "trash"), attributes: [.destructive], handler: { action in
-                    DownloadStore.instance.deleteFile(for: "\(item.id)");
-                    DBChatHistoryStore.instance.updateItem(for: item.conversation, id: item.id, updateAppendix: { appendix in
-                        appendix.state = .removed;
-                    })
-                }),
-                UIAction(title: NSLocalizedString("More..", comment: "attachment cell context action"), image: UIImage(systemName: "ellipsis"), handler: { action in
+//                UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: [.destructive], handler: { action in
+//                    print("delete called");
+//                    DownloadStore.instance.deleteFile(for: "\(item.id)");
+//                    DBChatHistoryStore.instance.updateItem(for: item.conversation, id: item.id, updateAppendix: { appendix in
+//                        appendix.state = .removed;
+//                    })
+//                }),
+                UIAction(title: "More..", image: UIImage(systemName: "ellipsis"), handler: { action in
                     NotificationCenter.default.post(name: Notification.Name("tableViewCellShowEditToolbar"), object: self);
                 })
             ];
             return UIMenu(title: "", image: nil, identifier: nil, options: [], children: items);
         } else {
             let items = [
-                UIAction(title: NSLocalizedString("Copy", comment: "attachment cell context action"), image: UIImage(systemName: "doc.on.doc"), handler: { action in
+                UIAction(title: "Copy", image: UIImage(systemName: "doc.on.doc"), handler: { action in
                     UIPasteboard.general.strings = [url];
                     UIPasteboard.general.string = url;
                 }),
-                UIAction(title: NSLocalizedString("Download", comment: "attachment cell context action"), image: UIImage(systemName: "square.and.arrow.down"), handler: { action in
+                UIAction(title: "Download", image: UIImage(systemName: "square.and.arrow.down"), handler: { action in
+                    print("download called");
                     self.download(for: item);
                 }),
-                UIAction(title: NSLocalizedString("More..", comment: "attachment cell context action"), image: UIImage(systemName: "ellipsis"), handler: { action in
+                UIAction(title: "More..", image: UIImage(systemName: "ellipsis"), handler: { action in
                     NotificationCenter.default.post(name: Notification.Name("tableViewCellShowEditToolbar"), object: self);
                 })
             ];
@@ -208,11 +220,13 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
         }
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse();
-        (self.linkView as? AttachmentInfoView)?.prepareForReuse();
+    @objc func longPressGestureDidFire(_ recognizer: UILongPressGestureRecognizer) {
+        guard recognizer.state == .recognized else {
+            return;
+        }
+        downloadOrOpen();
     }
-        
+    
     @objc func tapGestureDidFire(_ recognizer: UITapGestureRecognizer) {
         downloadOrOpen();
     }
@@ -230,6 +244,7 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
                     self.addGestureRecognizer(recognizer)
                 }
             }
+            longPressGestureRecognizer?.isEnabled = documentController == nil;
         }
     }
     
@@ -242,8 +257,10 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
     }
     
     func open(url: URL, preview: Bool) {
+        print("opening a file:", url, "exists:", FileManager.default.fileExists(atPath: url.path));// "tmp:", tmpUrl);
         let documentController = UIDocumentInteractionController(url: url);
         documentController.delegate = self;
+        print("detected uti:", documentController.uti as Any, "for:", documentController.url as Any);
         if preview && documentController.presentPreview(animated: true) {
             self.documentController = documentController;
         } else if documentController.presentOptionsMenu(from: self.superview?.convert(self.frame, to: self.superview?.superview) ?? CGRect.zero, in: self.self, animated: true) {
@@ -259,6 +276,20 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
         (self.linkView as? AttachmentInfoView)?.progress(show: true);
     }
     
+//    func documentInteractionControllerViewForPreview(_ controller: UIDocumentInteractionController) -> UIView? {
+//        return self;
+//    }
+    
+//    func documentInteractionControllerDidDismissOptionsMenu(_ controller: UIDocumentInteractionController) {
+//        print("file sharing cancelled!");
+//        self.documentController = nil;
+//    }
+//
+//    func documentInteractionController(_ controller: UIDocumentInteractionController, didEndSendingToApplication application: String?) {
+//        print("file shared with:", application);
+//        self.documentController = nil;
+//    }
+    
     private func downloadOrOpen() {
         guard let item = self.item else {
             return;
@@ -268,23 +299,22 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
 //            try? FileManager.default.copyItem(at: localUrl, to: tmpUrl);
             open(url: localUrl, preview: true);
         } else {
-            let alert = UIAlertController(title: NSLocalizedString("Download", comment: "confirmation dialog title"), message: NSLocalizedString("File is not available locally. Should it be downloaded?", comment: "confirmation dialog body"), preferredStyle: .alert);
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Yes", comment: "button label"), style: .default, handler: { (action) in
+            let alert = UIAlertController(title: "Download", message: "File is not available locally. Should it be downloaded?", preferredStyle: .alert);
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                 self.download(for: item);
             }))
-            alert.addAction(UIAlertAction(title: NSLocalizedString("No", comment: "button label"), style: .cancel, handler: nil));
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil));
             if let controller = (UIApplication.shared.delegate as? AppDelegate)?.window?.rootViewController {
                 controller.present(alert, animated: true, completion: nil);
             }
         }
     }
         
-    class AttachmentInfoView: UIView, AVAudioPlayerDelegate {
+    class AttachmentInfoView: UIView {
         
         let iconView: ImageAttachmentPreview;
         let filename: UILabel;
         let details: UILabel;
-        let actionButton: UIButton;
         
         private var viewType: ViewType = .none {
             didSet {
@@ -294,22 +324,18 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
                 switch oldValue {
                 case .none:
                     break;
-                case .audioFile:
-                    NSLayoutConstraint.deactivate(audioFileViewConstraints);
                 case .file:
                     NSLayoutConstraint.deactivate(fileViewConstraints);
                 case .imagePreview:
                     NSLayoutConstraint.deactivate(imagePreviewConstraints);
                 }
                 switch viewType {
-                case .none:
-                    break;
-                case .audioFile:
-                    NSLayoutConstraint.activate(audioFileViewConstraints);
-                case .file:
-                    NSLayoutConstraint.activate(fileViewConstraints);
-                case .imagePreview:
-                    NSLayoutConstraint.activate(imagePreviewConstraints);
+                    case .none:
+                        break;
+                    case .file:
+                        NSLayoutConstraint.activate(fileViewConstraints);
+                    case .imagePreview:
+                        NSLayoutConstraint.activate(imagePreviewConstraints);
                 }
                 iconView.contentMode = viewType == .imagePreview ? .scaleAspectFill : .scaleAspectFit;
                 iconView.isImagePreview = viewType == .imagePreview;
@@ -318,20 +344,7 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
         
         private var fileViewConstraints: [NSLayoutConstraint] = [];
         private var imagePreviewConstraints: [NSLayoutConstraint] = [];
-        private var audioFileViewConstraints: [NSLayoutConstraint] = [];
         
-        private static var labelFont: UIFont {
-            let font = UIFont.preferredFont(forTextStyle: .headline);
-            return font.withSize(font.pointSize - 2);
-        }
-        
-        private static var detailsFont: UIFont {
-            let font = UIFont.preferredFont(forTextStyle: .subheadline);
-            return font.withSize(font.pointSize - 2);
-        }
-        
-        private var fileUrl: URL?;
-
         override init(frame: CGRect) {
             iconView = ImageAttachmentPreview(frame: .zero);
             iconView.clipsToBounds = true
@@ -343,27 +356,17 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
             iconView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal);
 
             filename = UILabel(frame: .zero);
-            filename.numberOfLines = 0
-            filename.font = AttachmentInfoView.labelFont//.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .semibold);
-//            filename.adjustsFontForContentSizeCategory = true;
+            filename.font = UIFont.systemFont(ofSize: UIFont.systemFontSize - 1, weight: .semibold);
             filename.translatesAutoresizingMaskIntoConstraints = false;
             filename.setContentHuggingPriority(.defaultHigh, for: .horizontal);
             filename.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal);
-            filename.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
             
             details = UILabel(frame: .zero);
-            details.font = AttachmentInfoView.detailsFont// UIFont.systemFont(ofSize: UIFont.systemFontSize - 2, weight: .regular);
-//            details.adjustsFontForContentSizeCategory = true;
-            details.textColor = UIColor.secondaryLabel;
+            details.font = UIFont.systemFont(ofSize: UIFont.systemFontSize - 2, weight: .regular);
             details.translatesAutoresizingMaskIntoConstraints = false;
             details.setContentHuggingPriority(.defaultHigh, for: .horizontal)
             details.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal);
-            details.numberOfLines = 0;
 
-            actionButton = UIButton.systemButton(with: UIImage(systemName: "play.circle.fill")!, target: nil, action: nil);
-            actionButton.translatesAutoresizingMaskIntoConstraints = false;
-            actionButton.tintColor = UIColor(named: "tintColor");
-            
             super.init(frame: frame);
             self.clipsToBounds = true
             self.translatesAutoresizingMaskIntoConstraints = false;
@@ -372,58 +375,25 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
             addSubview(iconView);
             addSubview(filename);
             addSubview(details);
-            addSubview(actionButton);
             
             fileViewConstraints = [
                 iconView.heightAnchor.constraint(equalToConstant: 30),
                 iconView.widthAnchor.constraint(equalTo: iconView.heightAnchor),
                 
-                iconView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-                iconView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-                iconView.topAnchor.constraint(greaterThanOrEqualTo: self.topAnchor, constant: 8),
-//                iconView.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor, constant: -8),
+                iconView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
+                iconView.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
+                iconView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8),
                 
-                filename.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 10),
+                filename.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 12),
                 filename.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
-                filename.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -10),
+                filename.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -12),
                 
-                details.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 10),
-                details.topAnchor.constraint(equalTo: filename.bottomAnchor, constant: 4),
+                details.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 12),
+                details.topAnchor.constraint(equalTo: filename.bottomAnchor, constant: 0),
                 details.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8),
                 // -- this is causing issue with progress indicatior!!
-                details.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -10),
-                details.heightAnchor.constraint(equalTo: filename.heightAnchor),
-                
-                actionButton.heightAnchor.constraint(equalToConstant: 0),
-                actionButton.widthAnchor.constraint(equalToConstant: 0),
-                actionButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
-                actionButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0)
-            ];
-            
-            audioFileViewConstraints = [
-                iconView.heightAnchor.constraint(equalToConstant: 30),
-                iconView.widthAnchor.constraint(equalTo: iconView.heightAnchor),
-                
-                iconView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-                iconView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-                iconView.topAnchor.constraint(greaterThanOrEqualTo: self.topAnchor, constant: 8),
-//                iconView.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor, constant: -8),
-                
-                filename.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 10),
-                filename.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
-                filename.trailingAnchor.constraint(lessThanOrEqualTo: self.actionButton.leadingAnchor, constant: -10),
-                
-                details.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 10),
-                details.topAnchor.constraint(equalTo: filename.bottomAnchor, constant: 4),
-                details.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8),
-                // -- this is causing issue with progress indicatior!!
-                details.trailingAnchor.constraint(lessThanOrEqualTo: self.actionButton.leadingAnchor, constant: -10),
-                
-                actionButton.heightAnchor.constraint(equalToConstant: 30),
-                actionButton.widthAnchor.constraint(equalTo: actionButton.heightAnchor),
-                actionButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
-                actionButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-                actionButton.topAnchor.constraint(greaterThanOrEqualTo: self.topAnchor, constant: 8)
+                details.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -12),
+                details.heightAnchor.constraint(equalTo: filename.heightAnchor)
             ];
             
             imagePreviewConstraints = [
@@ -436,94 +406,58 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
                 iconView.topAnchor.constraint(equalTo: self.topAnchor),
                 iconView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
                 
-                filename.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-                filename.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 8),
-                filename.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -16),
+                filename.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
+                filename.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 4),
+                filename.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -12),
                 
-                details.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-                details.topAnchor.constraint(equalTo: filename.bottomAnchor, constant: 4),
+                details.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
+                details.topAnchor.constraint(equalTo: filename.bottomAnchor, constant: 0),
                 details.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8),
-                details.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -16),
-                details.heightAnchor.constraint(equalTo: filename.heightAnchor),
-                
-                actionButton.heightAnchor.constraint(equalToConstant: 0),
-                actionButton.widthAnchor.constraint(equalToConstant: 0),
-                actionButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
-                actionButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0)
+                details.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -12),
+                details.heightAnchor.constraint(equalTo: filename.heightAnchor)
             ];
-            
-            actionButton.addTarget(self, action: #selector(actionTapped(_:)), for: .touchUpInside);
         }
         
         required init?(coder: NSCoder) {
             return nil;
         }
-
-        func prepareForReuse() {
-            self.stopPlayingAudio();
-        }
         
         override func draw(_ rect: CGRect) {
             let path = UIBezierPath(roundedRect: rect, cornerRadius: 10);
             path.addClip();
-            UIColor.secondarySystemFill.setFill();
+            if #available(iOS 13.0, *) {
+                UIColor.secondarySystemBackground.setFill();
+            } else {
+                UIColor.lightGray.withAlphaComponent(0.5).setFill();
+            }
             path.fill();
             
             super.draw(rect);
         }
         
-        static let timeFormatter: DateComponentsFormatter = {
-            let formatter = DateComponentsFormatter();
-            formatter.unitsStyle = .abbreviated;
-            formatter.zeroFormattingBehavior = .dropAll;
-            formatter.allowedUnits = [.minute,.second]
-            return formatter;
-        }();
-        
         func set(item: ConversationEntry, url: String, appendix: ChatAttachmentAppendix) {
-            self.fileUrl = DownloadStore.instance.url(for: "\(item.id)");
-            if let fileUrl = self.fileUrl {
+            if let fileUrl = DownloadStore.instance.url(for: "\(item.id)") {
                 filename.text = fileUrl.lastPathComponent;
                 let fileSize = fileSizeToString(try! FileManager.default.attributesOfItem(atPath: fileUrl.path)[.size] as? UInt64);
                 if let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileUrl.pathExtension as CFString, nil)?.takeRetainedValue(), let typeName = UTTypeCopyDescription(uti)?.takeRetainedValue() as String? {
                     details.text = "\(typeName) - \(fileSize)";
                     if UTTypeConformsTo(uti, kUTTypeImage) {
                         self.viewType = .imagePreview;
+                        print("preview of:" , fileUrl, fileUrl.path);
                         iconView.image = UIImage(contentsOfFile: fileUrl.path)!;
-                    } else if UTTypeConformsTo(uti, kUTTypeAudio) {
-                        self.viewType = .audioFile;
-                        let asset = AVURLAsset(url: fileUrl);
-                        asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
-                            DispatchQueue.main.async {
-                                guard self.fileUrl == fileUrl else {
-                                    return;
-                                }
-                                if asset.duration != .invalid && asset.duration != .zero {
-                                    let length = CMTimeGetSeconds(asset.duration);
-                                    if let lengthStr = AttachmentInfoView.timeFormatter.string(from: length) {
-                                        self.details.text = "\(typeName) - \(fileSize) - \(lengthStr)";
-                                    }
-                                }
-                            }
-                        });
-                        iconView.image = UIImage.icon(forUTI: uti as String) ?? UIImage.icon(forFile: fileUrl, mimeType: appendix.mimetype);
                     } else {
                         self.viewType = .file;
                         iconView.image = UIImage.icon(forFile: fileUrl, mimeType: appendix.mimetype);
                     }
-                } else if let mimetype = appendix.mimetype, let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, mimetype as CFString, nil)?.takeRetainedValue(), let typeName = UTTypeCopyDescription(uti)?.takeRetainedValue() as String? {
-                    details.text = "\(typeName) - \(fileSize)";
-                    iconView.image = UIImage.icon(forUTI: uti as String) ?? UIImage.icon(forFile: fileUrl, mimeType: appendix.mimetype);
-                    self.viewType = .file;
                 } else {
-                    details.text = String.localizedStringWithFormat(NSLocalizedString("File - %@", comment: "file size label"), fileSize);
+                    details.text = fileSize;
                     iconView.image = UIImage.icon(forFile: fileUrl, mimeType: appendix.mimetype);
                     self.viewType = .file;
                 }
             } else {
                 let filename = appendix.filename ?? URL(string: url)?.lastPathComponent ?? "";
                 if filename.isEmpty {
-                    self.filename.text = NSLocalizedString("Unknown file", comment: "unknown file label");
+                    self.filename.text =  "Unknown file";
                 } else {
                     self.filename.text = filename;
                 }
@@ -533,7 +467,7 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
                         details.text = "\(typeName) - \(fileSize)";
                         iconView.image = UIImage.icon(forUTI: uti as String);
                     } else {
-                        details.text = String.localizedStringWithFormat(NSLocalizedString("File - %@", comment: "file size label"),fileSizeToString(UInt64(size)));
+                        details.text = fileSizeToString(UInt64(size));
                         iconView.image = UIImage.icon(forUTI: "public.content");
                     }
                 } else {
@@ -585,48 +519,8 @@ class AttachmentChatTableViewCell: BaseChatTableViewCell, UIContextMenuInteracti
             case none
             case file
             case imagePreview
-            case audioFile
         }
         
-        private var audioPlayer: AVAudioPlayer?;
-        
-        private func startPlayingAudio() {
-            stopPlayingAudio();
-            guard let fileUrl = self.fileUrl else {
-                return;
-            }
-            do {
-                try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default);
-                try? AVAudioSession.sharedInstance().setActive(true);
-                audioPlayer = try AVAudioPlayer(contentsOf: fileUrl);
-                audioPlayer?.delegate = self;
-                audioPlayer?.volume = 1.0;
-                audioPlayer?.play();
-                self.actionButton.setImage(UIImage(systemName: "pause.circle.fill")!, for: .normal);
-            } catch {
-                self.stopPlayingAudio();
-            }
-        }
-        
-        private func stopPlayingAudio() {
-            audioPlayer?.stop();
-            audioPlayer = nil;
-            self.actionButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal);
-        }
-        
-        func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-            audioPlayer?.stop();
-            audioPlayer = nil;
-            self.actionButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal);
-        }
-        
-        @objc func actionTapped(_ sender: Any) {
-            if audioPlayer == nil {
-                self.startPlayingAudio();
-            } else {
-                self.stopPlayingAudio();
-            }
-        }
     }
 }
 
@@ -678,6 +572,7 @@ extension UIImage {
             controller.uti = "public.data";
         }
         let icons = controller.icons;
+        print("got:", icons.last as Any, "for:", url.absoluteString);
         return icons.last;
     }
 
@@ -688,6 +583,7 @@ extension UIImage {
             controller.uti = "public.data";
         }
         let icons = controller.icons;
+        print("got:", icons.last as Any, "for:", utiString);
         return icons.last;
     }
     

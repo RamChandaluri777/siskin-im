@@ -120,6 +120,12 @@ class ChatAttachmentsCellView: UICollectionViewCell, UIDocumentInteractionContro
                 UIAction(title: NSLocalizedString("Preview", comment: "context action"), image: UIImage(systemName: "eye.fill"), handler: { action in
                     self.open(url: localUrl, preview: true);
                 }),
+                UIAction(title: NSLocalizedString("Reply", comment: "context action"), image: UIImage(systemName: "eye.fill"), handler: { action in
+                    self.open(url: localUrl, preview: true);
+                }),
+                UIAction(title: NSLocalizedString("Forward", comment: "context action"), image: UIImage(systemName: "eye.fill"), handler: { action in
+                    self.open(url: localUrl, preview: true);
+                }),
                 UIAction(title: NSLocalizedString("Copy", comment: "context action"), image: UIImage(systemName: "doc.on.doc"), handler: { action in
                     UIPasteboard.general.strings = [url];
                     UIPasteboard.general.string = url;

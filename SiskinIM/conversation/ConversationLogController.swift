@@ -23,7 +23,7 @@ import UIKit
 import Combine
 import CoreAudio
 
-class ConversationLogController: UIViewController, ConversationDataSourceDelegate, UITableViewDataSource, UITableViewDelegate {
+class ConversationLogController: UIViewController, ConversationDataSourceDelegate, UITableViewDataSource, UITableViewDelegate, attachmentFeaturesCellDelegate {
     
     public static let REFRESH_CELL = Notification.Name("ConversationCellRefresh");
     
@@ -130,9 +130,6 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
         }
       //  let abc = dataSourceArraySection[indexPath.section]
       //  let item = abc[indexPath.row]
-        print(item.state)
-        print(item.state.errorMessage)
-        print(item.state.isError)
         switch item.payload {
         case .unreadMessages:
             let cell: ChatTableViewSystemCell = tableView.dequeueReusableCell(withIdentifier: "ChatTableViewSystemCell", for: indexPath) as! ChatTableViewSystemCell;
@@ -166,8 +163,10 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
                 }else{
                     switch item.state {
                     case.incoming(_):
-                        
                         let cell = tableView.dequeueReusableCell(withIdentifier: "LeftViewCell") as! LeftViewCell
+                        cell.cellDelegate = self
+                        cell.indexPath = indexPath
+                        cell.index = indexPath.row
                         cell.contentView.transform = tableView.transform
                         if indexPath.row == 0 && self.newlyAddedRow == nil && dataSource.count == 1 {
                            if dataSource.getItem(at: indexPath.row) != nil {
@@ -231,6 +230,9 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
                         return cell
                     case.outgoing(_):
                         let cell = tableView.dequeueReusableCell(withIdentifier: "RightViewCell") as! RightViewCell
+                        cell.cellDelegate = self
+                        cell.indexPath = indexPath
+                        cell.index = indexPath.row
                         cell.contentView.transform = tableView.transform
                         if indexPath.row == 0 && self.newlyAddedRow == nil && dataSource.count == 1 {
                            if dataSource.getItem(at: indexPath.row) != nil {
@@ -364,6 +366,9 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
                        // return tableView.dequeueReusableCell(withIdentifier: "ChatTableViewCellIncoming", for: indexPath);
                     case .outgoing_error(_, errorMessage: _):
                        let cell = tableView.dequeueReusableCell(withIdentifier: "RightViewCell") as! RightViewCell
+                        cell.cellDelegate = self
+                        cell.indexPath = indexPath
+                        cell.index = indexPath.row
                        cell.contentView.transform = tableView.transform
                         if indexPath.row == 0 && self.newlyAddedRow == nil && dataSource.count == 1 {
                            if dataSource.getItem(at: indexPath.row) != nil {
@@ -439,6 +444,9 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
         case .attachment(let url, let appendix):
             let id = isContinuation(at: indexPath.row, for: item) ? "ChatTableViewAttachmentContinuationCell" : "ChatTableViewAttachmentCell" ;
             let cell: AttachmentChatTableViewCell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! AttachmentChatTableViewCell;
+            cell.cellDelegate = self
+            cell.indexPath = indexPath
+            cell.index = indexPath.row
             cell.contentView.transform = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: 0);
             let lbl = UILabel()
             lbl.frame = CGRect(x: 0, y: 0, width: cell.frame.size.width, height: 30)
@@ -448,14 +456,6 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
             lbl.textColor = .black
             lbl.text = "today"
             cell.contentView.addSubview(lbl)
-            
-            let dateFormatterPrint = DateFormatter()
-            dateFormatterPrint.dateFormat = "hh:mm"
-                            
-
-            if let dateChat = item.timestamp as Date? {
-               // cell.lblTime?.text = dateFormatterPrint.string(from: dateChat)
-            }
             
             if indexPath.row == 0 && self.newlyAddedRow == nil && dataSource.count == 1 {
                if dataSource.getItem(at: indexPath.row) != nil {
@@ -516,7 +516,6 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
                self.newlyAddedRow = nil
            }
             cell.set(item: item, url: url, appendix: appendix);
-            cell.frame.size.height = 250
             return cell;
         case .invitation(let message, let appendix):
             let id = "ChatTableViewInvitationCell";
@@ -535,26 +534,33 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
         }
     }
     
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//
-//        //if section < arrayDateSection.count {
-//            if (arrayDateSection[section-1] as! Date).compare(Date()) == .orderedSame {
-//                return "today"
-//            } else {
-//                let dateFormatterPrint = DateFormatter()
-//                dateFormatterPrint.dateFormat = "dd MMMM YYYY"
-//                print(dateFormatterPrint.string(from: arrayDateSection[section-1] as! Date))
-//                return dateFormatterPrint.string(from: arrayDateSection[section-1] as! Date)
-//            }
-//          // }
-//        //   return nil
-//    }
+
     
-    
-    
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//            return 20
-//        }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let item = dataSource.getItem(at: indexPath.row) else {
+            return tableView.rowHeight
+        }
+       switch item.payload {
+       case .unreadMessages:
+           return tableView.rowHeight
+       case .messageRetracted:
+           return tableView.rowHeight
+       case .message(let message, let correctionTimestamp):
+           return tableView.rowHeight
+       case .linkPreview(let url):
+           return tableView.rowHeight
+       case .attachment(let url, let appendix):
+           return 350
+       case .invitation(let message, let appendix):
+           return tableView.rowHeight
+       case .marker(let type, let senders):
+           return tableView.rowHeight
+       default:
+           return tableView.rowHeight
+               // return tableView.dequeueReusableCell(withIdentifier: "ChatTableViewCellIncoming", for: indexPath);
+       }
+    }
+
 //
 //     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 //             let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 20))
@@ -787,6 +793,17 @@ class ConversationLogController: UIViewController, ConversationDataSourceDelegat
     }
     
     private var tempRightBarButtonItem: UIBarButtonItem?;
+    
+    //Protocol Method
+    func featuresWorking(indexPath: IndexPath, index: Int) {
+        //self.tableView.beginUpdates()
+        print(self.dataSource.count)
+        self.dataSource.remove(item: self.dataSource.getItem(at: index)!)
+        print(self.dataSource.count)
+        self.tableView.deleteRows(at: [indexPath], with: .fade)
+        self.tableView.reloadData()
+        //self.tableView.endUpdates()
+    }
 }
 
 extension ConversationLogController {

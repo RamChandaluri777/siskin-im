@@ -24,28 +24,42 @@ import UIKit
 import UserNotifications
 import TigaseSwift
 import Combine
+import Foundation
 
-class ChatsListViewController: UITableViewController {
+class ChatsListViewController: UITableViewController, UISearchBarDelegate {
     
     @IBOutlet var addMucButton: UIBarButtonItem!
     
     var dataSource: ChatsDataSource?;
+    var userNameList:[String] = []
+    var filtererData:ChatsDataSource?;
     
     private var cancellables: Set<AnyCancellable> = [];
+    lazy var searchBar = UISearchBar(frame: CGRect.zero)
     
     override func viewDidLoad() {
-        dataSource = getDatabaseData()//ChatsDataSource(controller: self);
+        
         super.viewDidLoad();
-        
-        tableView.dataSource = self;
-        
-      
+        searchBar.placeholder = "Search"
+        searchBar.delegate = self
+        navigationItem.titleView = searchBar
         setColors();
-
     }
     
     func getDatabaseData() -> ChatsDataSource {
         return ChatsDataSource(controller: self);
+    }
+    
+    func fetchNameFromList() {
+        //print(filtererData!.items.count)
+        if (filtererData != nil) {
+            for i in 0..<filtererData!.items.count  {
+                let item = filtererData!.item(at: i)
+                if let s = (item!.name.split(separator: "@").first)?.prefix(1).uppercased() {
+                    userNameList.append(s.appending((item!.name.split(separator: "@").first!).dropFirst()))
+                }
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,7 +77,13 @@ class ChatsListViewController: UITableViewController {
             self?.navigationController?.tabBarItem.badgeValue = value;
         }).store(in: &cancellables);
         Settings.$recentsMessageLinesNo.removeDuplicates().receive(on: DispatchQueue.main).sink(receiveValue: { _ in
-            self.tableView.reloadData();
+            self.fetchNameFromList()
+            self.tableView.dataSource = self;
+            self.tableView.delegate = self;
+            self.dataSource = self.getDatabaseData()//ChatsDataSource(controller: self);
+            self.filtererData = self.dataSource//ChatsDataSource(controller: self, items: filtererData!.items)
+            //self.tableView.reloadData();
+            
         }).store(in: &cancellables);
         animate();
         
@@ -109,6 +129,44 @@ class ChatsListViewController: UITableViewController {
         }
     }
     
+//    override func viewDidAppear(_ animated: Bool) {
+//        self.dataSource = self.getDatabaseData()
+//    }
+    
+//    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+//        self.dataSource?.items = []
+//    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText != "" {
+            var arr:[ConversationItem] = []
+            for i in 0..<userNameList.count  {
+                if (userNameList[i] as String).contains(searchText) {
+                    print(i)
+                    print(self.filtererData?.count)
+                    arr.append(self.filtererData!.item(at: i)!)
+                }
+            }
+            self.dataSource?.items = arr
+        } else {
+            self.dataSource = self.filtererData
+        }
+        tableView.reloadData()
+    }
+    
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        if searchBar.text == "" {
+            self.dataSource = self.filtererData
+        }
+        return true
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if searchBar.text == "" {
+            self.dataSource = self.filtererData
+        }
+    }
+    
     private func animate() {
         guard let coordinator = self.transitionCoordinator else {
             return;
@@ -127,7 +185,7 @@ class ChatsListViewController: UITableViewController {
           navigationController?.navigationBar.scrollEdgeAppearance = appearance;
           navigationController?.navigationBar.barTintColor = UIColor(named: "chatslistBackground");
           navigationController?.navigationBar.tintColor = UIColor.white;
-      }
+    }
  
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -239,8 +297,6 @@ class ChatsListViewController: UITableViewController {
                 case .none:
                     return;
                 }
-                
-               
                 }
             conversation?.updateOptions({ options in
                 options.encryption = ChatEncryption.none;
@@ -255,21 +311,16 @@ class ChatsListViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1;
+                return 1;
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
         return  dataSource?.count ?? 0;
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = Settings.recentsMessageLinesNo == 1 ? "ChatsListTableViewCellNew" : "ChatsListTableViewCellBig";
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath) as! ChatsListTableViewCell;
-        
-       
-     
-        
         if let item = dataSource?.item(at: indexPath) {
             print(item.name)
             cell.update(conversation: item.chat);
@@ -279,7 +330,6 @@ class ChatsListViewController: UITableViewController {
                 cell.nameLabel.text = s.appending((item.name.split(separator: "@").first!).dropFirst())
             }
         }
-        
         cell.avatarStatusView.updateCornerRadius();
         
         return cell;
@@ -531,7 +581,7 @@ class ChatsListViewController: UITableViewController {
             self.items.count;
         }
         
-        private var items: [ConversationItem] = [];
+        public var items: [ConversationItem] = [];
         private var cancellables: Set<AnyCancellable> = [];
         
         init(controller: ChatsListViewController) {
@@ -539,11 +589,11 @@ class ChatsListViewController: UITableViewController {
             
             if #available(iOS 13.2, *) {
                 DBChatStore.instance.$conversations.throttle(for: 0.1, scheduler: self.dispatcher, latest: true).sink(receiveValue: { [weak self] items in
-                    self?.update(items: items);
+                  //  self?.update(items: items);
                 }).store(in: &cancellables);
             } else {
                 DBChatStore.instance.$conversations.throttle(for: 0.1, scheduler: RunLoop.main, latest: true).sink(receiveValue: { [weak self] items in
-                    self?.update(items: items);
+                  //  self?.update(items: items);
                 }).store(in: &cancellables);
             }
         }
@@ -606,6 +656,8 @@ class ChatsListViewController: UITableViewController {
         }
         
         func item(at index: Int) -> ConversationItem? {
+            print(index)
+            print(self.items.count)
             return self.items[index];
         }
     }

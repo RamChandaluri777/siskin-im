@@ -27,11 +27,16 @@
 		010A28EE27017A38004E702F /* LoginVerifyIDVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28EA27017A38004E702F /* LoginVerifyIDVC.swift */; };
 		010A28F027028CA3004E702F /* OTRECDHKeyExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28EF27028CA3004E702F /* OTRECDHKeyExchange.swift */; };
 		010A28F227028D11004E702F /* CryptoExportImportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010A28F127028D11004E702F /* CryptoExportImportManager.swift */; };
+		307D1C15A23E3156F7653A8A /* Pods_Shared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57CA9DADFB304AEBF0280206 /* Pods_Shared.framework */; };
 		5C30D031270C4A6300D17A72 /* AttachmentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C30D030270C4A6300D17A72 /* AttachmentsCell.swift */; };
+		5C47C1EE273A22F600C98A91 /* AttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C47C1ED273A22F600C98A91 /* AttachmentCell.swift */; };
 		5CE5ABB5270AF8000063C1C8 /* RightViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CE5ABB1270AF8000063C1C8 /* RightViewCell.xib */; };
 		5CE5ABB6270AF8000063C1C8 /* LeftViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CE5ABB2270AF8000063C1C8 /* LeftViewCell.xib */; };
 		5CE5ABB7270AF8000063C1C8 /* RightViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE5ABB3270AF8000063C1C8 /* RightViewCell.swift */; };
 		5CE5ABB8270AF8000063C1C8 /* LeftViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE5ABB4270AF8000063C1C8 /* LeftViewCell.swift */; };
+		73AB4B95BE9E11257A8F2268 /* Pods_Siskin_IM___Share.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1BD35C77FC6AB5B604D07D3 /* Pods_Siskin_IM___Share.framework */; };
+		840843CC6E0DB902D87CE41E /* Pods_NotificationService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C864D7F02F7C2C2CCE59638B /* Pods_NotificationService.framework */; };
+		A4886947575DF852E9F9D781 /* Pods_Siskin_IM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD1C2B31173C0FD603CFBBC1 /* Pods_Siskin_IM.framework */; };
 		FE00157D2017617B00490340 /* StreamFeaturesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE00157C2017617B00490340 /* StreamFeaturesCache.swift */; };
 		FE00157F2019090300490340 /* ExperimentalSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE00157E2019090300490340 /* ExperimentalSettingsViewController.swift */; };
 		FE01ADA91E224CF400FA7E65 /* SiskinPushNotificationsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE01ADA81E224CF400FA7E65 /* SiskinPushNotificationsModule.swift */; };
@@ -374,14 +379,19 @@
 		1A35B2C055C61D447FD9E98B /* Pods-Shared.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared.debug.xcconfig"; path = "Target Support Files/Pods-Shared/Pods-Shared.debug.xcconfig"; sourceTree = "<group>"; };
 		1BD37AA5F0EC76935CEBDC50 /* Pods-Shared.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shared.release.xcconfig"; path = "Target Support Files/Pods-Shared/Pods-Shared.release.xcconfig"; sourceTree = "<group>"; };
 		3916E3A0673D9D8DE7882D14 /* Pods-Siskin IM - Share.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siskin IM - Share.debug.xcconfig"; path = "Target Support Files/Pods-Siskin IM - Share/Pods-Siskin IM - Share.debug.xcconfig"; sourceTree = "<group>"; };
+		57CA9DADFB304AEBF0280206 /* Pods_Shared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C30D030270C4A6300D17A72 /* AttachmentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentsCell.swift; sourceTree = "<group>"; };
+		5C47C1ED273A22F600C98A91 /* AttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCell.swift; sourceTree = "<group>"; };
 		5CE5ABB1270AF8000063C1C8 /* RightViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RightViewCell.xib; sourceTree = "<group>"; };
 		5CE5ABB2270AF8000063C1C8 /* LeftViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeftViewCell.xib; sourceTree = "<group>"; };
 		5CE5ABB3270AF8000063C1C8 /* RightViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightViewCell.swift; sourceTree = "<group>"; };
 		5CE5ABB4270AF8000063C1C8 /* LeftViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftViewCell.swift; sourceTree = "<group>"; };
 		60FDAD703E9A1379B972E0D6 /* Pods-Siskin IM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siskin IM.release.xcconfig"; path = "Target Support Files/Pods-Siskin IM/Pods-Siskin IM.release.xcconfig"; sourceTree = "<group>"; };
 		7DD139AEABDA2140708D5AD6 /* Pods-Siskin IM - Share.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siskin IM - Share.release.xcconfig"; path = "Target Support Files/Pods-Siskin IM - Share/Pods-Siskin IM - Share.release.xcconfig"; sourceTree = "<group>"; };
+		B1BD35C77FC6AB5B604D07D3 /* Pods_Siskin_IM___Share.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods_Siskin_IM___Share.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD1C2B31173C0FD603CFBBC1 /* Pods_Siskin_IM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Siskin_IM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF208294D915DDA6A231DF31 /* Pods-Siskin IM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siskin IM.debug.xcconfig"; path = "Target Support Files/Pods-Siskin IM/Pods-Siskin IM.debug.xcconfig"; sourceTree = "<group>"; };
+		C864D7F02F7C2C2CCE59638B /* Pods_NotificationService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NotificationService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFE49B486917015C348A8F93 /* Pods-NotificationService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotificationService.debug.xcconfig"; path = "Target Support Files/Pods-NotificationService/Pods-NotificationService.debug.xcconfig"; sourceTree = "<group>"; };
 		FE00157C2017617B00490340 /* StreamFeaturesCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamFeaturesCache.swift; sourceTree = "<group>"; };
 		FE00157E2019090300490340 /* ExperimentalSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperimentalSettingsViewController.swift; sourceTree = "<group>"; };
@@ -650,6 +660,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE759FE22371C83D001E78D9 /* Shared.framework in Frameworks */,
+				73AB4B95BE9E11257A8F2268 /* Pods_Siskin_IM___Share.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,6 +669,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE759FD12370B2F2001E78D9 /* Shared.framework in Frameworks */,
+				840843CC6E0DB902D87CE41E /* Pods_NotificationService.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -671,6 +683,7 @@
 				FE759FE82371C972001E78D9 /* libxml2.tbd in Frameworks */,
 				FE1908B72584D70300CA049F /* OpenSSL.xcframework in Frameworks */,
 				FEC9B1162440E7B500A484EE /* TigaseSwiftOMEMO in Frameworks */,
+				307D1C15A23E3156F7653A8A /* Pods_Shared.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -682,6 +695,7 @@
 				FE5079F01CD3CA91001A015C /* Security.framework in Frameworks */,
 				FE759FCC2370B2A4001E78D9 /* Shared.framework in Frameworks */,
 				FE1908AA2584D6BC00CA049F /* OpenSSL.xcframework in Frameworks */,
+				A4886947575DF852E9F9D781 /* Pods_Siskin_IM.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -814,6 +828,7 @@
 				FECEF29C23B7C36F007EC323 /* AttachmentChatTableViewCell.swift */,
 				FE2332E0242CCDB400008ED4 /* InvitationChatTableViewCell.swift */,
 				FEDE00C8266CEF270019CC1C /* ChatTableViewMarkerCell.swift */,
+				5C47C1ED273A22F600C98A91 /* AttachmentCell.swift */,
 			);
 			path = conversation;
 			sourceTree = "<group>";
@@ -843,6 +858,10 @@
 			children = (
 				FE1A349F258CD3E10058B86A /* WebRTC.xcframework */,
 				FE1908962584D69400CA049F /* OpenSSL.xcframework */,
+				C864D7F02F7C2C2CCE59638B /* Pods_NotificationService.framework */,
+				57CA9DADFB304AEBF0280206 /* Pods_Shared.framework */,
+				BD1C2B31173C0FD603CFBBC1 /* Pods_Siskin_IM.framework */,
+				B1BD35C77FC6AB5B604D07D3 /* Pods_Siskin_IM___Share.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -1919,6 +1938,7 @@
 				010A28D127017A00004E702F /* LoginPage Extension.swift in Sources */,
 				FE11D38226623D7700CC883F /* DBChatStore+ChatStore.swift in Sources */,
 				FE2809832167CF1B002F5BD0 /* ServerFeaturesViewController.swift in Sources */,
+				5C47C1EE273A22F600C98A91 /* AttachmentCell.swift in Sources */,
 				FEC514281CEB82E9003AF765 /* MucChatViewController.swift in Sources */,
 				010A28F027028CA3004E702F /* OTRECDHKeyExchange.swift in Sources */,
 				010A28E327017A12004E702F /* PasswordTF.swift in Sources */,
@@ -2480,7 +2500,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 14;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 9VNV3CT575;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
