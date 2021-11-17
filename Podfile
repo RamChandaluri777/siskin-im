@@ -24,6 +24,9 @@ target 'Siskin IM' do
   # Pods for Siskin IM
 	pod 'TransitionButton'
 	pod 'CryptoSwift', '~> 1.4.1'
+  # Swift 5.0
+  pod 'MessageKit', '~> 3.3.0'
+
 end
 
 target 'Siskin IM - Share' do

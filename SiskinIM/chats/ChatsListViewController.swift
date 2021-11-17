@@ -398,15 +398,15 @@ class ChatsListViewController: UITableViewController {
         }
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if let item = dataSource?.item(at: indexPath) {
-            if item.name.contains("Bot") || item.name.contains("enhanced-apk"){
-                return 0
-            }
-            else{
-                return 60
-            }
-        }
-        return 0
+//        if let item = dataSource?.item(at: indexPath) {
+//            if item.name.contains("Bot") || item.name.contains("enhanced-apk"){
+//                return 0
+//            }
+//            else{
+//                return 60
+//            }
+//        }
+        return 60
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
